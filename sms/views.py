@@ -2530,7 +2530,7 @@ def meter_readings_report(request):
             sheet.merge_cells('A1:B2')  
   
             cell = sheet.cell(row=1, column=1)  
-            cell.value = 'TOM WATER CLIENTS' 
+            cell.value = 'TEULE CLIENTS' 
             #summary_sheet.merge_cells('A2:D2')
             
             wb=Workbook()
@@ -2557,7 +2557,7 @@ def meter_readings_report(request):
 
 
             #summary_sheet.append(('T N T WATER CLIENTS'))
-            summary_sheet.append(('TOM WATER CLIENTS','NAMES'))
+            summary_sheet.append(('TEULE CLIENTS','NAMES'))
             big_red_text = Font(color="00FF0000", size=20)
             sheet["B1"].font = big_red_text
             sheet["B2"].font = big_red_text
