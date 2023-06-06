@@ -264,7 +264,21 @@ class TeuleFlats(models.Model):
         verbose_name = 'Flat'
         verbose_name_plural = 'Flats'
 
+class TeuleFlat(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    caretaker = models.ForeignKey(Caretaker, on_delete=models.DO_NOTHING,blank=True,null=True)
+    name = models.CharField(max_length=250)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    number_of_units = models.IntegerField(default=0, null=True)
+    location = models.CharField( max_length=100,null=True)
+    ocupied_units = models.IntegerField(default=0, null=True)
+    reading = models.FloatField(max_length=250, default=0,null=True)
+    read_date = models.DateTimeField(auto_now_add=True, blank=True)
 
+    class Meta:
+        verbose_name = 'Flat'
+        verbose_name_plural = 'Flats'
 class TeuleClients(models.Model):
     
     names = models.CharField(max_length=250)
