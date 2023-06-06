@@ -26,17 +26,13 @@
             <table class="table table-hover table-bordered" id="sampleTable">
                 <thead>
                 <tr>
-                    <th>Tenant Name</th>
-                    <th>A/C</th>
-                    <th>Phone 1</th>
-                    
-
-                    <th>House Number</th>
-                    <th>Station</th>
-                    <th>Last Readings</th>
+                    <th>Tenant Name</th>                    
+                    <th>Phone</th>
+                    <th>House Number</th>                    
+                    <th>Flat Name</th>
                     <th>Amount Due</th>
                     <th>Reg Date</th>
-                    <th>M. Reading Date</th>
+                    <th>Vacated</th>
                     <th>Actions</th>
 
                 </tr>
@@ -45,21 +41,15 @@
                 {% for client in clients %}
                 <tr>
                     <td><a href="{% url 'sms:client_dashboard' client.id %}">{{ client.names }}</a></td>
-                    {% if client.provided_account %}
-
-                    <td>{{ client.provided_account }}</td>
-                    {% else %}
-                    <td>{{ client.id }}</td>
-                    {% endif %}
+                    
                     <td>{{ client.msisdn }}</td>
                     
 
-                    <td>{{ client.court }}</td>
-                    <td>{{ client.network }}</td>
-                    <td>{{ client.last_meter_reading|floatformat:0 }}</td>
+                    <td>{{ client.flat_name }}</td>
+                    
                     <td>{{ client.amount_due|floatformat:0 }}</td>
                     <td>{{ client.created_at|date:'Y:m:d' }}</td>
-                    <td>{{ client.last_meter_reading_date|date:'Y:m:d' }}</td>
+                    <td>{{ client.vacated }}</td>
                     <td>
                         <a href="{% url 'sms:edit_water_client' client.id %}" title="Edit" class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-lg"></i></a>
 {#                        <a href="" title="Approve" class="btn btn-outline-primary btn-sm"><i class="fa fa-check-square-o"></i></a>#}

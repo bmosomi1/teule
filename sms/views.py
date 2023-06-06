@@ -1921,7 +1921,7 @@ def create_teule_house(request):
             amount_due=request.POST['amount_due']
 
         )
-        return redirect('sms:teule_house', flat_id)
+        return redirect('sms:teule_houses', flat_id)
     context = {
         'flats': flats
     }
