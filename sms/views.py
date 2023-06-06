@@ -1790,12 +1790,14 @@ def add_caretaker(request):
 
 def create_teule_flat(request):
     caretakers = Caretaker.objects.all()
+    customer = Customer.objects.filter(id=request.user.id).first()
     if request.method == 'POST':
         caretaker_ids=int(request.POST['caretaker_id'])
         caretaker = Caretaker.objects.filter(id=caretaker_ids).first()
         #phone_number = f"{254}{request.POST['phone_number'].replace(' ', '')[-9:]}"
         TeuleFlat.objects.create(
             caretaker=caretaker,
+            customer=Customer,
             name=request.POST['flat_name'],
             number_of_units=request.POST['number_of_units'],
             location=request.POST['location']
