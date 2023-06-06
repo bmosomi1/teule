@@ -1762,7 +1762,7 @@ def create_teule_client(request):
             client_name = request.POST['names']
             phone_number = f"{0}{phones.replace(' ', '')[-9:]}"
             phone_number2 = f"{0}{phones2.replace(' ', '')[-9:]}"
-        WaterClientAll.objects.update_or_create(
+        TeuleClients.objects.update_or_create(
             names=request.POST['names'],
             msisdn=phone_number,
             msisdn2=phone_number2,
