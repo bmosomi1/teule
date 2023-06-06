@@ -250,7 +250,7 @@ class Caretaker(models.Model):
         verbose_name_plural = 'Groups'
 class TeuleFlats(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    caretaker = models.ForeignKey(Caretaker, on_delete=models.CASCADE)
+    caretaker = models.ForeignKey(Caretaker, on_delete=models.DO_NOTHING,blank=True,null=True)
     name = models.CharField(max_length=250)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
