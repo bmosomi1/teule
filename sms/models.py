@@ -299,6 +299,7 @@ class TeuleClients(models.Model):
     amount_4 = models.FloatField(default=0, null=True)
     amount_5 = models.FloatField(default=0, null=True)
     amount_6 = models.FloatField(default=0, null=True)
+    amount_due = models.FloatField(default=0, null=True)
     main_account = models.IntegerField(default=0, null=True)
     ismain_account = models.IntegerField(default=0, null=True)
     provided_account = models.CharField(max_length=250,null=True)
