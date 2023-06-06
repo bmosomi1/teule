@@ -1914,14 +1914,14 @@ def create_teule_house(request):
         #phone_number = f"{254}{request.POST['phone_number'].replace(' ', '')[-9:]}"
         TeuleHouses.objects.create(
             flat=flat,
-            house_number=request.POST['house_number'],
+            house_number=request.POST['house_number'].upper(),
             monthly_rent=request.POST['monthly_rent'],
             deposit=request.POST['deposit'],
             reading=request.POST['meter_reading'],
             amount_due=request.POST['amount_due']
 
         )
-        return redirect('sms:sample_datatable_network', flat_id)
+        return redirect('sms:teule_house', flat_id)
     context = {
         'flats': flats
     }
