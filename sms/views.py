@@ -1703,6 +1703,101 @@ def customer_contacts(request):
             'groups': groups
         }
         return render(request, 'sms/contacts.html', context)
+def teule_clients(request):
+    clients = TeuleClients.objects.all().order_by('-id').values()
+    context = {
+        'clients': clients
+    }
+    return render(request, 'sms/teule_clients.html', context)
+
+
+def create_teule_client(request):
+    if request.method == 'POST':
+        customer_number = ''
+        last_client = TeuleClients.objects.all().order_by('id').last()
+        #last_client = '1'
+        if not last_client:
+            customer_number = 'TH-100'
+            cn = 'TH-100'
+            
+
+
+
+
+
+            #cn = last_client.client_number
+            cn_int = int(cn.split('TH-')[-1])
+            new_cn_int = cn_int + 1
+            new_cn = f"TH-{new_cn_int}"
+            customer_number = new_cn
+            phones = request.POST['msisdn']
+            phones2 = request.POST['msisdn2']
+            phone_number = f"{0}{phones.replace(' ', '')[-9:]}"
+            phone_number2 = f"{0}{phones2.replace(' ', '')[-9:]}"
+            TeuleClients.objects.update_or_create(
+                names=request.POST['names'],
+                msisdn=phone_number,
+                msisdn2=phone_number2,
+                client_number=customer_number,
+                id_num=request.POST['id_num'],
+                house_number=request.POST['house_number'],
+                email_address=request.POST['email_address'],
+                
+                )
+        else:
+            #cn = 'RB-400'
+            
+
+
+
+
+
+            cn = last_client.client_number
+            cn_int = int(cn.split('TH-')[-1])
+            new_cn_int = cn_int + 1
+            new_cn = f"TH-{new_cn_int}"
+            customer_number = new_cn
+            phones = request.POST['msisdn']
+            phones2 = request.POST['msisdn2']
+            client_name = request.POST['names']
+            phone_number = f"{0}{phones.replace(' ', '')[-9:]}"
+            phone_number2 = f"{0}{phones2.replace(' ', '')[-9:]}"
+        WaterClientAll.objects.update_or_create(
+            names=request.POST['names'],
+            msisdn=phone_number,
+            msisdn2=phone_number2,
+            client_number=customer_number,
+            id_num=request.POST['id_num'],
+            
+            email_address=request.POST['email_address'],
+            
+
+        )
+        test = "Dear ..... Your  account is....... ensure that you put the paybill 4047479 and  account number......when paying for water bill.  Help line 0712730611"
+        dear = "Dear "
+        your = ", Your  account is "
+        account_num = str(new_cn_int)
+        ensure = ". ensure that you put the paybill 4047479 and  account number "
+        paying = " when paying for water bill.  Help line 0712730611"
+        client_message = dear + client_name + your + account_num + ensure + account_num + paying
+
+        WaterOutbox.objects.create(
+            dest_msisdn=phone_number,
+            text_message=client_message,
+            user_id=100,
+            client=new_cn_int
+            
+
+
+        )
+        
+        messages.success(request, 'Water Client Added Successfully')
+        return redirect('sms:water_clients')
+    context = {
+        'courts': WaterCourt.objects.filter().order_by('name')
+    }
+    return render(request, 'sms/add_water_client.html', context)
+
 
 def teule_flats(request):
     customer = Customer.objects.filter(id=request.user.id).first()
