@@ -1746,7 +1746,7 @@ def teule_houses(request):
 def teule_caretakers(request):
     customer = Customer.objects.filter(id=request.user.id).first()
     if customer is not None:
-        readers = Caretaker.objects.all()
+        caretakers = Caretaker.objects.all()
 
         context = {
 
