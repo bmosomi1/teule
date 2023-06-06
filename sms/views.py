@@ -1796,7 +1796,7 @@ def create_teule_flat(request):
         #phone_number = f"{254}{request.POST['phone_number'].replace(' ', '')[-9:]}"
         TeuleFlats.objects.create(
             caretaker=caretaker,
-            name=request.POST['house_number'],
+            name=request.POST['flat_name'],
             number_of_units=request.POST['number_of_units'],
             location=request.POST['location']
             
