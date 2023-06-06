@@ -255,7 +255,7 @@ class TeuleFlats(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     number_of_units = models.IntegerField(default=0, null=True)
-    location = models.FloatField( default=100,null=True)
+    location = models.CharField( max_length=100,null=True)
     ocupied_units = models.IntegerField(default=0, null=True)
     reading = models.FloatField(max_length=250, default=0,null=True)
     read_date = models.DateTimeField(auto_now_add=True, blank=True)

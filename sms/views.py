@@ -1796,11 +1796,10 @@ def create_teule_flat(request):
         #phone_number = f"{254}{request.POST['phone_number'].replace(' ', '')[-9:]}"
         TeuleFlats.objects.create(
             caretaker=caretaker,
-            house_number=request.POST['house_number'],
-            monthly_rent=request.POST['monthly_rent'],
-            deposit=request.POST['deposit'],
-            meter_reading=request.POST['meter_reading'],
-            amount_due=request.POST['amount_due']
+            name=request.POST['house_number'],
+            number_of_units=request.POST['number_of_units'],
+            location=request.POST['location']
+            
 
         )
         return redirect('sms:teule_flats')
