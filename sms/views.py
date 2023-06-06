@@ -1813,7 +1813,7 @@ def create_teule_flat(request):
 def create_teule_house(request):
     flats = TeuleFlat.objects.all()
     if request.method == 'POST':
-        flat_id=request.POST['flat_id'],
+        flat_id=int(request.POST['flat_id'])
         flat = TeuleFlat.objects.filter(id=flat_id).first()
         #phone_number = f"{254}{request.POST['phone_number'].replace(' ', '')[-9:]}"
         TeuleHouses.objects.create(
