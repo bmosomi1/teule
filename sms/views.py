@@ -1827,7 +1827,7 @@ def create_teule_house(request):
         )
         return redirect('sms:sample_datatable_network', flat_id)
     context = {
-        'flat': flats
+        'flats': flats
     }
     return render(request, 'sms/create_teule_house.html', context)
 
