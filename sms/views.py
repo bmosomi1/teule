@@ -1800,7 +1800,7 @@ def create_teule_client(request):
         return redirect('sms:teule_clients')
     context = {
         
-        'houses': TeuleHouses.filter(occupied_status__icontains='NO')
+        'houses': TeuleHouses.objects.filter(occupied_status__icontains='NO')
         
     }
     return render(request, 'sms/add_teule_client.html', context)
