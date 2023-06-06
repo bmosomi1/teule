@@ -318,6 +318,7 @@ class TeuleHouses(models.Model):
     monthly_rent = models.FloatField(max_length=250, default=0,null=True)
     deposit = models.FloatField(max_length=250, default=0,null=True)
     rent_arrears = models.FloatField(max_length=250, default=0,null=True)
+    amount_due = models.FloatField(max_length=250, default=0,null=True)
     floor = models.IntegerField(default=0, null=True)
     care_taker = models.FloatField( default=100,null=True)
     occupied_by = models.ForeignKey(TeuleClients, on_delete=models.DO_NOTHING, blank=True, null=True)

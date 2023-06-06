@@ -1821,7 +1821,7 @@ def create_teule_house(request):
             house_number=request.POST['house_number'],
             monthly_rent=request.POST['monthly_rent'],
             deposit=request.POST['deposit'],
-            meter_reading=request.POST['meter_reading'],
+            reading=request.POST['meter_reading'],
             amount_due=request.POST['amount_due']
 
         )
