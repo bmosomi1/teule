@@ -1724,6 +1724,46 @@ def teule_flats(request):
         }
         return render(request, 'sms/contacts.html', context)
 
+def teule_houses(request):
+    customer = Customer.objects.filter(id=request.user.id).first()
+    if customer is not None:
+        houses = TeuleHouses.objects.all()
+
+        context = {
+
+            'houses': houses
+        }
+        return render(request, 'sms/teule_houses.html', context)
+    else:
+        customer = CustomerSubAccounts.objects.filter(user_ptr_id=request.user.id).first().owner
+        groups = Group.objects.filter(customer=customer.id)
+
+        context = {
+            'customer': customer,
+            'groups': groups
+        }
+        return render(request, 'sms/contacts.html', context)
+
+
+def create_teule_house(request, flat_id):
+    flat = TeuleFlats.objects.filter(id=flat_id).first()
+    if request.method == 'POST':
+        #phone_number = f"{254}{request.POST['phone_number'].replace(' ', '')[-9:]}"
+        TeuleHouses.objects.create(
+            flat=flat,
+            house_number=request.POST['house_number'],
+            monthly_rent=request.POST['monthly_rent'],
+            deposit=request.POST['deposit'],
+            meter_reading=request.POST['meter_reading'],
+            amount_due=request.POST['amount_due']
+
+        )
+        return redirect('sms:sample_datatable_network', flat_id)
+    context = {
+        'flat': flat
+    }
+    return render(request, 'sms/create_teule_house.html', context)
+
 def water_courts(request):
     customer = Customer.objects.filter(id=request.user.id).first()
     if customer is not None:

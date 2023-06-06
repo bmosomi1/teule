@@ -1,0 +1,84 @@
+{% extends 'layouts/new_base.html' %}
+
+{% block additional_styles %}
+
+{% endblock %}
+
+{% block content %}
+{#    <div class="app-title">#}
+{#        <div>#}
+{#          <h1><i class="fa fa-dashboard"></i> Dashboard</h1>#}
+{#            <h2>Welcome, <strong> {{request.user.username}} </strong></h2>#}
+{#          <p></p>#}
+{#        </div>#}
+{#        <ul class="app-breadcrumb breadcrumb">#}
+{#          <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>#}
+{#          <li class="breadcrumb-item"><a href="#">Create Contact</a></li>#}
+{#        </ul>#}
+{#      </div>#}
+<div class="row">
+        <div class="col-md-6">
+          <div class="tile">
+            <h3 class="tile-title">Add House</h3>
+            <div class="tile-body">
+              <form action="{% url 'sms:create_network_court' network.id %}" method="post">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label>Flat Name</label>
+                    <select name="flat" class="form-control" id="court" required>
+                        <option value="">Select a flat</option>
+                        {% for flat in flats %}
+                            <option value="{{ flat.id }}">{{ flat.name }} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">House Number</label>
+                  <input class="form-control" name="house_number" type="text" placeholder="Enter House number">
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label">Monthly Rent</label>
+                  <input class="form-control" name="monthly_rent" type="text" placeholder="Rent Amount">
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Deposit</label>
+                    <input class="form-control" name="deposit" type="text" placeholder="Deposit payabele">
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label">Meter Reading</label>
+                    <input class="form-control" name="meter_reading" type="text" value="0">
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">Amount Due</label>
+                    <input class="form-control" name="amount_due" type="text" value="0">
+                  </div>
+
+
+
+{#                <div class="form-group">#}
+{#                  <label class="control-label">Contact Name</label>#}
+{#                  <input class="form-control" name="name" type="text" placeholder="Enter Group Name">#}
+{#                </div>  #}
+                  <button class="btn btn-outline-success" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Create Sub station</button>
+              </form>
+            </div>
+            <div class="tile-footer">
+            </div>
+          </div>
+        </div>
+
+
+
+
+ </div>
+
+</div>
+
+
+{% endblock %}
+
+{% block additional_scripts %}
+
+{% endblock %}
