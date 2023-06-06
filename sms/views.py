@@ -1771,7 +1771,8 @@ def add_caretaker(request):
                 customer=customer,
                 name=request.POST['name'],
                 phone_number = f"{0}{phone_numbers.replace(' ', '')[-9:]}",
-                comment=request.POST['comment']
+                id_number=request.POST['id_number'],
+                monthly_salary=request.POST['monthly_salary'],
             )
             return redirect('sms:teule_caretakers')
         return render(request, 'sms/create_caretaker.html')
