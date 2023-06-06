@@ -39,6 +39,7 @@
                         <th>Monthly Rent</th>
                         <th>Occupied Status</th>
                         <th>Occupied by</th>
+                        <th>Contact</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -47,16 +48,16 @@
                     
                     <tr>
 
-                        <td><a href="{% url 'sms:sample_datatable_network' network.id%}">{{ house.name }}</a></td>
-
                         
+                        <td>{{ house.house_number }}</td>
                         <td>{{ house.flat.name }}</td>
                         <td>{{ house.monthly_rent}}</td>
                         <td>{{ house.occupied_status}}</td>
                         <td>{{ house.occupied_by.name }}</td>
+                        <td>{{ house.occupied_by.msisdn }}</td>
                          <td>
                             <div class="btn-group">
-                                <a class="btn btn-outline-warning" href="{% url 'sms:edit_water_network' network.id %}"><i class="fa fa-lg fa-edit"></i>Edit</a>
+                                <a class="btn btn-outline-warning" href="{% url 'sms:edit_water_network' house.id %}"><i class="fa fa-lg fa-edit"></i>Edit</a>
                                 <button class="btn btn-outline-danger" style="margin-left: 2px"  onclick="confirm({{ network.id }})"><i class="fa fa-lg fa-trash"></i>Delete</button>
                             </div>
                             </td>
