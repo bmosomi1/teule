@@ -26,6 +26,7 @@
     {% url 'sms:water_payments_allocations' as water_payments_allocations %}
     {% url 'sms:water_system_config' as water_system_config %}
     {% url 'sms:meter_readers' as meter_readers %}
+    {% url 'sms:teule_houses' as teule_houses %}
 
 {#    {% url 'ShortCode:subs' as subs %}#}
     {% url 'ShortCode:incoming_sms' as incoming_sms %}
@@ -163,10 +164,10 @@
                     <span class="app-menu__label">Teule Clients</span></a>
             </li>
            <li>
-                <a {% if request.path == water_courts %} class="app-menu__item active"
+                <a {% if request.path == teule_houses %} class="app-menu__item active"
                 {% else %}
                       class="app-menu__item"
-                {% endif %} href="{{ water_courts }}">
+                {% endif %} href="{{ teule_houses }}">
                     <i class="app-menu__icon fa fa-money"></i>
                     <span class="app-menu__label">TEULE HOUSES</span></a>
             </li>

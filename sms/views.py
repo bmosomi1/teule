@@ -1745,9 +1745,11 @@ def teule_houses(request):
         return render(request, 'sms/contacts.html', context)
 
 
-def create_teule_house(request, flat_id):
-    flat = TeuleFlats.objects.filter(id=flat_id).first()
+def create_teule_house(request):
+    flats = TeuleFlats.objects.all()
     if request.method == 'POST':
+        flat_id=request.POST['flat_id'],
+        flat = TeuleFlats.objects.filter(id=flat_id).first()
         #phone_number = f"{254}{request.POST['phone_number'].replace(' ', '')[-9:]}"
         TeuleHouses.objects.create(
             flat=flat,
@@ -1760,7 +1762,7 @@ def create_teule_house(request, flat_id):
         )
         return redirect('sms:sample_datatable_network', flat_id)
     context = {
-        'flat': flat
+        'flat': flats
     }
     return render(request, 'sms/create_teule_house.html', context)
 
