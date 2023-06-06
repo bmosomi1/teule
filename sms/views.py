@@ -1789,7 +1789,7 @@ def add_caretaker(request):
         return render(request, 'group/create_reader.html')
 
 def create_teule_flat(request):
-    flats = TeuleFlats.objects.all()
+    caretakers = Caretaker.objects.all()
     if request.method == 'POST':
         caretaker_id=request.POST['caretaker_id'],
         caretaker = Caretaker.objects.filter(id=caretaker_id).first()
@@ -1803,9 +1803,9 @@ def create_teule_flat(request):
             amount_due=request.POST['amount_due']
 
         )
-        return redirect('sms:sample_datatable_network', flat_id)
+        return redirect('sms:teule_flats')
     context = {
-        'flat': flats
+        'caretakers': caretakers
     }
     return render(request, 'sms/create_flat.html', context)
 
