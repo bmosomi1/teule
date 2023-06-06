@@ -57,7 +57,7 @@
                         <td>{{ house.occupied_by.msisdn }}</td>
                          <td>
                             <div class="btn-group">
-                                <a class="btn btn-outline-warning" href="{% url 'sms:edit_water_network' house.id %}"><i class="fa fa-lg fa-edit"></i>Edit</a>
+                                <a class="btn btn-outline-warning" href="{% url 'sms:edit_teule_house' house.id %}"><i class="fa fa-lg fa-edit"></i>Edit</a>
                                 <button class="btn btn-outline-danger" style="margin-left: 2px"  onclick="confirm({{ network.id }})"><i class="fa fa-lg fa-trash"></i>Delete</button>
                             </div>
                             </td>
