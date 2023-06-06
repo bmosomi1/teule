@@ -1791,10 +1791,11 @@ def create_teule_client(request):
 
         )
         
-        messages.success(request, 'Water Client Added Successfully')
-        return redirect('sms:water_clients')
+        messages.success(request, 'Tenant Added Successfully')
+        return redirect('sms:teule_clients')
     context = {
-        'houses': TeuleHouses.objects.filter().order_by('house_number')
+        
+        'houses': TeuleHouses.objects.all()
     }
     return render(request, 'sms/add_teule_client.html', context)
 
