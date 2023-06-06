@@ -1704,6 +1704,26 @@ def customer_contacts(request):
         }
         return render(request, 'sms/contacts.html', context)
 
+def teule_flats(request):
+    customer = Customer.objects.filter(id=request.user.id).first()
+    if customer is not None:
+        networks = WaterNetwork.objects.all()
+
+        context = {
+
+            'networks': networks
+        }
+        return render(request, 'sms/courts.html', context)
+    else:
+        customer = CustomerSubAccounts.objects.filter(user_ptr_id=request.user.id).first().owner
+        groups = Group.objects.filter(customer=customer.id)
+
+        context = {
+            'customer': customer,
+            'groups': groups
+        }
+        return render(request, 'sms/contacts.html', context)
+
 def water_courts(request):
     customer = Customer.objects.filter(id=request.user.id).first()
     if customer is not None:

@@ -235,6 +235,85 @@ class Group(models.Model):
     class Meta:
         verbose_name = 'Group'
         verbose_name_plural = 'Groups'
+class TeuleFlats(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    name = models.CharField(max_length=250)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    number_of_units = models.IntegerField(default=0, null=True)
+    location = models.FloatField( default=100,null=True)
+    ocupied_units = models.IntegerField(default=0, null=True)
+    reading = models.FloatField(max_length=250, default=0,null=True)
+    read_date = models.DateTimeField(auto_now_add=True, blank=True)
+
+    class Meta:
+        verbose_name = 'Flat'
+        verbose_name_plural = 'Flats'
+
+
+class TeuleClients(models.Model):
+    
+    names = models.CharField(max_length=250)
+    msisdn = models.CharField(max_length=250)
+    msisdn2 = models.CharField(max_length=250,null=True)
+    house_number = models.CharField(max_length=250, null=True)
+    client_number = models.CharField(max_length=250)
+    id_num = models.CharField(max_length=250, null=True)
+    flat_name = models.CharField(max_length=250, null=True)
+    customer_rate = models.FloatField( default=0,null=True)
+    standing_charge = models.FloatField( default=0,null=True)
+    deposit_paid = models.FloatField( default=0,null=True)
+    monthly_rent = models.FloatField( default=0,null=True)
+    balance_brought_forward = models.FloatField( default=0,null=True)
+    last_meter_reading_date = models.DateTimeField(auto_now_add=True,null=True)
+    last_fine_date = models.DateTimeField(auto_now_add=True,null=True)
+    email_address = models.EmailField(max_length=250, null=True)
+    gender = models.CharField(max_length=250, null=True)
+    vacated = models.CharField(max_length=250, null=True)
+    last_meter_reading = models.FloatField(max_length=250, default=0,null=True)
+    total_arrears = models.FloatField(max_length=250, default=0,null=True)
+    units_consumed = models.FloatField(max_length=250, default=0,null=True)
+    last_payment_date = models.DateTimeField(auto_now_add=True,null=True)
+    vacate_date = models.DateTimeField(auto_now_add=True,null=True)
+    connection_fee_paid = models.FloatField(max_length=250, default=0,null=True)
+    message = models.IntegerField(max_length=250, default=0, null=True)
+    processed = models.IntegerField(max_length=250, default=0, null=True)
+    amount_0= models.FloatField( default=0,null=True)
+    amount_1 = models.FloatField(default=0, null=True)
+    amount_2 = models.FloatField(default=0, null=True)
+    amount_3 = models.FloatField(default=0, null=True)
+    amount_4 = models.FloatField(default=0, null=True)
+    amount_5 = models.FloatField(default=0, null=True)
+    amount_6 = models.FloatField(default=0, null=True)
+    main_account = models.IntegerField(default=0, null=True)
+    ismain_account = models.IntegerField(default=0, null=True)
+    provided_account = models.CharField(max_length=250,null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Water'
+        verbose_name_plural = 'Waters'
+
+
+class TeuleHouses(models.Model):
+    flat = models.ForeignKey(TeuleFlats, on_delete=models.CASCADE)
+    house_type = models.CharField(max_length=250)
+    house_number = models.CharField(max_length=250)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    monthly_rent = models.FloatField(max_length=250, default=0,null=True)
+    deposit = models.FloatField(max_length=250, default=0,null=True)
+    rent_arrears = models.FloatField(max_length=250, default=0,null=True)
+    floor = models.IntegerField(default=0, null=True)
+    care_taker = models.FloatField( default=100,null=True)
+    occupied_by = models.ForeignKey(TeuleClients, blank=True, null=True)
+    occupied_status = models.CharField(max_length=250, default='NO', null=True)
+    reading = models.FloatField(max_length=250, default=0,null=True)
+    read_date = models.DateTimeField(auto_now_add=True, blank=True)
+
+    class Meta:
+        verbose_name = 'Flat'
+        verbose_name_plural = 'Flats'
 
 class WaterNetwork(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
