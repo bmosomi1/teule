@@ -1768,7 +1768,7 @@ def create_teule_client(request):
             msisdn2=phone_number2,
             client_number=customer_number,
             id_num=request.POST['id_num'],
-            
+            house_number=request.POST['house_number'],
             email_address=request.POST['email_address'],
             
 
@@ -1777,7 +1777,7 @@ def create_teule_client(request):
         dear = "Dear "
         your = ", Your  account is "
         account_num = str(new_cn_int)
-        ensure = ". ensure that you put the paybill 4047479 and  account number "
+        ensure = ". ensure that you put the paybill 11111 and  account number "
         paying = " when paying for water bill.  Help line 0712730611"
         client_message = dear + client_name + your + account_num + ensure + account_num + paying
 
@@ -1796,7 +1796,7 @@ def create_teule_client(request):
     context = {
         'courts': WaterCourt.objects.filter().order_by('name')
     }
-    return render(request, 'sms/add_water_client.html', context)
+    return render(request, 'sms/add_teule_client.html', context)
 
 
 def teule_flats(request):
