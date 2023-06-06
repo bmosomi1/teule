@@ -1794,7 +1794,7 @@ def create_teule_client(request):
         messages.success(request, 'Water Client Added Successfully')
         return redirect('sms:water_clients')
     context = {
-        'courts': WaterCourt.objects.filter().order_by('name')
+        'houses': TeuleHouses.objects.filter().order_by('house_number')
     }
     return render(request, 'sms/add_teule_client.html', context)
 
