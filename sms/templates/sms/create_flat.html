@@ -28,8 +28,8 @@
                   {% csrf_token %}
                   <div class="form-group">
                     <label>Caretaker Name</label>
-                    <select name="caretaker" class="form-control" id="caretaker" required>
-                        <option value="">Select a flat</option>
+                    <select name="caretaker_id" class="form-control" id="caretaker" required>
+                        <option value="">Select caretaker</option>
                         {% for caretaker in caretakers %}
                             <option value="{{ caretaker.id }}">{{ caretaker.name }} </option>
                         {% endfor %}
