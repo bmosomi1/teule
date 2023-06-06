@@ -1743,6 +1743,49 @@ def teule_houses(request):
             'groups': groups
         }
         return render(request, 'sms/contacts.html', context)
+def teule_caretakers(request):
+    customer = Customer.objects.filter(id=request.user.id).first()
+    if customer is not None:
+        readers = Caretaker.objects.all()
+
+        context = {
+
+            'caretakers': caretakers
+        }
+        return render(request, 'sms/caretakers.html', context)
+    else:
+        customer = CustomerSubAccounts.objects.filter(user_ptr_id=request.user.id).first().owner
+        groups = Group.objects.filter(customer=customer.id)
+
+        context = {
+            'customer': customer,
+            'groups': groups
+        }
+        return render(request, 'sms/contacts.html', context)
+def add_caretaker(request):
+    customer = Customer.objects.filter(id=request.user.id).first()
+    if customer is not None:
+        if request.method == "POST":
+            phone_numbers=request.POST['phone_number']
+            Caretaker.objects.create(
+                customer=customer,
+                name=request.POST['name'],
+                phone_number = f"{0}{phone_numbers.replace(' ', '')[-9:]}",
+                comment=request.POST['comment']
+            )
+            return redirect('sms:teule_caretakers')
+        return render(request, 'sms/create_caretaker.html')
+    else:
+        customer = CustomerSubAccounts.objects.filter(id=request.user.id).first().owner
+        if request.method == "POST":
+            Group.objects.create(
+                customer_id=customer,
+                name=request.POST['name'],
+                standing_charge=request.POST['phone_number'],
+                rate=request.POST['comment']
+            )
+            return redirect('sms:meter_readers')
+        return render(request, 'group/create_reader.html')
 
 def create_teule_flat(request):
     flats = TeuleFlats.objects.all()
