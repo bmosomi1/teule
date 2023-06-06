@@ -235,8 +235,22 @@ class Group(models.Model):
     class Meta:
         verbose_name = 'Group'
         verbose_name_plural = 'Groups'
+
+class Caretaker(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    name = models.CharField(max_length=250)
+    phone_number = models.CharField(max_length=250)
+    id_number = models.CharField(max_length=250)
+    monthly_salary = models.FloatField(default=0,null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'Group'
+        verbose_name_plural = 'Groups'
 class TeuleFlats(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    caretaker = models.ForeignKey(Caretaker, on_delete=models.CASCADE)
     name = models.CharField(max_length=250)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
