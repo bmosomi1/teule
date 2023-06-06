@@ -24,7 +24,7 @@
           <div class="tile">
             <h3 class="tile-title">Add House</h3>
             <div class="tile-body">
-              <form action="{% url 'sms:create_teule_houses' %}" method="post">
+              <form action="{% url 'sms:create_teule_house' %}" method="post">
                   {% csrf_token %}
                   <div class="form-group">
                     <label>Flat Name</label>
