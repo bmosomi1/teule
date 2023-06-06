@@ -310,7 +310,7 @@ class TeuleClients(models.Model):
 
 
 class TeuleHouses(models.Model):
-    flat = models.ForeignKey(TeuleFlats, on_delete=models.CASCADE)
+    flat = models.ForeignKey(TeuleFlat, on_delete=models.CASCADE)
     house_type = models.CharField(max_length=250)
     house_number = models.CharField(max_length=250)
     created_at = models.DateTimeField(auto_now_add=True)
