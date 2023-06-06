@@ -1713,6 +1713,10 @@ def teule_clients(request):
 
 def create_teule_client(request):
     if request.method == 'POST':
+        house_number=request.POST['house_number']
+        teule_house = TeuleHouses.objects.filter(house_number=house_number).first()
+        teule_house.occupied_status='OCCUPIED'
+        teule_house.save()
         customer_number = ''
         last_client = TeuleClients.objects.all().order_by('id').last()
         #last_client = '1'
@@ -1734,6 +1738,7 @@ def create_teule_client(request):
             phones2 = request.POST['msisdn2']
             phone_number = f"{0}{phones.replace(' ', '')[-9:]}"
             phone_number2 = f"{0}{phones2.replace(' ', '')[-9:]}"
+            
             TeuleClients.objects.update_or_create(
                 names=request.POST['names'],
                 msisdn=phone_number,
