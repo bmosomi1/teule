@@ -1747,11 +1747,11 @@ def teule_houses(request):
 def create_teule_flat(request):
     flats = TeuleFlats.objects.all()
     if request.method == 'POST':
-        flat_id=request.POST['flat_id'],
-        flat = TeuleFlats.objects.filter(id=flat_id).first()
+        caretaker_id=request.POST['caretaker_id'],
+        caretaker = Caretaker.objects.filter(id=caretaker_id).first()
         #phone_number = f"{254}{request.POST['phone_number'].replace(' ', '')[-9:]}"
-        TeuleHouses.objects.create(
-            flat=flat,
+        TeuleFlats.objects.create(
+            caretaker=caretaker,
             house_number=request.POST['house_number'],
             monthly_rent=request.POST['monthly_rent'],
             deposit=request.POST['deposit'],
