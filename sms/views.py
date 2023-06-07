@@ -2875,12 +2875,12 @@ def add_meter_readings(request):
         rate=sys_configs.rate
         waterclient = TeuleClients.objects.get(house_number='A14')
         
-        msisdn = q.msisdn
-        id_num = q.id_num
-        amount_due = q.amount_due
-        amount_0 = q.amount_0
-        amount_1 = q.amount_1
-        amount_2 = q.amount_2
+        msisdn = waterclient.msisdn
+        id_num = waterclient.id_num
+        amount_due = waterclient.amount_due
+        amount_0 = waterclient.amount_0
+        amount_1 = waterclient.amount_1
+        amount_2 = waterclient.amount_2
 
         last_meter_reading = q.last_meter_reading
         units_consumed=float(readings)-float(last_meter_reading)
