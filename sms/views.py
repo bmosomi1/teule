@@ -2873,7 +2873,7 @@ def add_meter_readings(request):
         sys_configs = WaterSysConf.objects.filter().first()
         standing_charge=sys_configs.standing_charge
         rate=sys_configs.rate
-        waterclient = TeuleClients.objects.get(house_number=house_number)
+        waterclient = TeuleClients.objects.get(house_number='A14')
         names = q[0].names
         the_ids = q[0].id
         msisdn = q[0].msisdn
