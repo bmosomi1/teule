@@ -1703,6 +1703,86 @@ def customer_contacts(request):
             'groups': groups
         }
         return render(request, 'sms/contacts.html', context)
+
+
+
+@login_required()
+@is_user_customer
+def teule_home(request):
+    customer = Customer.objects.filter(user_ptr_id=request.user.id).first()
+    if customer is None:
+        customer = CustomerSubAccounts.objects.filter(user_ptr_id=request.user.id).first().owner
+        #weeks = get_last_n_weeks(12)
+        months = get_last_n_months(10)
+        one_month_ago = datetime.datetime.today() - datetime.timedelta(days=30)
+        current_day = datetime.datetime.today()
+        this_month = current_day.month
+        monthly_all_consumptions = []
+        
+        for month in months:
+            # print(week)
+            monthly_units = WaterMeterReadings.objects.filter(read_date__month=this_month).aggregate(total=Sum('units_consumed'))['total'] or 0
+               
+            messages = WaterMeterReadings.objects.filter(read_date__gte=one_month_ago, read_date__lte=current_day).count()
+            monthly_all_consumptions.append(monthly_units)
+            monthss.append(this_month)
+            #monthly_consumptions.append(this_month)
+            current_day = current_day - datetime.timedelta(days=30)
+            this_month = current_day.month
+            one_month_ago = one_month_ago - datetime.timedelta(days=30)
+            current_month = current_month - datetime.timedelta(days=30)
+        # print(credit_usage)
+        context = {
+            'messages_sent': monthly_all_consumptions[::-1],
+            #'weeks': weeks[::-1],
+            'months': monthss[::-1],
+            'customer': customer,
+            'contacts': Contact.objects.filter(group__customer_id=customer.id).count(),
+            'water_clients': WaterClientAll.objects.filter().count(),
+            'groups': Group.objects.filter(customer_id=customer.id).count(),
+            'admins': CustomerSubAccounts.objects.filter(owner=customer.id).count()+1
+        }
+        return render(request, 'sms/water_apps.html', context)
+    else:
+        months = get_last_n_monther(10)
+        weeks = get_last_n_weeks(20)
+        one_month_ago = datetime.datetime.today() - datetime.timedelta(days=30)
+        current_day = datetime.datetime.today()
+        this_month = current_day.month
+        monthly_all_consumptions = []
+        monthss=[]
+        for month in months:
+            #print(month)
+            #ModelName.objects.aggregate(Sum('field_name'))
+            consumed_units = WaterMeterReadings.objects.filter(read_date__month=this_month).aggregate(total=Sum('units_consumed'))['total'] or 0
+               
+            messages = WaterMeterReadings.objects.filter(read_date__gte=one_month_ago, read_date__lte=current_day).count()
+            monthly_all_consumptions.append(consumed_units)
+            monthss.append(this_month)
+            #monthly_consumptions.append(this_month)
+            current_day = current_day - datetime.timedelta(days=30)
+            this_month = current_day.month
+            one_month_ago = one_month_ago - datetime.timedelta(days=30)
+            
+       
+        context = {
+            'messages_sent': monthly_all_consumptions[::-1],
+            'months': monthss[::-1],
+            'customer': customer,
+            'contacts': Contact.objects.filter(group__customer_id=customer.id).count(),
+            'water_clients': WaterClientAll.objects.filter().count(),
+            'groups': Group.objects.filter(customer_id=customer.id).count(),
+            'courts': WaterCourt.objects.filter().count(),
+            'readings': WaterMeterReadings.objects.filter().count(),
+            'outbox': WaterMeterReadings.objects.filter().count(),
+            'unallocated_payments': MiwamaMpesa.objects.filter(processed=3).count(),
+            'unallocated_amount': int(MiwamaMpesa.objects.filter(processed=3).aggregate(total=Sum('amount'))['total'] or 0),
+            'admins': CustomerSubAccounts.objects.filter(owner=customer.id).count() + 1
+        }
+        return render(request, 'sms/water_apps.html', context)
+
+
+
 def teule_clients(request):
     clients = TeuleClients.objects.all().order_by('-id').values()
     context = {

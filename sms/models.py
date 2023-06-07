@@ -331,6 +331,76 @@ class TeuleHouses(models.Model):
         verbose_name = 'Flat'
         verbose_name_plural = 'Flats'
 
+class TeuleMeterReadingSmsRaw(models.Model):
+    names = models.CharField(max_length=250)
+    msisdn = models.CharField(max_length=250)    
+    account_number = models.ForeignKey(TeuleClients, on_delete=models.CASCADE)
+    id_num = models.CharField(max_length=250, null=True)
+    meter_num = models.CharField(max_length=250, null=True)
+    customer_rate = models.CharField(max_length=250, null=True)
+    reading_type = models.CharField(max_length=250, null=True)
+    read_by = models.CharField(max_length=250, null=True)
+    last_meter_reading_date = models.CharField(max_length=250, null=True)
+    comment = models.EmailField(max_length=250, null=True)
+    court = models.CharField(max_length=250, null=True)
+    network = models.CharField(max_length=250, null=True)
+    previous_reading = models.FloatField(max_length=250, default=0,null=True)
+    rate = models.FloatField(max_length=250, default=0,null=True)
+    standing_charge = models.FloatField(max_length=250, default=0,null=True)
+    water_levy = models.FloatField(max_length=250, default=0,null=True)
+    readings = models.FloatField(max_length=250, default=0, null=True)
+    amount_from_units = models.FloatField(max_length=250, default=0, null=True)
+    credit = models.FloatField(max_length=250, default=0, null=True)
+    arrears = models.FloatField(max_length=250, default=0, null=True)
+    amount_due = models.FloatField(max_length=250, default=0,null=True)
+    payable = models.FloatField(max_length=250, default=0, null=True)
+    confirmed = models.IntegerField(max_length=250, default=0, null=True)
+    processed = models.IntegerField(max_length=250, default=0, null=True)
+    message = models.IntegerField(max_length=250, default=0, null=True)
+    units_consumed = models.FloatField(max_length=250, default=0,null=True)
+    last_payment_date = models.CharField(max_length=250, null=True)
+    meter_change_date = models.CharField(max_length=250, null=True)
+    connection_fee_paid = models.FloatField(max_length=250, default=0,null=True)
+    read_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'teule_meterreading'
+        verbose_name_plural = 'teule_meterreadings'
+
+
+class TeuleStatement(models.Model):
+    narration = models.CharField(max_length=250)
+    account_number = models.ForeignKey(TeuleClients, on_delete=models.CASCADE)
+    account_name = models.CharField(max_length=250, null=True, default=0)
+    debit = models.FloatField(max_length=250, null=True, default=0)
+    credits = models.FloatField(max_length=250, null=True, default=0)
+    balance = models.FloatField(max_length=250, null=True, default=0)
+    units = models.FloatField(max_length=250, null=True, default=0)
+    processed = models.IntegerField(max_length=250, null=True)
+    comments = models.FloatField(max_length=250, null=True)
+    curr_reading = models.FloatField(max_length=250, null=True)
+    prev_reading = models.CharField(max_length=250, null=True)
+    statement_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'teule_statement'
+        verbose_name_plural = 'teule_statements'
+
+class TeuleBillSent(models.Model):
+    text_message = models.CharField(max_length=250)
+    dest_msisdn = models.CharField(max_length=250)
+    account_name = models.CharField(max_length=250, null=True, default=0)
+    account_number = models.CharField(max_length=250)
+    processed = models.IntegerField(max_length=250, null=True)
+    units_consumed = models.FloatField(max_length=250, null=True)
+    curr_reading = models.FloatField(max_length=250, null=True)
+    prev_reading = models.CharField(max_length=250, null=True)
+    read_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'water_bill_sent'
+        verbose_name_plural = 'water_bill_sents'
+
 class WaterNetwork(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     name = models.CharField(max_length=250)
