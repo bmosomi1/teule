@@ -2891,7 +2891,7 @@ def add_meter_readings(request):
 
 
             TeuleMeterReadings.objects.create(
-                account_number=waterclient,
+                account_number=teule_house,
                 msisdn=msisdn,                
                 previous_reading=last_meter_reading,
                 readings=readings,
