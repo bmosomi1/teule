@@ -1876,7 +1876,7 @@ def teule_client_dashboard(request,client_id):
             'client_id': customer.id,
             'amount_due': customer.amount_due,
             'client_name': customer.names,
-            'client_court': customer.court,
+            'client_court': customer.flat_name,
             'customer': customer,
             'contacts': Contact.objects.filter(group__customer_id=customer.id).count(),
             'water_clients': TeuleClients.objects.filter().count(),
