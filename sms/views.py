@@ -2903,7 +2903,8 @@ def add_meter_readings(request):
 
             )
 
-            waterclient.units_consumed = units_consumed
+            teule_house.units_consumed = units_consumed
+            teule_house.save()
             waterclient.last_meter_reading = readings
             waterclient.amount_0=amount_from_units
             waterclient.amount_1 = amount_0
