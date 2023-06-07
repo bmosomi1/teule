@@ -2877,6 +2877,7 @@ def add_meter_readings(request):
         teule_house = TeuleHouses.objects.get(house_number='A14')
         
         msisdn = waterclient.msisdn
+        names = waterclient.names
         id_num = waterclient.id_num
         amount_due = waterclient.amount_due
         amount_0 = waterclient.amount_0
@@ -2913,7 +2914,7 @@ def add_meter_readings(request):
 
             waterclient.save()
 
-            messages.success(request,  names)
+            messages.success(request,  msisdn)
             return redirect('sms:meter_readings')
         else:
             print("Invalid readings")
