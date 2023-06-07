@@ -1806,6 +1806,96 @@ def create_teule_client(request):
     return render(request, 'sms/add_teule_client.html', context)
 
 
+
+@login_required()
+@is_user_customer
+def teule_client_dashboard(request,client_id):
+    #customer = Customer.objects.filter(user_ptr_id=request.user.id).first()
+    customer = TeuleClients.objects.get(id=client_id)
+    if customer is None:
+        customer = Teule.objects.get(id=client_id)
+        weeks = get_last_n_weeks(12)
+        months = get_last_n_months(12)
+        one_month_ago = datetime.datetime.today() - datetime.timedelta(days=30)
+        current_day = datetime.datetime.today()
+        credit_usage = []
+        for month in months:
+            # print(week)
+            messages = WaterMeterReadings.objects.filter(account_number=client_id,read_date__gte=one_month_ago, read_date__lte=current_day).count()
+            credit_usage.append(messages)
+            current_day = current_day - datetime.timedelta(days=7)
+            one_month_ago = one_month_ago - datetime.timedelta(days=30)
+        # print(credit_usage)
+        context = {
+            'messages_sent': credit_usage[::-1],
+            'weeks': weeks[::-1],
+            'months': months[::-1],
+            'customer': customer,
+            'contacts': Contact.objects.filter(group__customer_id=customer.id).count(),
+            'water_clients': TeuleClients.objects.filter().count(),
+            'phone_number': customer.msisdn,
+            'groups': Group.objects.filter(customer_id=customer.id).count(),
+            'admins': CustomerSubAccounts.objects.filter(owner=customer.id).count()+1
+        }
+        return render(request, 'sms/client_apps.html', context)
+    else:
+        months = get_last_n_months(10)
+        payments = WaterPaymentReceived.objects.filter(account_number=client_id)
+        
+        weeks = get_last_n_weeks(10)
+        one_month_ago = datetime.datetime.today() - datetime.timedelta(days=30)
+        current_day = datetime.datetime.today()
+        current_month = datetime.datetime.today()
+        this_month = current_day.month
+        
+        the_sub_months=[]
+        #the_sub_months=[2,1,12,11,10,9,8,7,6,5,4]
+        #monthly_consumptions = [0, 10, 0, 5, 0, 0, 0, 0, 0, 0, 0, 15]
+        monthly_consumptions = []
+        for month in months:
+        
+    
+            units_consumed_this = int(WaterMeterReadings.objects.filter(account_number=client_id,read_date__month=this_month).aggregate(total=Sum('units_consumed'))['total'] or 0)
+            
+            monthly_consumptions.append(units_consumed_this)
+            the_sub_months.append(this_month)
+            
+            current_day = current_day - datetime.timedelta(days=30)
+            this_month = current_day.month
+            
+            one_month_ago = one_month_ago - datetime.timedelta(days=30)
+            current_month = current_month - datetime.timedelta(days=30)
+       # del the_sub_months[0]
+          
+        context = {
+            'monthly_readings': monthly_consumptions[::-1],
+            'weeks': weeks[::-1],
+            'payments': payments,
+            'months': the_sub_months[::-1],
+            'phone_number': customer.msisdn,
+            'client_id': customer.id,
+            'amount_due': customer.amount_due,
+            'client_name': customer.names,
+            'client_court': customer.court,
+            'customer': customer,
+            'contacts': Contact.objects.filter(group__customer_id=customer.id).count(),
+            'water_clients': TeuleClients.objects.filter().count(),
+            'groups': Group.objects.filter(customer_id=customer.id).count(),
+            'courts': WaterCourt.objects.filter().count(),
+            'readings': customer.last_meter_reading,
+            'last_date': customer.last_meter_reading_date,
+            
+            'outbox': WaterMeterReadings.objects.filter().count(),
+            'unallocated_payments': MiwamaMpesa.objects.filter(processed=2).count(),
+            'admins': CustomerSubAccounts.objects.filter(owner=customer.id).count() + 1
+        }
+        return render(request, 'sms/client_apps.html', context)
+
+
+
+
+
+
 def teule_flats(request):
     customer = Customer.objects.filter(id=request.user.id).first()
     if customer is not None:

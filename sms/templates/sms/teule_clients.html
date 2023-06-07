@@ -40,7 +40,7 @@
                 <tbody>
                 {% for client in clients %}
                 <tr>
-                    <td><a href="{% url 'sms:client_dashboard' client.id %}">{{ client.names }}</a></td>
+                    <td><a href="{% url 'sms:teule_client_dashboard' client.id %}">{{ client.names }}</a></td>
                     
                     <td>{{ client.msisdn }}</td>
                     
