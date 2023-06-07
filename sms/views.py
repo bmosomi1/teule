@@ -1893,6 +1893,67 @@ def teule_client_dashboard(request,client_id):
 
 
 
+def edit_teule_client(request, client_id):
+    client = TeuleClients.objects.get(id=client_id)
+    amount_due1 = client.amount_due
+    readings1 = client.last_meter_reading
+    #WaterMeterReadings.objects.all().delete()
+    #WaterPaymentReceived.objects.all().delete()
+    #WaterPaymentReceivedManual.objects.all().delete()
+    #WaterOutbox.objects.all().delete()
+    #WaterMeterReplacement.objects.all().delete()
+    #WaterPaymentReallocate.objects.all().delete()
+    #WaterNetwork.objects.all().delete()
+    #WaterCourt.objects.all().delete()
+    #WaterClientAll.objects.all().delete()
+    #MiwamaMpesa.objects.all().delete()
+
+    if request.method == 'POST':
+        client.names = request.POST['names']
+        #client.msisdn = request.POST['msisdn']
+        phones = request.POST['msisdn']
+        phones2 = request.POST['msisdn2']
+        new_balance = int(float(request.POST['amount_due']))
+        phone_number = f"{0}{phones.replace(' ', '')[-9:]}"
+        phone_number2 = f"{0}{phones2.replace(' ', '')[-9:]}"
+        client.msisdn = phone_number
+        client.msisdn2 = phone_number2
+        #client.court = request.POST['court']
+        client.email_address = request.POST['email_address']
+        client.last_meter_reading = float(request.POST['last_meter_reading'])
+        #client.customer_rate = int(float(request.POST['customer_rate']))
+        #client.standing_charge = int(float(request.POST['standing_charge']))
+        client.amount_due = int(float(request.POST['amount_due']))
+        client.save()
+        if amount_due1 != client.amount_due:
+            if amount_due1>client.amount_due:
+                credit=amount_due1-client.amount_due
+                debit=0
+            else:
+                           
+                debit=client.amount_due-amount_due1
+                credit=0
+            WaterStatement.objects.create(
+            account_number=client,
+            narration='System update via client edit',
+            debit=debit,
+            curr_reading=request.POST['last_meter_reading'],
+            prev_reading=readings1,
+            credits = credit,
+            balance = request.POST['amount_due']
+
+
+        )
+
+        #WaterNetwork.delete(self)
+        #messages.success(request, request.POST['email_address'])
+        messages.success(request,new_balance)
+        return redirect('sms:teule_clients')
+    context = {
+        'client': client
+    }
+    return render(request, 'sms/edit_teule_client.html', context)
+
 
 
 
