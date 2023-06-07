@@ -1778,7 +1778,7 @@ def teule_home(request):
             'readings': TeuleMeterReadings.objects.filter().count(),
             'outbox': TeuleMeterReadings.objects.filter().count(),
             'unallocated_payments': MiwamaMpesa.objects.filter(processed=3).count(),
-            'uncollected_rent': int(TeuleFlat.objects.filter(amount_due>0).aggregate(total=Sum('amount_due'))['total'] or 0),
+            'uncollected_rent': int(TeuleHouses.objects.filter(amount_due>0).aggregate(total=Sum('amount_due'))['total'] or 0),
             'unallocated_amount': int(MiwamaMpesa.objects.filter(processed=3).aggregate(total=Sum('amount'))['total'] or 0),
             'admins': CustomerSubAccounts.objects.filter(owner=customer.id).count() + 1
         }
