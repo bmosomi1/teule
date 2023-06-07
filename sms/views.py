@@ -2473,7 +2473,7 @@ def edit_sys_config(request, client_id):
 
 def meter_readings(request):
     #meter_readings = WaterMeterReadings.objects.all()
-    meter_readings = WaterMeterReadings.objects.all().order_by('-read_date')[:600]
+    meter_readings = TeuleMeterReadings.objects.all().order_by('-read_date')[:600]
     #meter_readingss = WaterMeterReadings.objects.all().delete()
 
     context = {
@@ -2866,14 +2866,14 @@ def add_meter_readings(request):
 
     if request.method == 'POST':
         readings = float(request.POST['readings'])
-        account_num = request.POST['client']
+        house_number = request.POST['house_number']
 
 
-        q = WaterClientAll.objects.filter(id=account_num)
+        q = TeuleClients.objects.filter(house_number=house_number)
         sys_configs = WaterSysConf.objects.filter().first()
         standing_charge=sys_configs.standing_charge
         rate=sys_configs.rate
-        waterclient = WaterClientAll.objects.get(id=account_num)
+        waterclient = TeuleClients.objects.get(house_number=house_number)
         names = q[0].names
         the_ids = q[0].id
         msisdn = q[0].msisdn
@@ -2890,13 +2890,12 @@ def add_meter_readings(request):
 
 
 
-            WaterMeterReadings.objects.create(
-                names=names,
-                msisdn=msisdn,
+            TeuleMeterReadings.objects.create(
                 account_number=waterclient,
+                msisdn=msisdn,                
                 previous_reading=last_meter_reading,
                 readings=readings,
-                id_num=id_num,
+                
                 reading_type="System Input",
                 units_consumed=units_consumed
 
