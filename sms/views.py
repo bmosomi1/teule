@@ -1721,9 +1721,9 @@ def teule_home(request):
         
         for month in months:
             # print(week)
-            monthly_units = TeuleMeterReadingSmsRaw.objects.filter(read_date__month=this_month).aggregate(total=Sum('units_consumed'))['total'] or 0
+            monthly_units = TeuleMeterReadings.objects.filter(read_date__month=this_month).aggregate(total=Sum('units_consumed'))['total'] or 0
                
-            messages = WaterMeterReadings.objects.filter(read_date__gte=one_month_ago, read_date__lte=current_day).count()
+            messages = TeuleMeterReadings.objects.filter(read_date__gte=one_month_ago, read_date__lte=current_day).count()
             monthly_all_consumptions.append(monthly_units)
             monthss.append(this_month)
             #monthly_consumptions.append(this_month)
@@ -1738,11 +1738,11 @@ def teule_home(request):
             'months': monthss[::-1],
             'customer': customer,
             'contacts': Contact.objects.filter(group__customer_id=customer.id).count(),
-            'water_clients': WaterClientAll.objects.filter().count(),
+            'water_clients': TeuleClients.objects.filter().count(),
             'groups': Group.objects.filter(customer_id=customer.id).count(),
             'admins': CustomerSubAccounts.objects.filter(owner=customer.id).count()+1
         }
-        return render(request, 'sms/water_apps.html', context)
+        return render(request, 'sms/teule_apps.html', context)
     else:
         months = get_last_n_monther(10)
         weeks = get_last_n_weeks(20)
@@ -1770,11 +1770,11 @@ def teule_home(request):
             'months': monthss[::-1],
             'customer': customer,
             'contacts': Contact.objects.filter(group__customer_id=customer.id).count(),
-            'water_clients': WaterClientAll.objects.filter().count(),
+            'water_clients': TeuleClients.objects.filter().count(),
             'groups': Group.objects.filter(customer_id=customer.id).count(),
             'courts': WaterCourt.objects.filter().count(),
-            'readings': WaterMeterReadings.objects.filter().count(),
-            'outbox': WaterMeterReadings.objects.filter().count(),
+            'readings': TeuleMeterReadings.objects.filter().count(),
+            'outbox': TeuleMeterReadings.objects.filter().count(),
             'unallocated_payments': MiwamaMpesa.objects.filter(processed=3).count(),
             'unallocated_amount': int(MiwamaMpesa.objects.filter(processed=3).aggregate(total=Sum('amount'))['total'] or 0),
             'admins': CustomerSubAccounts.objects.filter(owner=customer.id).count() + 1

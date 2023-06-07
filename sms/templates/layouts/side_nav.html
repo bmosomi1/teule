@@ -3,6 +3,7 @@
 <div hidden>
     {% url 'sms:apps' as apps %}
     {% url 'sms:water_apps' as water_apps %}
+    {% url 'sms:teule_home' as teule_home %}
     {% url 'sms:main_meter' as main_meter %}
   #  {% url 'sms:comprehensive_reports' as reports %}
     {% url 'sms:customer_credit' as credit %}
@@ -97,10 +98,10 @@
             </li>
         {% else %}
             <li>
-                <a {% if request.path == water_apps %} class="app-menu__item active"
+                <a {% if request.path == teule_home %} class="app-menu__item active"
                 {% else %}
                                                  class="app-menu__item"
-                {% endif %} href="{{ water_apps }}">
+                {% endif %} href="{{ teule_home }}">
                     <i class="app-menu__icon fa fa-dashboard"></i>
                     <span class="app-menu__label">Dashboard</span></a>
             </li>
