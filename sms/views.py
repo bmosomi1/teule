@@ -1813,7 +1813,7 @@ def teule_client_dashboard(request,client_id):
     #customer = Customer.objects.filter(user_ptr_id=request.user.id).first()
     customer = TeuleClients.objects.get(id=client_id)
     if customer is None:
-        customer = Teule.objects.get(id=client_id)
+        customer = TeuleClients.objects.get(id=client_id)
         weeks = get_last_n_weeks(12)
         months = get_last_n_months(12)
         one_month_ago = datetime.datetime.today() - datetime.timedelta(days=30)
@@ -1837,7 +1837,7 @@ def teule_client_dashboard(request,client_id):
             'groups': Group.objects.filter(customer_id=customer.id).count(),
             'admins': CustomerSubAccounts.objects.filter(owner=customer.id).count()+1
         }
-        return render(request, 'sms/client_apps.html', context)
+        return render(request, 'sms/teule_client_apps.html', context)
     else:
         months = get_last_n_months(10)
         payments = WaterPaymentReceived.objects.filter(account_number=client_id)
@@ -1889,7 +1889,7 @@ def teule_client_dashboard(request,client_id):
             'unallocated_payments': MiwamaMpesa.objects.filter(processed=2).count(),
             'admins': CustomerSubAccounts.objects.filter(owner=customer.id).count() + 1
         }
-        return render(request, 'sms/client_apps.html', context)
+        return render(request, 'sms/teule_client_apps.html', context)
 
 
 
