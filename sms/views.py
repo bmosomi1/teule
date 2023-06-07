@@ -1850,7 +1850,7 @@ def edit_teule_house(request, house_id):
     house = TeuleHouses.objects.get(id=house_id)
     if request.method == 'POST':
         house.monthly_rent = request.POST['monthly_rent']
-        house.standing_charge = request.POST['deposit']
+        house.deposit = request.POST['deposit']
         house.amount_due = request.POST['amount_due']
         
         house.save()
