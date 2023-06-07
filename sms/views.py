@@ -1954,6 +1954,36 @@ def edit_teule_house(request, house_id):
         'house': house
     }
     return render(request, 'sms/edit_teule_house.html', context)
+
+def vacate_house(request, client_id):
+    client = TeuleClients.objects.get(id=client_id)
+    vacated_house = client.house_number
+    house = TeuleHouses.objects.get(house_number=vacated_house)
+    client.house_number=null
+    client.house_number='YES'
+    client.vacate_date=datetime.datetime
+    client.save()
+    house.occupied_status='NO'
+    house.occupied_by=null
+    house.save()
+    return redirect('sms:teule_houses')
+
+    if request.method == 'POST':
+        house.monthly_rent = request.POST['monthly_rent']
+        house.deposit = request.POST['deposit']
+        house.amount_due = request.POST['amount_due']
+        
+        house.save()
+        #WaterNetwork.delete(self)
+
+       
+
+        messages.success(request, request.POST['monthly_rent'])
+        return redirect('sms:teule_houses')
+    context = {
+        'house': house
+    }
+    return render(request, 'sms/edit_teule_house.html', context)
 def teule_caretakers(request):
     customer = Customer.objects.filter(id=request.user.id).first()
     if customer is not None:
