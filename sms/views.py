@@ -1960,7 +1960,7 @@ def vacate_house(request, client_id):
     vacated_house = client.house_number
     house = TeuleHouses.objects.get(house_number=vacated_house)
     client.house_number='null'
-    client.house_number='YES'
+    client.vacated='YES'
     client.vacate_date=datetime.datetime.now()
     client.save()
     house.occupied_status='NO'
