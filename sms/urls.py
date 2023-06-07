@@ -21,6 +21,7 @@ urlpatterns = [
    
     path('apps', views.apps, name='apps'),
     path('home', views.teule_home, name='teule_home'),
+    path('home_water', views.water_apps, name='water_apps'),
     path('main/meter', views.main_meter, name='main_meter'),
     path('main/meter/chart', views.main_meterchart, name='main_meterchart'),
     path('client/dashboard/<int:client_id>', views.client_dashboard, name='client_dashboard'),
