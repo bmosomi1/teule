@@ -2874,6 +2874,7 @@ def add_meter_readings(request):
         standing_charge=sys_configs.standing_charge
         rate=sys_configs.rate
         waterclient = TeuleClients.objects.get(house_number='A14')
+        teule_house = TeuleHouses.objects.get(house_number='A14')
         
         msisdn = waterclient.msisdn
         id_num = waterclient.id_num
@@ -2882,7 +2883,7 @@ def add_meter_readings(request):
         amount_1 = waterclient.amount_1
         amount_2 = waterclient.amount_2
 
-        last_meter_reading = q.last_meter_reading
+        last_meter_reading = teule_house.reading
         units_consumed=float(readings)-float(last_meter_reading)
         if units_consumed>0:
             amount_from_units=(units_consumed*rate)+standing_charge
