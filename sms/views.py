@@ -1779,7 +1779,7 @@ def teule_home(request):
             'unallocated_amount': int(MiwamaMpesa.objects.filter(processed=3).aggregate(total=Sum('amount'))['total'] or 0),
             'admins': CustomerSubAccounts.objects.filter(owner=customer.id).count() + 1
         }
-        return render(request, 'sms/water_apps.html', context)
+        return render(request, 'sms/teule_apps.html', context)
 
 
 
