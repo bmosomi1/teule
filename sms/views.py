@@ -1964,7 +1964,7 @@ def vacate_house(request, client_id):
     client.vacate_date=datetime.datetime.now()
     client.save()
     house.occupied_status='NO'
-    house.occupied_by_id='null'
+    house.occupied_by_id=0
     house.save()
     return redirect('sms:teule_houses')
 
