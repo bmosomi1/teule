@@ -2925,7 +2925,7 @@ def add_meter_readings(request):
             return render(request, 'sms/add_meter.html', context)
     else:
 
-        clienter = WaterClientAll.objects.all()
+        clienter = TeuleHouses.objects.all()
         context = {
             'clients': clienter
         }
