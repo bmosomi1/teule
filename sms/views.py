@@ -1959,12 +1959,12 @@ def vacate_house(request, client_id):
     client = TeuleClients.objects.get(id=client_id)
     vacated_house = client.house_number
     house = TeuleHouses.objects.get(house_number=vacated_house)
-    client.house_number=null
+    client.house_number='null'
     client.house_number='YES'
     client.vacate_date=datetime.datetime
     client.save()
     house.occupied_status='NO'
-    house.occupied_by=null
+    house.occupied_by='null'
     house.save()
     return redirect('sms:teule_houses')
 
