@@ -1787,7 +1787,7 @@ def teule_home(request):
 
 
 def teule_clients(request):
-    clients = TeuleClients.objects.filter(vacated='').order_by('-id').values()
+    clients = TeuleClients.objects.filter(~Q(vacated__contains="YES")).order_by('-id').values()
     context = {
         'clients': clients
     }
@@ -1795,6 +1795,7 @@ def teule_clients(request):
 
 
 def teule_vacated_clients(request):
+    
     clients = TeuleClients.objects.filter(vacated='YES').order_by('-id').values()
     context = {
         'clients': clients
