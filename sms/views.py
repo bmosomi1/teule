@@ -1806,9 +1806,7 @@ def teule_vacated_clients(request):
 def create_teule_client(request):
     if request.method == 'POST':
         house_number=request.POST['house_number']
-        teule_house = TeuleHouses.objects.filter(vacated=house_number).first()
-        teule_house.occupied_status='OCCUPIED'
-        teule_house.save()
+        
         customer_number = ''
         last_client = TeuleClients.objects.all().order_by('id').last()
         #last_client = '1'
@@ -1841,6 +1839,31 @@ def create_teule_client(request):
                 email_address=request.POST['email_address'],
                 
                 )
+            teule_client = TeuleClients.objects.all().order_by('id').last()
+            teule_house = TeuleHouses.objects.filter(house_number=house_number).first()
+            teule_house.occupied_status='OCCUPIED'
+            teule_house.occupied_by = teule_client
+            teule_house.save()
+
+            test = "Dear ..... Your  account is....... ensure that you put the paybill 4047479 and  account number......when paying for water bill.  Help line 0712730611"
+            dear = "Dear "
+            your = ", Your  account is "
+            welcome = " Welcome to TEULE house. Your house number is "
+            account_num = str(new_cn_int)
+            house_num = str(house_number)
+            ensure = ". ensure that you put the paybill 4057701 and  account number "
+            paying = " when paying for rent and water bill.  Help line 0722812323"
+            client_message = dear + client_name + welcome + house_number + ensure + house_number + paying
+
+            WaterOutbox.objects.create(
+                dest_msisdn=phone_number,
+                text_message=client_message,
+                user_id=100,
+                client=new_cn_int
+                
+
+
+            )
         else:
             #cn = 'RB-400'
             
@@ -1870,13 +1893,21 @@ def create_teule_client(request):
             
 
         )
+        teule_client = TeuleClients.objects.all().order_by('id').last()
+        teule_house = TeuleHouses.objects.filter(house_number=house_number).first()
+        teule_house.occupied_status='OCCUPIED'
+        teule_house.occupied_by = teule_client
+        teule_house.save()
         test = "Dear ..... Your  account is....... ensure that you put the paybill 4047479 and  account number......when paying for water bill.  Help line 0712730611"
         dear = "Dear "
         your = ", Your  account is "
+        
+        welcome = " Welcome to TEULE house. Your house number is "
         account_num = str(new_cn_int)
-        ensure = ". ensure that you put the paybill 11111 and  account number "
-        paying = " when paying for water bill.  Help line 0712730611"
-        client_message = dear + client_name + your + account_num + ensure + account_num + paying
+        house_num = str(house_number)
+        ensure = ". ensure that you put the paybill 4057701 and  account number "
+        paying = " when paying for rent and water bill.  Help line 0722812323"
+        client_message = dear + client_name + welcome + house_number + ensure + house_number + paying
 
         WaterOutbox.objects.create(
             dest_msisdn=phone_number,

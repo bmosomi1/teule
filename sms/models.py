@@ -284,6 +284,7 @@ class TeuleClients(models.Model):
     email_address = models.EmailField(max_length=250, null=True)
     gender = models.CharField(max_length=250, null=True)
     vacated = models.CharField(max_length=250, null=True)
+    vacated_from = models.CharField(max_length=250, null=True,default=None)
     last_meter_reading = models.FloatField(max_length=250, default=0,null=True)
     total_arrears = models.FloatField(max_length=250, default=0,null=True)
     units_consumed = models.FloatField(max_length=250, default=0,null=True)
