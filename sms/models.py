@@ -331,6 +331,14 @@ class TeuleHouses(models.Model):
     class Meta:
         verbose_name = 'Flat'
         verbose_name_plural = 'Flats'
+class TeuleVacateHistory(models.Model):
+    house = models.ForeignKey(TeuleHouses, on_delete=models.CASCADE)
+    client = models.ForeignKey(TeuleClients, on_delete=models.CASCADE)     
+    vacate_date = models.DateTimeField(auto_now_add=True, blank=True)
+
+    class Meta:
+        verbose_name = 'vacate'
+        verbose_name_plural = 'vacates'
 
 class TeuleMeterReadingSmsRaw(models.Model):
     names = models.CharField(max_length=250)

@@ -2151,24 +2151,14 @@ def vacate_house(request, client_id):
     house.occupied_status='NO'
     house.occupied_by_id=''
     house.save()
+    TeuleVacateHistory.objects.create(
+                client= client,
+                house= house
+                
+            )
     return redirect('sms:teule_houses')
 
-    if request.method == 'POST':
-        house.monthly_rent = request.POST['monthly_rent']
-        house.deposit = request.POST['deposit']
-        house.amount_due = request.POST['amount_due']
-        
-        house.save()
-        #WaterNetwork.delete(self)
-
-       
-
-        messages.success(request, request.POST['monthly_rent'])
-        return redirect('sms:teule_houses')
-    context = {
-        'house': house
-    }
-    return render(request, 'sms/edit_teule_house.html', context)
+  
 def teule_caretakers(request):
     customer = Customer.objects.filter(id=request.user.id).first()
     if customer is not None:
