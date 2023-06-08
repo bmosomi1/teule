@@ -1800,7 +1800,7 @@ def teule_vacated_clients(request):
     context = {
         'clients': clients
     }
-    return render(request, 'sms/teule_clients.html', context)
+    return render(request, 'sms/teule_vacated_clients.html', context)
 
 
 def create_teule_client(request):
