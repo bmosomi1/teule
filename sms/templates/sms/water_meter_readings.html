@@ -37,10 +37,12 @@
                 <thead>
                 <tr>
                     <th>Names</th>
-                    <th>Account Number</th>
+                    <th>Phone</th>
+                    <th>House Number</th>
                     <th>Current Readings</th>
                     <th>Previous Readings</th>
                     <th>Units</th>
+                    <th>Amount from units</th>
                     <th>Reading Date</th>
 
                     <th>Reading Type</th>
@@ -51,11 +53,12 @@
                 <tr>
                     <td><a href="{% url 'sms:meter_readings_clients' meter_reading.account_number.id %}">{{ meter_reading.names }}</a></td>
 
-
-                    <td>{{ meter_reading.account_number.id }}</td>
+                    <td>{{ meter_reading.msisdn }}</td>
+                    <td>{{ meter_reading.account_number.house_number }}</td>
                     <td>{{ meter_reading.readings }}</td>
                     <td>{{ meter_reading.previous_reading }}</td>
                     <td>{{ meter_reading.units_consumed | floatformat:2 }}</td>
+                    <td>{{ meter_reading.amoun_from_units | floatformat:2 }}</td>
                     <td>{{ meter_reading.read_date |date:'Y-m-d H:i' }}</td>
 
                     <td>{{ meter_reading.reading_type }}</td>
