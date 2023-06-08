@@ -2916,7 +2916,7 @@ def add_meter_readings(request):
 
             waterclient.save()
 
-            messages.success(request,  msisdn)
+            messages.success(request,  house_number)
             return redirect('sms:meter_readings')
         else:
             print("Invalid readings")
