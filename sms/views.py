@@ -1787,7 +1787,15 @@ def teule_home(request):
 
 
 def teule_clients(request):
-    clients = TeuleClients.objects.all().order_by('-id').values()
+    clients = TeuleClients.objects.filter(vacated='').order_by('-id').values()
+    context = {
+        'clients': clients
+    }
+    return render(request, 'sms/teule_clients.html', context)
+
+
+def teule_vacated_clients(request):
+    clients = TeuleClients.objects.filter(vacated='YES').order_by('-id').values()
     context = {
         'clients': clients
     }
@@ -1797,7 +1805,7 @@ def teule_clients(request):
 def create_teule_client(request):
     if request.method == 'POST':
         house_number=request.POST['house_number']
-        teule_house = TeuleHouses.objects.filter(house_number=house_number).first()
+        teule_house = TeuleHouses.objects.filter(vacated=house_number).first()
         teule_house.occupied_status='OCCUPIED'
         teule_house.save()
         customer_number = ''
