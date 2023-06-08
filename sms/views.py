@@ -2896,7 +2896,7 @@ def add_meter_readings(request):
                 msisdn=msisdn,                
                 previous_reading=last_meter_reading,
                 readings=readings,
-                
+                names=names,
                 reading_type="System Input",
                 units_consumed=units_consumed
 
