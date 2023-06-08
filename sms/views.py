@@ -1803,6 +1803,15 @@ def teule_vacated_clients(request):
     return render(request, 'sms/teule_vacated_clients.html', context)
 
 
+def teule_vacate_hisory(request):
+    
+    clients = TeuleVacateHistory.objects.filter().order_by('-id').values()
+    context = {
+        'clients': clients
+    }
+    return render(request, 'sms/teule_vacate_history.html', context)
+
+
 def create_teule_client(request):
     if request.method == 'POST':
         house_number=request.POST['house_number']

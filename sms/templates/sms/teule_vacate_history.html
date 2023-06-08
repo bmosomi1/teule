@@ -1,0 +1,68 @@
+{% extends 'layouts/new_base.html' %}
+{% load static %}
+
+{% block additional_meta %}
+
+{% endblock %}
+
+{% block additional_styles %}
+
+{% endblock %}
+
+{% block content %}
+<div class="tile">
+<div class="tile-title">
+    <div class="row">
+        <div class="col-sm-6">
+            <h4>Clients</h4>
+        </div>
+        <div class="col-sm-6">
+            <a href="{% url 'sms:teule_clients' %}" class="btn btn-outline-primary pull-right"> Tenants</a>
+        </div>
+        <div class="col-sm-6">
+            <a href="{% url 'sms:create_teule_client' %}" class="btn btn-outline-primary pull-right">Allocate House</a>
+        </div>
+    </div>
+    <hr>
+</div>
+        <div class="tile-body">
+            <table class="table table-hover table-bordered" id="sampleTable">
+                <thead>
+                <tr>
+                    <th>Names</th>                    
+                    <th>Phone</th>
+                    <th>House Vacated</th>
+                                       
+                    <th>Date Vacated</th>
+                    <th>Arrears</th>                  
+                    
+                    <th>Actions</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for client in clients %}
+                <tr>
+                    <td><a href="{% url 'sms:teule_client_dashboard' client.id %}">{{ client.names }}</a></td>
+                    
+                    <td>{{ client.client.msisdn }}</td>                  
+                    
+                    <td>{{ client.house.house_number }}</td>
+                    <td>{{ client.vacate_date|date:'Y:m:d' }}</td>
+                    
+                    <td>{{ client.client.amount_due|floatformat:0 }}</td>
+                    
+                    
+                   
+
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block additional_scripts %}
+
+{% endblock %}
