@@ -1803,7 +1803,7 @@ def teule_vacated_clients(request):
     return render(request, 'sms/teule_vacated_clients.html', context)
 
 
-def teule_vacate_hisory(request):
+def teule_vacate_history(request):
     
     clients = TeuleVacateHistory.objects.filter().order_by('-id').values()
     context = {
