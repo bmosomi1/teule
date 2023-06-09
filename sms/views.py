@@ -1805,9 +1805,9 @@ def teule_vacated_clients(request):
 
 def teule_vacate_history(request):
     
-    clients = TeuleVacateHistory.objects.filter().order_by('-id').values()
+    vacates = TeuleVacateHistory.objects.filter().order_by('-id').values()
     context = {
-        'clients': clients
+        'vacates': vacates
     }
     return render(request, 'sms/teule_vacate_history.html', context)
 
