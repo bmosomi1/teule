@@ -1937,6 +1937,32 @@ def create_teule_client(request):
     }
     return render(request, 'sms/add_teule_client.html', context)
 
+def teule_house_allocations(request):
+
+    if request.method == 'POST':
+        comments = request.POST['comment']
+        client_id = request.POST['client_id']
+        house_number = request.POST['house_number']
+
+        tenant = TeuleClients.objects.filter(id=client_id).first()
+        house = TeuleHouses.objects.filter(id=house_number).first()
+        tenant.vacated='NO'
+        tenant.house_number=house_number
+        tenant.save()
+        house.date_joined=datetime.datetime.now()
+        house.occupied_by=tenant
+        house.occupied_status='OCCUPIED'
+        house.save()        
+
+        
+        return redirect('sms:teule_houses')
+    else:
+        context = {
+            'houses': TeuleHouses.objects.filter(occupied_status='NO').order_by('-id'),
+            'payments_allocated': WaterPaymentReallocate.objects.filter().order_by('-id'),
+            'clients': TeuleClients.objects.filter(vacated='YES').order_by('names')
+        }
+        return render(request, 'sms/teule_house_allocations.html', context)
 
 
 @login_required()

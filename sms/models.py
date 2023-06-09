@@ -317,6 +317,8 @@ class TeuleHouses(models.Model):
     house_number = models.CharField(max_length=250)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    occupied_date = models.DateTimeField(auto_now=True)
+    vacated_date = models.DateTimeField(auto_now=True)
     monthly_rent = models.FloatField(max_length=250, default=0,null=True)
     deposit = models.FloatField(max_length=250, default=0,null=True)
     rent_arrears = models.FloatField(max_length=250, default=0,null=True)
