@@ -47,7 +47,7 @@
                     
                     <td>{{ vacate.client.msisdn }}</td>                  
                     
-                    <td>{{ vacate.house.house_id }}</td>
+                    <td>{{ vacate.house.house.house_number }}</td>
                     <td>{{ vacate.vacate_date|date:'Y:m:d' }}</td>
                     
                     <td>{{ vacate.client.amount_due|floatformat:0 }}</td>
