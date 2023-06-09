@@ -271,7 +271,6 @@ class TeuleClients(models.Model):
     msisdn = models.CharField(max_length=250)
     msisdn2 = models.CharField(max_length=250,null=True)
     house_number = models.CharField(max_length=250, null=True)
-    house = models.ForeignKey(TeuleHouses, on_delete=models.DO_NOTHING, blank=True, null=True)
     client_number = models.CharField(max_length=250)
     id_num = models.CharField(max_length=250, null=True)
     flat_name = models.CharField(max_length=250, null=True)
