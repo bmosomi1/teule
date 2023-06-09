@@ -24,9 +24,9 @@
               <form action="{% url 'sms:add_meter_readings' %}" method="post">
                 {% csrf_token %}
                  <div class="form-group">
-                    <label>Customer</label>
-                    <select name="house_number" class="form-control" id="house_number">
-                        <option value="">Select a customer</option>
+                    <label>House Number</label>
+                    <select name="house_number" class="form-control" id="house_number" required>
+                        <option value="">Select house</option>
                         {% for client in clients %}
                             <option value="{{ client.house_number }}">{{ client.house_number }}--- {{ client.reading }}</option>
                         {% endfor %}
