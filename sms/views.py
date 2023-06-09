@@ -1805,7 +1805,7 @@ def teule_vacated_clients(request):
 
 def teule_vacate_history(request):
     
-    vacates = TeuleVacateHistory.objects.filter().order_by('-id').values()
+    vacates = TeuleVacateHistory.objects.all()
     context = {
         'vacates': vacates
     }
