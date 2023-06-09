@@ -2042,6 +2042,7 @@ def teule_client_dashboard(request,client_id):
             'groups': Group.objects.filter(customer_id=customer.id).count(),
             'courts': WaterCourt.objects.filter().count(),
             'readings': customer.last_meter_reading,
+            'house_number': customer.house_number,
             'last_date': customer.last_meter_reading_date,
             
             'outbox': WaterMeterReadings.objects.filter().count(),
