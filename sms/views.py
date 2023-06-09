@@ -3037,7 +3037,7 @@ def add_fine_upload(request):
     }
     return render(request, 'sms/add_fines.html', context)
 def add_meter_upload(request):
-    customer = WaterClientAll.objects.all().order_by('id')
+    customer = TeuleHouses.objects.filter(occupied_status='OCCUPIED').order_by('id')
     time = datetime.datetime.now()
     file_namer = "meter_readings"
     file_path = 'media/reports/'
@@ -3053,12 +3053,12 @@ def add_meter_upload(request):
     #cell.value = 'Meter Readings'
     #cell.alignment = Alignment(horizontal='center', vertical='center')
     #summary_sheet.merge_cells('A1:B1')
-    summary_sheet.append(('A/C','NAMES', 'PREV. READINGS','CURRENT READINGS','STATION'))
+    summary_sheet.append(('HOUSE','NAMES', 'PREV. READINGS','CURRENT READINGS','RENT'))
 
     number = 1
     for cust in customer:
         #summary_sheet.append((cust.id, cust.names, cust.last_meter_reading))
-        summary_sheet.append((cust.id, cust.names,cust.last_meter_reading, 0,cust.network))
+        summary_sheet.append((cust.house_number, cust.occupied_by.names,cust.reading, 0,cust.monthly_rent))
         number += 1
 
     workbook.save(full_path)
