@@ -34,8 +34,8 @@
                     <table class="table table-hover table-bordered" id="sampleTable">
                 <thead>
                 <tr>
-                    <th>Names</th>
-                    <th>Account Number</th>
+                    <th>House Number</th>
+                    
                     <th>Current Readings</th>
                     <th>Previous Readings</th>
                     <th>Units</th>
@@ -52,7 +52,7 @@
                     <td><a href="{% url 'sms:meter_readings_clients' meter_reading.account_number.id %}">{{ meter_reading.names }}</a></td>
 
 
-                    <td>{{ meter_reading.account_number.id }}</td>
+                    
                     <td>{{ meter_reading.readings }}</td>
                     <td>{{ meter_reading.previous_reading }}</td>
                     <td>{{ meter_reading.units_consumed | floatformat:2 }}</td>
