@@ -36,7 +36,7 @@
                     <select name="house_id" class="form-control" id="customer" style="width:300px" required>
                         <option value="">Select House Number</option>
                         {% for house in houses %}
-                            <option value="{{ house.house_id }}">{{ house.house_id }} {{ house.flat }} {{ client.rent_amount }}</option>
+                            <option value="{{ house.id }}">{{ house.house_number }} {{ house.flat.name }} {{ client.rent_amount }}</option>
                         {% endfor %}
                     </select>
 
