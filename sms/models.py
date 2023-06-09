@@ -898,6 +898,7 @@ class WaterSysConfHist(models.Model):
     standing_charge = models.FloatField(max_length=250,null=True)
     rate = models.FloatField(max_length=250, null=True)
     water_levy = models.FloatField(max_length=250, null=True)
+    garbage = models.FloatField(max_length=250, null=True)
     comment = models.CharField(max_length=250, null=True, default=0)
     account_number = models.CharField(max_length=250)
     processed = models.IntegerField(max_length=250, null=True)

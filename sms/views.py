@@ -2518,7 +2518,7 @@ def edit_sys_config(request, client_id):
     if request.method == 'POST':
         client.standing_charge = request.POST['standing_charge']
         client.rate = request.POST['rate']
-        client.water_levy = request.POST['water_levy']
+        client.garbage = request.POST['garbage']
         client.comment = request.POST['comment']
         client.save()
         #WaterNetwork.delete(self)
@@ -2526,7 +2526,7 @@ def edit_sys_config(request, client_id):
         WaterSysConfHist.objects.create(
             standing_charge=request.POST['standing_charge'],
             rate=request.POST['rate'],
-            water_levy=request.POST['water_levy'],
+            garbage=request.POST['garbage'],
             comment = request.POST['comment']
 
 
