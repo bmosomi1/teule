@@ -41,16 +41,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for client in clients %}
+                {% for clienter in clients %}
                 <tr>
-                    <td><a href="{% url 'sms:teule_client_dashboard' client.id %}">{{ client.client.names }}</a></td>
+                    <td><a href="{% url 'sms:teule_client_dashboard' client.id %}">{{ clienter.client.names }}</a></td>
                     
-                    <td>{{ client.client.msisdn }}</td>                  
+                    <td>{{ clienter.client_id }}</td>                  
                     
-                    <td>{{ client.house.house_number }}</td>
-                    <td>{{ client.vacate_date|date:'Y:m:d' }}</td>
+                    <td>{{ clienter.house.house_id }}</td>
+                    <td>{{ clienter.vacate_date|date:'Y:m:d' }}</td>
                     
-                    <td>{{ client.client.amount_due|floatformat:0 }}</td>
+                    <td>{{ clienter.client.amount_due|floatformat:0 }}</td>
                     
                     
                    
