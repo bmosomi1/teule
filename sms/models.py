@@ -884,6 +884,7 @@ class WaterSysConf(models.Model):
     comment = models.CharField(max_length=250, null=True, default=0)
     account_number = models.CharField(max_length=250)
     water_levy = models.FloatField(max_length=250, default=0, null=True)
+    garbage = models.FloatField(max_length=250, default=0, null=True)
     processed = models.IntegerField(max_length=250, null=True)
     reading_type = models.CharField(max_length=250, null=True)
     add_date = models.DateTimeField(auto_now_add=True)
