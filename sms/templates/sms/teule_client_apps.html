@@ -36,7 +36,7 @@
           <div class="widget-small danger coloured-icon"><i class="icon fa fa-money fa-3x"></i>
             <div class="info">
               <h4>Joined on</h4>
-              <p><b>{{ customer.created_at }}</b></p>
+              <p><b>{{ customer.created_at|date:"M d, Y" }}</b></p>
             </div>
           </div>
         </div>
