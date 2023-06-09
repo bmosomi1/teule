@@ -1942,10 +1942,11 @@ def teule_house_allocations(request):
     if request.method == 'POST':
         comments = request.POST['comment']
         client_id = request.POST['client_id']
-        house_number = request.POST['house_number']
+        house_id = request.POST['house_id']
 
         tenant = TeuleClients.objects.filter(id=client_id).first()
-        house = TeuleHouses.objects.filter(id=house_number).first()
+        house = TeuleHouses.objects.filter(id=house_id).first()
+        house_number = house.house_number
         tenant.vacated='NO'
         tenant.house_number=house_number
         tenant.save()
