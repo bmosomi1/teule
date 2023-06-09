@@ -2989,14 +2989,15 @@ def add_meter_readings(request):
         else:
             print("Invalid readings")
             messages.success(request, "Invalid readings for " + names + ". Previous readings were " + str(last_meter_reading))
-            clienter = WaterClientAll.objects.all()
+            clienter = clienter = TeuleHouses.objects.filter(occupied_status='OCCUPIED')
+
             context = {
                 'clients': clienter
             }
             return render(request, 'sms/add_meter.html', context)
     else:
 
-        clienter = TeuleHouses.objects.all()
+        clienter = TeuleHouses.objects.filter(occupied_status='OCCUPIED')
         context = {
             'clients': clienter
         }
