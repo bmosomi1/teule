@@ -26,7 +26,7 @@
                 <tr>
                     <th>Rate Per Unit</th>
                     <th>Standing Charge</th>
-                    <th>Water Levy</th>
+                    <th>Garbage</th>
                     <th>Comment</th>
                     <th>Updated On</th>
                     <th>Edit</th>
@@ -40,7 +40,7 @@
                     <td><a href="{% url 'sms:edit_sys_config' client.id %}">{{ client.rate }}</a></td>
 
                     <td>{{ client.standing_charge }}</td>
-                    <td>{{ client.water_levy }}</td>
+                    <td>{{ client.garbage }}</td>
                     <td>{{ client.comment }}</td>
 
                     <td>{{ client.update_date|date:'Y:m:d' }}</td>
