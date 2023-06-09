@@ -3053,12 +3053,12 @@ def add_meter_upload(request):
     #cell.value = 'Meter Readings'
     #cell.alignment = Alignment(horizontal='center', vertical='center')
     #summary_sheet.merge_cells('A1:B1')
-    summary_sheet.append(('HOUSE','NAMES', 'PREV. READINGS','CURRENT READINGS','RENT'))
+    summary_sheet.append(('#','HOUSE','NAMES', 'PREV. READINGS','CURRENT READINGS','RENT'))
 
     number = 1
     for cust in customer:
         #summary_sheet.append((cust.id, cust.names, cust.last_meter_reading))
-        summary_sheet.append((cust.house_number, cust.occupied_by.names,cust.reading, 0,cust.monthly_rent))
+        summary_sheet.append((cust.id,cust.house_number, cust.occupied_by.names,cust.reading, 0,cust.monthly_rent))
         number += 1
 
     workbook.save(full_path)
