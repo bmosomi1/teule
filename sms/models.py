@@ -345,7 +345,7 @@ class TeuleVacateHistory(models.Model):
 class TeuleMeterReadingSmsRaw(models.Model):
     names = models.CharField(max_length=250)
     msisdn = models.CharField(max_length=250)    
-    
+    account_number = models.ForeignKey(TeuleClients, on_delete=models.CASCADE)
     id_num = models.CharField(max_length=250, null=True)
     meter_num = models.CharField(max_length=250, null=True)
     customer_rate = models.CharField(max_length=250, null=True)
