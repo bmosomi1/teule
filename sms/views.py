@@ -2727,11 +2727,11 @@ def import_meter_readings(request):
             workbook = load_workbook(filename=f_path, read_only=True)
             worksheet = workbook[workbook.sheetnames[0]]
             for i in range(2, worksheet.max_row + 1):
-                if worksheet.cell(row=i, column=4).value != 0:
+                if worksheet.cell(row=i, column=5).value != 0:
 
                     account_number = worksheet.cell(row=i, column=1).value
                     name = worksheet.cell(row=i, column=2).value
-                    readings = (worksheet.cell(row=i, column=4).value)
+                    readings = (worksheet.cell(row=i, column=5).value)
                     #readings = float(worksheet.cell(row=i, column=3).value)
                     #readings = str(worksheet.cell(row=i, column=2).value)
 

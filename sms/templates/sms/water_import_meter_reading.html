@@ -27,8 +27,8 @@
                     <table class="table table-hover table-bordered" id="sampleTable">
                 <thead>
                 <tr>
-                    <th>Names</th>
-                    <th>Account Number</th>
+                    <th>House Number</th>
+                    
                     <th>Readings</th>
 
                     <th>Reading Date</th>
@@ -40,7 +40,7 @@
                 {% for meter_reading in meter_readings %}
                 <tr>
                     <td>{{ meter_reading.names }}</td>
-                    <td>{{ meter_reading.account_number }}</td>
+                    
                     <td>{{ meter_reading.readings }}</td>
 
                     <td>{{ meter_reading.read_date |date:'Y-m-d H:i' }}</td>
