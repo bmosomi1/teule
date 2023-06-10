@@ -5,6 +5,7 @@
     {% url 'sms:water_apps' as water_apps %}
     {% url 'sms:teule_home' as teule_home %}
     {% url 'sms:main_meter' as main_meter %}
+    {% url 'sms:teule_main_account' as teule_main_account %}
   #  {% url 'sms:comprehensive_reports' as reports %}
     {% url 'sms:customer_credit' as credit %}
   #  {% url 'sms:customer_contacts' as contacts %}
@@ -216,15 +217,15 @@
             </li>
 
             <li>
-                <a {% if request.path == main_meter %} class="app-menu__item active"
+                <a {% if request.path == teule_main_account %} class="app-menu__item active"
                 {% else %}
                       class="app-menu__item"
-                {% endif %} href="{{ main_meter }}">
+                {% endif %} href="{{ teule_main_account }}">
                     <i class="app-menu__icon fa fa-dashboard"></i>
                     <span class="app-menu__label">Main Account</span></a>
             </li>
             <li>
-                <a {% if request.path == main_meter %} class="app-menu__item active"
+                <a {% if request.path == teule_main_account %} class="app-menu__item active"
                 {% else %}
                       class="app-menu__item"
                 {% endif %} href="{{ meter_readers }}">
