@@ -3097,7 +3097,7 @@ def add_main_readings(request):
         return render(request, 'sms/add_main_readings.html', context)
     else:
         context = {
-            'meter': WaterNetwork.objects.all()
+            'meter': TeuleFlat.objects.all()
         }
         
         return render(request, 'sms/add_main_readings.html', context)
