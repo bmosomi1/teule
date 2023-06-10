@@ -3062,7 +3062,7 @@ def add_main_readings(request):
         meter_id = request.POST['customers']
         last_m_readings = 0
 
-        main_meter = WaterNetwork.objects.get(id=meter_id)
+        main_meter = TeuleFlat.objects.get(id=meter_id)
         last_readings = WaterMainReadings.objects.filter().last()
         
         last_m_readings = main_meter.reading
@@ -3086,7 +3086,7 @@ def add_main_readings(request):
             messages.success(request, "Invalid readings for the main meter Previous readings were " + str(last_m_readings))
             clienter = WaterClientAll.objects.all()
             context = {
-                'meter': MainMeter.objects.all()
+                'meter': TeuleFlat.objects.all()
             }
             return render(request, 'sms/add_main_readings.html', context)
 
