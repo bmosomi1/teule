@@ -3092,7 +3092,7 @@ def add_main_readings(request):
 
 
         context = {
-            'meter': MainMeter.objects.all()
+            'meter': TeuleFlat.objects.all()
         }
         return render(request, 'sms/add_main_readings.html', context)
     else:
@@ -4170,7 +4170,7 @@ def main_meter_replacement(request):
         comments = request.POST['comment']
         client_id = request.POST['meter']
         meter_number = request.POST['meter_number']
-        customer = WaterNetwork.objects.filter(id=client_id).first()
+        customer = TeuleFlat.objects.filter(id=client_id).first()
         #customer = WaterClientAll.objects.filter(id=client_id).first()
         last_readings = customer.reading
         
