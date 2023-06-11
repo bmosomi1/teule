@@ -50,7 +50,7 @@
                 <thead>
                 <tr>
                     <th>Names</th>
-                    <th>Account Number </th>
+                    <th>House </th>
                     <th>Amount</th>
 
 
@@ -65,7 +65,7 @@
                 {% for payment in payments %}
                 <tr>
                     <td><a href="{% url 'Invoices:client_invoices' payment.id %}">{{ payment.received_from }}</a></td>
-                    <td>{{ payment.client_id }}</td>
+                    <td>{{ payment.house_number }}</td>
                     <td>{{ payment.amount }}</td>
                     <td>{{ payment.ref_id }}</td>
 
@@ -74,7 +74,7 @@
                     <td>{{ payment.comments }}</td>
 
                     <td>
-                        <a href="{% url 'sms:edit_water_client' payment.id %}" title="Edit" class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-lg"></i></a>
+                        <a href="{% url 'sms:edit_teule_house' payment.id %}" title="Edit" class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-lg"></i></a>
 {#                        <a href="" title="Approve" class="btn btn-outline-primary btn-sm"><i class="fa fa-check-square-o"></i></a>#}
                     </td>
                 </tr>
