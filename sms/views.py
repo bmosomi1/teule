@@ -1721,11 +1721,11 @@ def teule_payments_allocations(request):
         client_id = request.POST['client_id']
         trans_id = request.POST['trans_id']
 
-        customer = WaterClientAll.objects.filter(id=client_id).first()
+        customer = TeuleHouses.objects.filter(id=client_id).first()
         transaction = MiwamaMpesa.objects.filter(id=trans_id).first()
 
-        names = customer.names
-        account_number = customer.id
+        names = customer.house_number
+        account_number = customer.house_number
         phone_number=transaction.sender_phone
         old_account = transaction.account_number
         paid_by=transaction.names

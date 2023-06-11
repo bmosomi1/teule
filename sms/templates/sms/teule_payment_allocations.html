@@ -19,7 +19,7 @@
         <div class="col-sm-6">
             <a href="{% url 'sms:water_payments_unallocated' %}" class="btn btn-outline-primary pull-right">Unallocated Payment</a>
         </div>
-            <form action="{% url 'sms:water_payments_allocations' %}" method="post">
+            <form action="{% url 'sms:teule_payments_allocations' %}" method="post">
                 {% csrf_token %}
                 <div class="form-group">
                     <label>Transaction</label> <br>
@@ -34,9 +34,9 @@
                 <div class="form-group">
                     <label>Client</label> <br>
                     <select name="client_id" class="form-control" id="meter" style="width:300px" required>
-                        <option value="">Select client</option>
+                        <option value="">Select House</option>
                         {% for client in clients %}
-                            <option value="{{ client.id }}">{{ client.names }} {{ client.id }} {{ client.msisdn }}</option>
+                            <option value="{{ client.id }}">{{ client.house_number }} Rent:{{ client.monthly_rent }} {{ client.occupied_by.names }}</option>
                         {% endfor %}
                     </select>
 
