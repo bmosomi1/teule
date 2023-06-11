@@ -4233,7 +4233,7 @@ def water_manual_payments(request):
     else:
         context = {
             'payments': WaterPaymentReceivedManual.objects.filter().order_by('-id'),
-            'clients': TeuleHouses.objects.filter(occupied_status='OCCUPIED').order_by('names')
+            'clients': TeuleHouses.objects.filter(occupied_status='OCCUPIED').order_by('-house_number')
         }
         return render(request, 'sms/water_manual_payment.html', context)
 
