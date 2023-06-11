@@ -4223,8 +4223,8 @@ def water_manual_payments(request):
             account_number=house_number,
             account_name=names,
             ref_id=ref_id,
-            comments=comments,
-            client_id=house_number
+            comments=comments
+            
 
         )
 
