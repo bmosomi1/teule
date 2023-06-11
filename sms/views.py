@@ -1762,7 +1762,7 @@ def teule_payments_allocations(request):
         context = {
             'payments': MiwamaMpesa.objects.filter(processed=3).order_by('-id'),
             'payments_allocated': WaterPaymentReallocate.objects.filter().order_by('-id'),
-            'clients': WaterClientAll.objects.filter().order_by('names')
+            'clients': TeuleHouses.objects.filter(occupied_status='OCCUPIED').order_by('house_number')
         }
         return render(request, 'sms/teule_payment_allocations.html', context)
 
