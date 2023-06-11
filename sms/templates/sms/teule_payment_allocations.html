@@ -55,8 +55,8 @@
                 <thead>
                 <tr>
                     <th>Paid By</th>
-                    <th>Allocated To</th>
-                    <th>House Number </th>
+                    <th>House Number</th>
+                    <th>Names </th>
                     <th>Amount</th>
 
 
@@ -74,7 +74,7 @@
                     <td>{{ payment.received_from }}</td>
                     <td><a href="{% url 'sms:teule_payments_clients' payment.client.id %}">{{ payment.account_name }}</a></td>
 
-                     <td>{{ payment.client_id }}</td>
+                     <td>{{ payment.account_name }}</td>
                     <td>{{ payment.amount }}</td>
                     <td>{{ payment.confirmation_code }}</td>
                     

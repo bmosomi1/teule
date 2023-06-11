@@ -1724,7 +1724,7 @@ def teule_payments_allocations(request):
         customer = TeuleHouses.objects.filter(id=client_id).first()
         transaction = MiwamaMpesa.objects.filter(id=trans_id).first()
 
-        names = customer.house_number
+        names = customer.occupied_by.names
         account_number = customer.house_number
         phone_number=transaction.sender_phone
         old_account = transaction.account_number
