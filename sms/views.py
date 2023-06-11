@@ -4209,7 +4209,7 @@ def water_manual_payments(request):
         amount = request.POST['amount']
         ref_id = request.POST['ref_id']
         customer = TeuleHouses.objects.filter(id=house_id).first()
-        names = customer.names
+        names = customer.occupied_by.names
         house_number = customer.house_number
 
         phone_number=customer.msisdn
