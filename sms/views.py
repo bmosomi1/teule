@@ -1712,6 +1712,61 @@ def teule_payments(request):
     }
     return render(request, 'sms/teule_payments.html', context)
 @login_required()
+
+
+def teule_payments_allocations(request):
+
+    if request.method == 'POST':
+        comments = request.POST['comment']
+        client_id = request.POST['client_id']
+        trans_id = request.POST['trans_id']
+
+        customer = WaterClientAll.objects.filter(id=client_id).first()
+        transaction = MiwamaMpesa.objects.filter(id=trans_id).first()
+
+        names = customer.names
+        account_number = customer.id
+        phone_number=transaction.sender_phone
+        old_account = transaction.account_number
+        paid_by=transaction.names
+        confirmation_code = transaction.trans_id
+        amount=transaction.amount
+        new_comment = comments + " Orig account " + old_account
+
+        transaction.processed = 0
+        transaction.allocated_to=names
+        transaction.is_read=old_account
+        transaction.account_number = account_number
+        transaction.save()
+
+
+
+        TeulePaymentReallocate.objects.create(
+            client=customer,
+            dest_msisdn=phone_number,
+            received_from=paid_by,
+            amount=amount,
+            confirmation_code=confirmation_code,
+            account_number=account_number,
+            account_name=names,
+            ref_id=trans_id,
+            comments=new_comment
+            
+
+        )
+
+
+        messages.success(request, 'Payments Allocated')
+        return redirect('sms:teule_payments_allocations')
+    else:
+        context = {
+            'payments': MiwamaMpesa.objects.filter(processed=3).order_by('-id'),
+            'payments_allocated': WaterPaymentReallocate.objects.filter().order_by('-id'),
+            'clients': WaterClientAll.objects.filter().order_by('names')
+        }
+        return render(request, 'sms/teule_payment_allocations.html', context)
+
+
 def teule_payments_clients(request,client_id):
     payments = TeulePaymentReceived.objects.filter(account_number=client_id)
     context = {
@@ -4369,7 +4424,7 @@ def water_payments_allocations(request):
 
 
 
-        WaterPaymentReallocate.objects.create(
+        TeulePaymentReallocate.objects.create(
             client=customer,
             dest_msisdn=phone_number,
             received_from=paid_by,
@@ -4378,8 +4433,8 @@ def water_payments_allocations(request):
             account_number=account_number,
             account_name=names,
             ref_id=trans_id,
-            comments=new_comment,
-            client_id=client_id
+            comments=new_comment
+            
 
         )
 

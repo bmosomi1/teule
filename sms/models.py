@@ -354,6 +354,21 @@ class TeuleVacateHistory(models.Model):
         verbose_name = 'vacate'
         verbose_name_plural = 'vacates'
 
+
+class TeulePaymentReallocate(models.Model):
+    client = models.ForeignKey(TeuleHouses, on_delete=models.DO_NOTHING)
+    dest_msisdn = models.CharField(max_length=250)
+    received_from = models.CharField(max_length=250)
+    amount = models.CharField(max_length=250, null=True)
+    confirmation_code = models.CharField(max_length=250, null=True)
+    account_number = models.CharField(max_length=250, null=True)
+    account_name = models.CharField(max_length=250, null=True)
+    balance_carried_forward = models.CharField(max_length=250, null=True)
+    processed = models.IntegerField(max_length=4, default=0)
+    ref_id = models.CharField(max_length=250, null=True)
+    comments = models.CharField(max_length=250, null=True)
+    pay_date = models.DateTimeField(auto_now_add=True)
+
 class TeuleMeterReadingSmsRaw(models.Model):
     names = models.CharField(max_length=250)
     msisdn = models.CharField(max_length=250)    
