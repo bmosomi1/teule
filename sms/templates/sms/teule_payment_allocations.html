@@ -72,7 +72,7 @@
                 {% for payment in payments_allocated %}
                 <tr>
                     <td>{{ payment.received_from }}</td>
-                    <td><a href="{% url 'sms:teule_payments_clients' payment.account_number %}">{{ payment.account_name }}</a></td>
+                    <td><a href="{% url 'sms:teule_payments_clients' payment.client.id %}">{{ payment.account_name }}</a></td>
 
                      <td>{{ payment.client_id }}</td>
                     <td>{{ payment.amount }}</td>
