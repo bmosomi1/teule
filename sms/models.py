@@ -497,6 +497,31 @@ class TeuleMeterReadingSmsRaw(models.Model):
         verbose_name = 'water_meterreading'
         verbose_name_plural = 'water_meterreadings'
 
+class TeulePaymentReceivedManual(models.Model):
+    client = models.ForeignKey(TeuleHouses, on_delete=models.CASCADE)
+    dest_msisdn = models.CharField(max_length=250)
+    received_from = models.CharField(max_length=250)
+    amount = models.CharField(max_length=250, null=True)
+    confirmation_code = models.CharField(max_length=250, null=True)
+    account_number = models.CharField(max_length=250, null=True)
+    account_name = models.CharField(max_length=250, null=True)
+    balance_carried_forward = models.CharField(max_length=250, null=True)
+    processed = models.IntegerField(max_length=4, default=0)
+    ref_id = models.CharField(max_length=250, null=True)
+    comments = models.CharField(max_length=250, null=True)
+    pay_date = models.DateTimeField(auto_now_add=True)
+
+class TeulePaymentReceived(models.Model):
+    client = models.ForeignKey(TeuleHouses, on_delete=models.CASCADE)
+    dest_msisdn = models.CharField(max_length=250)
+    received_from = models.CharField(max_length=250)
+    amount = models.CharField(max_length=250, null=True)
+    confirmation_code = models.CharField(max_length=250, null=True)
+    account_number = models.CharField(max_length=250, null=True)
+    account_name = models.CharField(max_length=250, null=True)
+    balance_carried_forward = models.CharField(max_length=250, null=True)
+    comments = models.CharField(max_length=250, null=True)
+    pay_date = models.DateTimeField(auto_now_add=True)
 
 
 class WaterNetwork(models.Model):

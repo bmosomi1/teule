@@ -4205,25 +4205,26 @@ def water_manual_payments(request):
 
     if request.method == 'POST':
         comments = request.POST['comment']
-        client_id = request.POST['meter']
+        house_id = request.POST['house_id']
         amount = request.POST['amount']
         ref_id = request.POST['ref_id']
-        customer = TeuleHouses.objects.filter(id=client_id).first()
+        customer = TeuleHouses.objects.filter(id=house_id).first()
         names = customer.names
+        house_number = customer.house_number
 
         phone_number=customer.msisdn
 
-        WaterPaymentReceivedManual.objects.create(
+        TeulePaymentReceivedManual.objects.create(
             client=customer,
             dest_msisdn=phone_number,
             received_from=names,
             amount=amount,
             confirmation_code=ref_id,
-            account_number=client_id,
+            account_number=house_number,
             account_name=names,
             ref_id=ref_id,
             comments=comments,
-            client_id=client_id
+            client_id=house_number
 
         )
 
@@ -4232,7 +4233,7 @@ def water_manual_payments(request):
         return redirect('sms:water_manual_payments')
     else:
         context = {
-            'payments': WaterPaymentReceivedManual.objects.filter().order_by('-id'),
+            'payments': TeulePaymentReceivedManual.objects.filter().order_by('-id'),
             'clients': TeuleHouses.objects.filter(occupied_status='OCCUPIED').order_by('-house_number')
         }
         return render(request, 'sms/water_manual_payment.html', context)
