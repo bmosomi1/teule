@@ -1705,6 +1705,13 @@ def customer_contacts(request):
         return render(request, 'sms/contacts.html', context)
 
 @login_required()
+def teule_payments(request):
+    payments = TeulePaymentReceived.objects.all().order_by('-pay_date')[:600]
+    context = {
+        'payments': payments
+    }
+    return render(request, 'sms/teule_payments.html', context)
+@login_required()
 @is_user_customer
 def teule_main_account(request):
     customer = Customer.objects.filter(user_ptr_id=request.user.id).first()
