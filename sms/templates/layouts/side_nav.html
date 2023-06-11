@@ -30,6 +30,7 @@
     {% url 'sms:meter_readers' as meter_readers %}
     {% url 'sms:teule_houses' as teule_houses %}
     {% url 'sms:teule_clients' as teule_clients %}
+    {% url 'sms:teule_payments' as teule_payments %}
     
 
 {#    {% url 'ShortCode:subs' as subs %}#}
@@ -200,10 +201,10 @@
                     <span class="app-menu__label">System Config</span></a>
             </li>
             <li>
-                <a {% if request.path == water_payments %} class="app-menu__item active"
+                <a {% if request.path == teule_payments %} class="app-menu__item active"
                 {% else %}
                       class="app-menu__item"
-                {% endif %} href="{{ water_payments }}">
+                {% endif %} href="{{ teule_payments }}">
                     <i class="app-menu__icon fa fa-mail-forward"></i>
                     <span class="app-menu__label">Payment Received</span></a>
             </li>
