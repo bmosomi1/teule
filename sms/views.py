@@ -4208,7 +4208,7 @@ def water_manual_payments(request):
         client_id = request.POST['meter']
         amount = request.POST['amount']
         ref_id = request.POST['ref_id']
-        customer = WaterClientAll.objects.filter(id=client_id).first()
+        customer = TeuleHouses.objects.filter(id=client_id).first()
         names = customer.names
 
         phone_number=customer.msisdn
@@ -4233,7 +4233,7 @@ def water_manual_payments(request):
     else:
         context = {
             'payments': WaterPaymentReceivedManual.objects.filter().order_by('-id'),
-            'clients': WaterClientAll.objects.filter().order_by('names')
+            'clients': TeuleHouses.objects.filter(vacated='NO').order_by('names')
         }
         return render(request, 'sms/water_manual_payment.html', context)
 
