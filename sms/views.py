@@ -4212,7 +4212,7 @@ def water_manual_payments(request):
         names = customer.occupied_by.names
         house_number = customer.house_number
 
-        phone_number=customer.msisdn
+        phone_number=customer.occupied_by.msisdn
 
         TeulePaymentReceivedManual.objects.create(
             client=customer,
