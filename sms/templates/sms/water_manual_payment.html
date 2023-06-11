@@ -65,7 +65,7 @@
                 {% for payment in payments %}
                 <tr>
                     <td><a href="{% url 'Invoices:client_invoices' payment.id %}">{{ payment.received_from }}</a></td>
-                    <td>{{ payment.house_number }}</td>
+                    <td>{{ payment.account_number }}</td>
                     <td>{{ payment.amount }}</td>
                     <td>{{ payment.ref_id }}</td>
 
