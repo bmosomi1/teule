@@ -65,6 +65,7 @@ urlpatterns = [
     path('create/houses', views.create_teule_house, name='create_teule_house'),
     path('teule/caretakers', views.teule_caretakers, name='teule_caretakers'),
     path('teule/payments', views.teule_payments, name='teule_payments'),
+    path('teule/payments/<int:client_id>', views.teule_payments_clients, name='teule_payments_clients'),
     path('add/caretakers', views.add_caretaker, name='add_caretaker'),
     path('meter/readers', views.meter_readers, name='meter_readers'),
     path('add/meter/reader', views.add_meter_reader, name='add_meter_reader'),
