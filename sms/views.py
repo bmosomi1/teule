@@ -2095,16 +2095,19 @@ def create_teule_client(request):
             teule_house.occupied_status='OCCUPIED'
             teule_house.occupied_by = teule_client
             teule_house.save()
+            flat_name = teule_house.flat.name
 
             test = "Dear ..... Your  account is....... ensure that you put the paybill 4047479 and  account number......when paying for water bill.  Help line 0712730611"
             dear = "Dear "
             your = ", Your  account is "
-            welcome = " Welcome to TEULE house. Your house number is "
+            welcome = " Welcome to "
+            your_account = ". Your house number is "
+            house = str(flat_name)
             account_num = str(new_cn_int)
             house_num = str(house_number)
             ensure = ". ensure that you put the paybill 4057701 and  account number "
             paying = " when paying for rent and water bill.  Help line 0722812323"
-            client_message = dear + client_name + welcome + house_number + ensure + house_number + paying
+            client_message = dear + client_name + welcome + flat_name + your_account + house_number + ensure + house_number + paying
 
             WaterOutbox.objects.create(
                 dest_msisdn=phone_number,
