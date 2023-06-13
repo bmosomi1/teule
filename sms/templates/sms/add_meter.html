@@ -25,10 +25,10 @@
                 {% csrf_token %}
                  <div class="form-group">
                     <label>House Number</label>
-                    <select name="house_number" class="form-control" id="house_number" required>
+                    <select name="house_number" class="form-control" id="meter" required>
                         <option value="">Select house</option>
                         {% for client in clients %}
-                            <option value="{{ client.house_number }}">{{ client.house_number }}--CR- {{ client.reading }}--- {{ client.occupied_by.names }}</option>
+                            <option value="{{ client.house_number }}">{{ client.house_number }}--CR= {{ client.reading }}--- {{ client.occupied_by.names }}- {{ client.occupied_by.msisdn }}</option>
                         {% endfor %}
                     </select>
                 </div>
