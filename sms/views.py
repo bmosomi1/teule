@@ -2029,7 +2029,7 @@ def teule_home(request):
 
 
 def teule_clients(request):
-    clients = TeuleClients.objects.filter(~Q(vacated__contains="YES")).order_by('-id').values()
+    clients = TeuleClients.objects.filter(~Q(vacated__contains="YES"))
     context = {
         'clients': clients
     }
