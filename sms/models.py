@@ -340,6 +340,7 @@ class TeuleHouses(models.Model):
     occupied_by = models.ForeignKey(TeuleClients, on_delete=models.DO_NOTHING, blank=True, null=True)
     occupied_status = models.CharField(max_length=250, default='NO', null=True)
     reading = models.FloatField(max_length=250, default=0,null=True)
+    units_consumed = models.FloatField(max_length=250, default=0,null=True)
     read_date = models.DateTimeField(auto_now_add=True, blank=True)
 
     class Meta:
