@@ -43,6 +43,7 @@
                         <th>Occupied Status</th>
                         <th>Occupied by</th>
                         <th>Contact</th>
+                        <th>Amount Due</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -58,6 +59,7 @@
                         <td>{{ house.occupied_status}}</td>
                         <td>{{ house.occupied_by.names }}</td>
                         <td>{{ house.occupied_by.msisdn }}</td>
+                        <td>{{ house.amount_due }}</td>
                          <td>
                             <div class="btn-group">
                                 <a class="btn btn-outline-warning" href="{% url 'sms:edit_teule_house' house.id %}"><i class="fa fa-lg fa-edit"></i>Edit</a>
