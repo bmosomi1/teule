@@ -3287,7 +3287,7 @@ def add_meter_upload(request):
     customer = TeuleHouses.objects.filter(occupied_status='OCCUPIED').order_by('id')
     time = datetime.datetime.now()
     file_namer = "meter_readings"
-    file_path = 'media/reports/new/'
+    file_path = 'media/reports/'
     
     filename = "%s_%d_%d.xlsx" % (file_namer, time.microsecond, time.second)
     #filename = "meter_readings.xlsx" % ( time.year, time.month)
