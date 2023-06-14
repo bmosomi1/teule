@@ -1704,7 +1704,440 @@ def customer_contacts(request):
         }
         return render(request, 'sms/contacts.html', context)
 
+@login_required()
+@is_user_customer
+def house_report(request):
+    #from datetime import datetime
+    from datetime import timedelta
+    from django.utils import formats
+    if request.method == 'POST':
+        report_value = request.POST['reports_value']
+        start_date = request.POST['start_date']
+        end_date = request.POST['end_date']
+        current_datetime = datetime.datetime.now()
+        #date_joined = datetime.now()  
+        date_time = current_datetime.strftime("%Y-%m-%d")
+        plus_one_day = datetime.datetime.strptime(end_date, "%Y-%m-%d") + datetime.timedelta(days=1)
+        formatted_datetime = formats.date_format(current_datetime, "SHORT_DATETIME_FORMAT")
+        plus_one_months = datetime.datetime.strptime(date_time, "%Y-%m-%d") + datetime.timedelta(days=-31)
+        #plus_one_months = formatted_datetime + datetime.timedelta(days=31)
+        #end_date = datetime(end_date) + timedelta(days=1)
+        m = request.POST['reports_value']
+        #start_date = start_date.strptime(start_date, "YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]")
+        #end_date = end_date.strptime(end_date, "YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]")
+        if report_value=='1':
 
+
+            #customer = WaterMeterReadings.objects.all().order_by('id')
+            customer = TeuleClients.objects.filter(created_at__range=[start_date, plus_one_day]).order_by('id')
+            report_net=2
+            time = datetime.datetime.now()
+            file_namer = "water_clients_report"
+            file_path = 'media/reports/'
+            filename = "%s_%d_%d.xlsx" % (file_namer, time.microsecond, time.second)
+            #filename = "meter_readings.xlsx" % ( time.year, time.month)
+            full_path = f"{file_path}/{filename}"
+            if not os.path.exists(file_path):
+                os.makedirs(file_path)
+            workbook = Workbook()
+            summary_sheet = workbook.get_sheet_by_name('Sheet')
+            summary_sheet.title = 'Tenants Report'
+            #summary_sheet.title = m
+            #cell = summary_sheet.cell(row=1, column=1)
+            #cell.value = 'Meter Readings'
+            #cell.alignment = Alignment(horizontal='center', vertical='center')
+            wb = Workbook()  
+            sheet = wb.active  
+            sheet.merge_cells('A1:B2')  
+  
+            cell = sheet.cell(row=1, column=1)  
+            cell.value = 'TEULE CLIENTS' 
+            #summary_sheet.merge_cells('A2:D2')
+            
+            wb=Workbook()
+            ws=wb.active
+            a1=ws['A2']
+            ft=Font(color="FA8072")
+            a1.font=ft
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            #summary_sheet.append(('T N T WATER CLIENTS'))
+            summary_sheet.append(('HOUSE TENANTS','NAMES'))
+            big_red_text = Font(color="00FF0000", size=20)
+            sheet["B1"].font = big_red_text
+            sheet["B2"].font = big_red_text
+            summary_sheet.append(('A/C','NAMES', 'PHONE NUMBER', 'ID NUMBER', 'CURRENT HOUSE','REG DATE', 'PREVIOUS HOUSE','AMOUNT DUE'))
+            from openpyxl.styles import PatternFill, GradientFill
+            ws.sheet_view.showGridLines = False
+
+            for c in ws['B5:C5'][0]:
+                c.fill = PatternFill('solid', fgColor = 'F2F2F2')
+
+            for c in ws['B7:C7'][0]:
+                c.fill = PatternFill('gray0625')
+
+            number = 1
+            for cust in customer:
+                #summary_sheet.append((cust.id, cust.names, cust.last_meter_reading))
+                summary_sheet.append((cust.client_number, cust.names, cust.msisdn,cust.id_num,cust.house_number,cust.created_at ,cust.vacated_from,cust.amount_due))
+                number += 1
+            
+
+
+                double = Side(border_style="double", color="4617F1")
+                thin = Side(border_style="thin", color="4617F1")
+                regular = Side(border_style="medium", color="000000")
+
+                ## For the title cells B2 to F2
+                for c in ws['B4:H4'][0]:
+                    c.border = Border(bottom=double, top=thin)
+
+
+
+                no_left_side = Border(top = regular,bottom=regular,right=regular)
+                no_right_side = Border(top = regular,bottom=regular, left=regular)
+                box = Border(top = regular,bottom=regular, left=regular,right=regular)
+
+                ## For the "table-like" cells
+                for c in ws['B8:B11']+ws['B15:B19']:
+                    c[0].border = no_left_side
+                    
+                for c in ws['C8:C11']+ws['C15:C19']:
+                    c[0].border = no_right_side
+
+            workbook.save(full_path)
+            context = {
+                'file_path': full_path,
+                'request_report':report_value
+            }
+            return render(request, 'sms/house_reports.html', context)
+        if report_value=='4':
+
+
+            #customer = WaterMeterReadings.objects.all().order_by('id')
+            customer = WaterPaymentReceived.objects.filter(pay_date__range=[start_date, plus_one_day]).order_by('-id')
+            report_net=2
+            time = datetime.datetime.now()
+            file_namer = "payment_received_report"
+            file_path = 'media/reports/'
+            filename = "%s_%d_%d.xlsx" % (file_namer, time.microsecond, time.second)
+            #filename = "meter_readings.xlsx" % ( time.year, time.month)
+            full_path = f"{file_path}/{filename}"
+            if not os.path.exists(file_path):
+                os.makedirs(file_path)
+            workbook = Workbook()
+            summary_sheet = workbook.get_sheet_by_name('Sheet')
+            summary_sheet.title = 'Received Payments'
+            #summary_sheet.title = m
+            #cell = summary_sheet.cell(row=1, column=1)
+            #cell.value = 'Meter Readings'
+            #cell.alignment = Alignment(horizontal='center', vertical='center')
+            #summary_sheet.merge_cells('A1:B1')
+            summary_sheet.append(('PAYMENT DATE','A/C NUMBER', 'ACCOUNT NAME', 'AMOUNT', 'PAID BY','CONFIRMATION CODE', 'OUTSTANDING BALANCE','STATION'))
+
+            number = 1
+            for cust in customer:
+                #summary_sheet.append((cust.id, cust.names, cust.last_meter_reading))
+                summary_sheet.append((cust.pay_date, cust.account_number, cust.account_name,int(float(cust.amount)),cust.received_from,cust.confirmation_code ,int(float(cust.balance_carried_forward)),cust.client.network))
+                number += 1
+
+            workbook.save(full_path)
+            context = {
+                'file_path': full_path,
+                'request_report':report_value
+            }
+            return render(request, 'sms/water_reports.html', context)
+        if report_value=='5':
+
+
+            #customer = WaterMeterReadings.objects.all().order_by('id')
+            customer = WaterClientAll.objects.filter(amount_due__gt=0).order_by('id')
+            #customer = WaterClientAll.objects.filter(id=1).order_by('id')
+            report_net=2
+            time = datetime.datetime.now()
+            file_namer = "arrears_report"
+            file_path = 'media/reports/'
+            filename = "%s_%d_%d.xlsx" % (file_namer, time.microsecond, time.second)
+            #filename = "meter_readings.xlsx" % ( time.year, time.month)
+            full_path = f"{file_path}/{filename}"
+            if not os.path.exists(file_path):
+                os.makedirs(file_path)
+            workbook = Workbook()
+            summary_sheet = workbook.get_sheet_by_name('Sheet')
+            summary_sheet.title = 'ARREARS REPORT'
+            #summary_sheet.title = m
+
+            cell = summary_sheet.cell(row=2, column=5)
+
+
+            cell.value = 'CUMMULATIVE ARREARS'
+            cell.alignment = Alignment(horizontal='center', vertical='center')
+
+
+
+            summary_sheet.merge_cells('E2:h2')
+            summary_sheet.append(('A/C','NAMES', 'PHONE NUMBER' ,'STATION','CURRENT ARREARS', '1 MONTH OLD', '2 MONTHS OLD','3 MONTHS', 'OVER 3 MONTHS','TOTAL ARREARS'))
+
+            number = 1
+            for cust in customer:
+
+                cust_id=cust.id
+                #last_readings = WaterMeterReadings.objects.filter(account_number=cust_id).order_by('id').last()
+                #last_readings = WaterMeterReadings.objects.get(id=143)
+                payable0=cust.amount_0
+                payable1=cust.amount_1
+                payable2=cust.amount_2
+                payable3=cust.amount_3
+                last_arrears=cust.amount_0
+                total_arrears=cust.amount_due
+
+                m2_arrears=0
+                m3_arrears=0
+                m4_arrears=0
+                m0_arrears=0
+                m1_arrears=0
+                    
+
+
+
+
+                if last_arrears==0:
+                    last_arrears=cust.amount_due
+
+
+                two_months = 1000
+                three_months=0
+                current_arrears=0
+                month_2_arrears=0
+                month_3_arrears=0
+                month_4_arrears=0
+
+
+                if total_arrears<cust.amount_0:
+                    m1_arrears=total_arrears
+                    m2_arrears=0
+                    m3_arrears=0
+                    m4_arrears=0
+                else:
+                    #total_arrears>cust.amount_0
+                    m1_arrears=total_arrears-cust.amount_0
+                    if m1_arrears<0:
+                        #m1_arrear=cust.amount_0-total_arrears
+                        m1_arrear=0
+                        m2_arrears=0
+                        m3_arrears=0
+                        m4_arrears=0
+                    else: 
+                        m2_arrears=m1_arrears-cust.amount_1
+                        if m2_arrears<0:
+                            m2_arrears=0
+                            m3_arrears=0
+                            m4_arrears=0
+                        else:
+                            m3_arrears-m2_arrears-cust.amount_2
+                            if m3_arrears<0:
+                                m3_arrears=0
+                                m4_arrears=0
+                            else:
+                                m4_arrears=m3_arrears-cust.amount_3
+                                if m4_arrears<0:
+                                    m4_arrears=0
+                        
+
+
+
+                    if cust.amount_1==0:
+                        m1_arrears=0
+                        m2_arrears=0
+                        m3_arrears=0
+                        m4_arrears=0
+                    if cust.amount_2==0:                        
+                        m2_arrears=0
+                        m3_arrears=0
+                        m4_arrears=0
+                    if cust.amount_3==0:                        
+                        m3_arrears=0
+                        m4_arrears=0
+
+
+
+
+
+                if total_arrears>cust.amount_0:
+                    month_1_arrears=total_arrears-cust.amount_0
+                else:
+                    month_1_arrears=total_arrears
+                if cust.amount_0<1:
+                    month_1_arrears=0
+
+                if month_1_arrears>cust.amount_1:
+                    month_2_arrears=month_1_arrears-cust.amount_1
+                else:
+                    month_2_arrears=0
+                if month_2_arrears>cust.amount_2:
+                    month_3_arrears=month_2_arrears-cust.amount_2
+                else:
+                    month_3_arrears=0
+                if month_3_arrears>cust.amount_3:
+                    month_4_arrears=month_3_arrears-cust.amount_3
+                else:
+                    month_4_arrears=0
+
+
+
+
+
+
+                if last_arrears>=current_arrears:
+
+                    current_arrears = last_arrears
+                    
+                #summary_sheet.append((cust.id, cust.names, cust.last_meter_reading))
+                #summary_sheet.append((cust.id, cust.names, cust.msisdn,last_arrears,month_1_arrears,month_2_arrears,month_3_arrears ,month_4_arrears,cust.amount_due))
+                summary_sheet.append((cust.id, cust.names, cust.msisdn,cust.network,cust.amount_due,m1_arrears,m2_arrears,m3_arrears,m4_arrears ,cust.amount_due))
+                number += 1
+
+            workbook.save(full_path)
+            context = {
+                'file_path': full_path,
+                'request_report':report_value
+            }
+            return render(request, 'sms/water_reports.html', context)
+        if report_value=='6':
+
+
+            #customer = WaterMeterReadings.objects.all().order_by('id')
+            customer = WaterClientAll.objects.filter(last_meter_reading_date__lte=plus_one_months).order_by('last_meter_reading_date')
+            report_net=2
+            time = datetime.datetime.now()
+            file_namer = "overdue_meter_readings_report"
+            file_path = 'media/reports/'
+            filename = "%s_%d_%d.xlsx" % (file_namer, time.microsecond, time.second)
+            #filename = "meter_readings.xlsx" % ( time.year, time.month)
+            full_path = f"{file_path}/{filename}"
+            if not os.path.exists(file_path):
+                os.makedirs(file_path)
+            workbook = Workbook()
+            summary_sheet = workbook.get_sheet_by_name('Sheet')
+            summary_sheet.title = "Overdue readings"
+            #summary_sheet.title = m
+            #cell = summary_sheet.cell(row=1, column=1)
+            #cell.value = 'Meter Readings'
+            #cell.alignment = Alignment(horizontal='center', vertical='center')
+            #summary_sheet.merge_cells('A1:B1')
+            summary_sheet.append(('A/C','NAMES', 'PHONE NUMBER', 'ID NUMBER', 'STATION','SUB STATION','LAST READING DATE', 'READINGS','AMOUNT DUE'))
+
+            number = 1
+            for cust in customer:
+                #summary_sheet.append((cust.id, cust.names, cust.last_meter_reading))
+                summary_sheet.append((cust.id, cust.names, cust.msisdn,cust.id_num,cust.network,cust.court,cust.last_meter_reading_date,cust.last_meter_reading,cust.amount_due))
+                number += 1
+
+            workbook.save(full_path)
+            context = {
+                'file_path': full_path,
+                'request_report':report_value
+            }
+            return render(request, 'sms/water_reports.html', context)
+            
+        if report_value=='2':
+
+
+            #customer = WaterMeterReadings.objects.all().order_by('id')
+            customer = WaterMeterReadings.objects.filter(read_date__range=[start_date, plus_one_day]).order_by('id')
+            report_net=2
+            time = datetime.datetime.now()
+            file_namer = "meter_readings_report"
+            file_path = 'media/reports/'
+            filename = "%s_%d_%d.xlsx" % (file_namer, time.microsecond, time.second)
+            #filename = "meter_readings.xlsx" % ( time.year, time.month)
+            full_path = f"{file_path}/{filename}"
+            if not os.path.exists(file_path):
+                os.makedirs(file_path)
+            workbook = Workbook()
+            summary_sheet = workbook.get_sheet_by_name('Sheet')
+            summary_sheet.title = 'Meter Reading Report2'
+            #summary_sheet.title = m
+            #cell = summary_sheet.cell(row=1, column=1)
+            #cell.value = 'Meter Readings'
+            #cell.alignment = Alignment(horizontal='center', vertical='center')
+            #summary_sheet.merge_cells('A1:B1')
+            summary_sheet.append(('A/C','NAMES','PHONE NUMBER', 'PR','CR', 'UNITS','BILL','CREDIT','ARREARS','PAYABLE', 'READING DATE', 'STATION'))
+
+            number = 1
+            for cust in customer:
+                #summary_sheet.append((cust.id, cust.names, cust.last_meter_reading))
+                summary_sheet.append((cust.account_number.id, cust.names,cust.msisdn, cust.previous_reading,cust.readings,cust.units_consumed,cust.amount_from_units,cust.credit,cust.arrears,cust.payable,cust.read_date,cust.account_number.network ))
+                number += 1
+
+            workbook.save(full_path)
+            context = {
+                'file_path': full_path,
+                'request_report':report_value
+            }
+            return render(request, 'sms/water_reports.html', context)
+        if report_value=='3':
+
+
+            #customer = WaterMeterReadings.objects.all().order_by('id')
+            customer = WaterOutbox.objects.filter(out_date__range=[start_date, plus_one_day]).order_by('-id')
+
+            time = datetime.datetime.now()
+            file_namer = "Bulk_sms_logs_report"
+            file_path = 'media/reports/'
+            filename = "%s_%d_%d.xlsx" % (file_namer, time.microsecond, time.second)
+            #filename = "meter_readings.xlsx" % ( time.year, time.month)
+            full_path = f"{file_path}/{filename}"
+            if not os.path.exists(file_path):
+                os.makedirs(file_path)
+            workbook = Workbook()
+            summary_sheet = workbook.get_sheet_by_name('Sheet')
+            summary_sheet.title = 'Bulk sms logs'
+            #summary_sheet.title = m
+            #cell = summary_sheet.cell(row=1, column=1)
+            #cell.value = 'Meter Readings'
+            #cell.alignment = Alignment(horizontal='center', vertical='center')
+            #summary_sheet.merge_cells('A1:B1')
+            summary_sheet.append(('OUT DATE','PHONE NUMBER', 'MESSAGE', 'STATUS'))
+
+            number = 1
+            for cust in customer:
+                #summary_sheet.append((cust.id, cust.names, cust.last_meter_reading))
+                summary_sheet.append((cust.out_date, cust.dest_msisdn, cust.text_message,cust.delivery_status))
+                number += 1
+
+            workbook.save(full_path)
+            context = {
+                'file_path': full_path,
+                'request_report':report_value
+            }
+            return render(request, 'sms/water_reports.html', context)
+
+
+
+
+
+
+            #return redirect('sms:meter_readings_report')
+
+        #return render(request, 'sms/meter_readings_report.html', context)
+    return render(request, 'sms/water_reports.html')
 @login_required()
 @is_user_customer
 def teule_revenues(request):
@@ -5457,7 +5890,7 @@ def send_to_court(request):
         #groups = WaterClientAll.objects.all().order_by('court').distinct()
         #groups = WaterCourt.objects.all().order_by('name').distinct()
         #groups = WaterCourt.objects.all().values('name').distinct()
-        groups = WaterClientAll.objects.all().values('court').distinct()
+        groups = TeuleClients.objects.all().values('house_number').distinct()
         #groups = WaterClientAll.objects.order_by().values_list('court',Flat=True).distinct()
         if request.method == 'POST':
             message = request.POST.get('Message')

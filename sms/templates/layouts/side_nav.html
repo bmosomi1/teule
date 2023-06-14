@@ -27,6 +27,7 @@
     {% url 'sms:water_payments' as water_payments %}
     {% url 'sms:water_payments_allocations' as water_payments_allocations %}
     {% url 'sms:teule_payments_allocations' as teule_payments_allocations %}
+    {% url 'sms:house_report' as house_report %}
     {% url 'sms:water_system_config' as water_system_config %}
     {% url 'sms:meter_readers' as meter_readers %}
     {% url 'sms:teule_houses' as teule_houses %}
@@ -119,10 +120,10 @@
             </li>
 
             <li>
-                <a {% if request.path == meter_readings_report %} class="app-menu__item active"
+                <a {% if request.path == house_report %} class="app-menu__item active"
                 {% else %}
                       class="app-menu__item"
-                {% endif %} href="{{ meter_readings_report }}">
+                {% endif %} href="{{ house_report }}">
                     <i class="app-menu__icon fa fa-pie-chart"></i>
                     <span class="app-menu__label">Reports</span></a>
             </li>
