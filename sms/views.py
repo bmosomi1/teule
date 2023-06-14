@@ -1831,7 +1831,7 @@ def house_report(request):
 
 
             #customer = WaterMeterReadings.objects.all().order_by('id')
-            customer = WaterPaymentReceived.objects.filter(pay_date__range=[start_date, plus_one_day]).order_by('-id')
+            customer = TeulePaymentReceived.objects.filter(pay_date__range=[start_date, plus_one_day]).order_by('-id')
             report_net=2
             time = datetime.datetime.now()
             file_namer = "payment_received_report"
@@ -1849,12 +1849,12 @@ def house_report(request):
             #cell.value = 'Meter Readings'
             #cell.alignment = Alignment(horizontal='center', vertical='center')
             #summary_sheet.merge_cells('A1:B1')
-            summary_sheet.append(('PAYMENT DATE','A/C NUMBER', 'ACCOUNT NAME', 'AMOUNT', 'PAID BY','CONFIRMATION CODE', 'OUTSTANDING BALANCE','STATION'))
+            summary_sheet.append(('PAYMENT DATE','HOUSE NUMBER', 'ACCOUNT NAME', 'AMOUNT', 'PAID BY','CONFIRMATION CODE', 'OUTSTANDING BALANCE','FLAT NAME'))
 
             number = 1
             for cust in customer:
                 #summary_sheet.append((cust.id, cust.names, cust.last_meter_reading))
-                summary_sheet.append((cust.pay_date, cust.account_number, cust.account_name,int(float(cust.amount)),cust.received_from,cust.confirmation_code ,int(float(cust.balance_carried_forward)),cust.client.network))
+                summary_sheet.append((cust.pay_date, cust.client.oouse_number, cust.account_name,int(float(cust.amount)),cust.received_from,cust.confirmation_code ,int(float(cust.balance_carried_forward)),cust.client.client.flat.name))
                 number += 1
 
             workbook.save(full_path)
@@ -1867,7 +1867,7 @@ def house_report(request):
 
 
             #customer = WaterMeterReadings.objects.all().order_by('id')
-            customer = WaterClientAll.objects.filter(amount_due__gt=0).order_by('id')
+            customer = TeuleHouses.objects.filter(amount_due__gt=0).order_by('id')
             #customer = WaterClientAll.objects.filter(id=1).order_by('id')
             report_net=2
             time = datetime.datetime.now()
@@ -1892,7 +1892,7 @@ def house_report(request):
 
 
             summary_sheet.merge_cells('E2:h2')
-            summary_sheet.append(('A/C','NAMES', 'PHONE NUMBER' ,'STATION','CURRENT ARREARS', '1 MONTH OLD', '2 MONTHS OLD','3 MONTHS', 'OVER 3 MONTHS','TOTAL ARREARS'))
+            summary_sheet.append(('A/C','HOUSE NUMBER', 'PHONE NUMBER' ,'FLAT','CURRENT ARREARS', '1 MONTH OLD', '2 MONTHS OLD','3 MONTHS', 'OVER 3 MONTHS','TOTAL ARREARS'))
 
             number = 1
             for cust in customer:
@@ -1998,6 +1998,15 @@ def house_report(request):
                     month_4_arrears=month_3_arrears-cust.amount_3
                 else:
                     month_4_arrears=0
+                if month_4_arrears>cust.amount_4:
+                    month_4_arrears=month_3_arrears-cust.amount_3
+                else:
+                    month_4_arrears=0
+                if month_5_arrears>cust.amount_5:
+                    month_5_arrears=month_4_arrears-cust.amount_4
+                else:
+                    month_5_arrears=0
+
 
 
 
@@ -2010,7 +2019,7 @@ def house_report(request):
                     
                 #summary_sheet.append((cust.id, cust.names, cust.last_meter_reading))
                 #summary_sheet.append((cust.id, cust.names, cust.msisdn,last_arrears,month_1_arrears,month_2_arrears,month_3_arrears ,month_4_arrears,cust.amount_due))
-                summary_sheet.append((cust.id, cust.names, cust.msisdn,cust.network,cust.amount_due,m1_arrears,m2_arrears,m3_arrears,m4_arrears ,cust.amount_due))
+                summary_sheet.append((cust.house_number, cust.occupied_by.names, cust.occupied_by.msisdn,cust.flat.name,cust.amount_due,m1_arrears,m2_arrears,m3_arrears,m4_arrears ,cust.amount_due))
                 number += 1
 
             workbook.save(full_path)
@@ -2023,7 +2032,7 @@ def house_report(request):
 
 
             #customer = WaterMeterReadings.objects.all().order_by('id')
-            customer = WaterClientAll.objects.filter(last_meter_reading_date__lte=plus_one_months).order_by('last_meter_reading_date')
+            customer = TeuleHouses.objects.filter(read_date__lte=plus_one_months).order_by('read_date')
             report_net=2
             time = datetime.datetime.now()
             file_namer = "overdue_meter_readings_report"
@@ -2060,7 +2069,7 @@ def house_report(request):
 
 
             #customer = WaterMeterReadings.objects.all().order_by('id')
-            customer = WaterMeterReadings.objects.filter(read_date__range=[start_date, plus_one_day]).order_by('id')
+            customer = TeuleMeterReadings.objects.filter(read_date__range=[start_date, plus_one_day]).order_by('id')
             report_net=2
             time = datetime.datetime.now()
             file_namer = "house_report"
@@ -2078,12 +2087,12 @@ def house_report(request):
             #cell.value = 'Meter Readings'
             #cell.alignment = Alignment(horizontal='center', vertical='center')
             #summary_sheet.merge_cells('A1:B1')
-            summary_sheet.append(('A/C','NAMES','PHONE NUMBER', 'PR','CR', 'UNITS','BILL','CREDIT','ARREARS','PAYABLE', 'READING DATE', 'STATION'))
+            summary_sheet.append(('A/C','NAMES','PHONE NUMBER', 'PR','CR', 'UNITS','BILL','CREDIT','ARREARS','PAYABLE', 'READING DATE', 'FLAT'))
 
             number = 1
             for cust in customer:
                 #summary_sheet.append((cust.id, cust.names, cust.last_meter_reading))
-                summary_sheet.append((cust.account_number.id, cust.names,cust.msisdn, cust.previous_reading,cust.readings,cust.units_consumed,cust.amount_from_units,cust.credit,cust.arrears,cust.payable,cust.read_date,cust.account_number.network ))
+                summary_sheet.append((cust.account_number.id, cust.names,cust.msisdn, cust.previous_reading,cust.readings,cust.units_consumed,cust.amount_from_units,cust.credit,cust.arrears,cust.payable,cust.read_date,cust.flat.name ))
                 number += 1
 
             workbook.save(full_path)
