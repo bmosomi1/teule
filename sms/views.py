@@ -2412,7 +2412,7 @@ def edit_teule_house(request, house_id):
         house.monthly_rent = request.POST['monthly_rent']
         house.deposit = request.POST['deposit']
         house.amount_due = request.POST['amount_due']
-        
+        house.house_type = request.POST['house_type'].upper()        
         house.save()
         #WaterNetwork.delete(self)
 
@@ -2524,6 +2524,7 @@ def create_teule_house(request):
         TeuleHouses.objects.create(
             flat=flat,
             house_number=request.POST['house_number'].upper(),
+            house_type=request.POST['house_type'].upper(),
             monthly_rent=request.POST['monthly_rent'],
             deposit=request.POST['deposit'],
             reading=request.POST['meter_reading'],
