@@ -2137,7 +2137,7 @@ def house_report(request):
             #return redirect('sms:meter_readings_report')
 
         #return render(request, 'sms/meter_readings_report.html', context)
-    return render(request, 'sms/water_reports.html')
+    return render(request, 'sms/house_reports.html')
 @login_required()
 @is_user_customer
 def teule_revenues(request):
