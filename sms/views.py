@@ -2087,12 +2087,12 @@ def house_report(request):
             #cell.value = 'Meter Readings'
             #cell.alignment = Alignment(horizontal='center', vertical='center')
             #summary_sheet.merge_cells('A1:B1')
-            summary_sheet.append(('A/C','NAMES','PHONE NUMBER', 'PR','CR', 'UNITS','BILL','CREDIT','ARREARS','PAYABLE', 'READING DATE', 'FLAT'))
+            summary_sheet.append(('HOUSE','NAMES','PHONE NUMBER', 'PR','CR', 'UNITS','BILL','CREDIT','ARREARS','PAYABLE', 'READING DATE', 'FLAT'))
 
             number = 1
             for cust in customer:
                 #summary_sheet.append((cust.id, cust.names, cust.last_meter_reading))
-                summary_sheet.append((cust.account_number.id, cust.names,cust.msisdn, cust.previous_reading,cust.readings,cust.units_consumed,cust.amount_from_units,cust.credit,cust.arrears,cust.payable,cust.read_date,cust.flat.name ))
+                summary_sheet.append((cust.account_number.house_number, cust.names,cust.msisdn, cust.previous_reading,cust.readings,cust.units_consumed,cust.amount_from_units,cust.credit,cust.arrears,cust.payable,cust.read_date,cust.account_number.flat.name ))
                 number += 1
 
             workbook.save(full_path)
