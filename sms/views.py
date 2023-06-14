@@ -2094,7 +2094,7 @@ def house_report(request):
             number = 1
             for cust in customer:
                 #summary_sheet.append((cust.id, cust.names, cust.last_meter_reading))
-                summary_sheet.append((cust.house.house_number, cust.occupied_by.names, cust.occupied_by.msisdn,cust.flat.name,cust.vacate_date,cust.client.amount_due))
+                summary_sheet.append((cust.house.house_number, cust.client.names, cust.client.msisdn,cust.house.flat.name,cust.vacate_date,cust.client.amount_due))
                 number += 1
 
             workbook.save(full_path)
