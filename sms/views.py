@@ -1704,6 +1704,118 @@ def customer_contacts(request):
         }
         return render(request, 'sms/contacts.html', context)
 
+
+@login_required()
+@is_user_customer
+def teule_revenues(request):
+    #customer = Customer.objects.filter(user_ptr_id=request.user.id).first()
+    customer = TeuleHouses.objects.all().first()
+    if customer is None:
+        customer = TeuleHouses.objects.all().first()
+        weeks = get_last_n_weeks(12)
+        months = get_last_n_months(12)
+        one_month_ago = datetime.datetime.today() - datetime.timedelta(days=30)
+        current_day = datetime.datetime.today()
+        credit_usage = []
+        for month in months:
+            # print(week)
+            messages = TeuleMeterReadings.objects.filter(read_date__gte=one_month_ago, read_date__lte=current_day).count()
+            credit_usage.append(messages)
+            current_day = current_day - datetime.timedelta(days=7)
+            one_month_ago = one_month_ago - datetime.timedelta(days=30)
+        # print(credit_usage)
+        context = {
+            'messages_sent': credit_usage[::-1],
+            'weeks': weeks[::-1],
+            'months': months[::-1],
+            'customer': customer,
+            'contacts': Contact.objects.filter(group__customer_id=customer.id).count(),
+            'water_clients': WaterClientAll.objects.filter().count(),
+            'phone_number': customer.msisdn,
+            'groups': Group.objects.filter(customer_id=customer.id).count(),
+            'admins': CustomerSubAccounts.objects.filter(owner=customer.id).count()+1
+        }
+        return render(request, 'sms/client_apps.html', context)
+    else:
+        months = get_last_n_months(10)
+        payments = TeulePaymentReceived.objects.filter(account_number=1)
+        
+        weeks = get_last_n_weeks(10)
+        one_month_ago = datetime.datetime.today() - datetime.timedelta(days=30)
+        current_day = datetime.datetime.today()
+        current_day_today = datetime.datetime.today()
+        current_month = datetime.datetime.today()
+        this_month = current_day.month
+        this_month_current_month = current_day.month
+        this_year = current_day.year
+        the_month_nam = current_day.month
+        number_index = 1
+        
+        the_sub_months=[]
+        the_month=[]
+        #the_sub_months=[2,1,12,11,10,9,8,7,6,5,4]
+        #monthly_consumptions = [0, 10, 0, 5, 0, 0, 0, 0, 0, 0, 0, 15]
+        payments_r = []
+        payments_e = []
+        index_numbers = []
+        mydeviation = []
+        for month in months:
+            if this_month>this_month_current_month:
+                this_year=this_year-1
+        
+    
+            payments_received = int(TeulePaymentReceived.objects.filter(pay_date__month=this_month,pay_date__year=this_year).aggregate(total=Sum('amount'))['total'] or 0)
+            expected_payments = int(TeuleMeterReadings.objects.filter(read_date__month=this_month,read_date__year=this_year).aggregate(total=Sum('amount_from_units'))['total'] or 0)
+            deviat = expected_payments - payments_received
+            thiss_month = calendar.month_name[this_month]
+            payments_r.append(payments_received)
+            payments_e.append(expected_payments)
+            index_numbers.append(number_index)
+            mydeviation.append(deviat)
+            the_sub_months.append(thiss_month)
+
+            
+            current_day = current_day - datetime.timedelta(days=30)
+            this_month = current_day.month
+            number_index = number_index + 1
+            
+            
+            one_month_ago = one_month_ago - datetime.timedelta(days=30)
+            current_month = current_month - datetime.timedelta(days=30)
+        receiving_months = the_sub_months[::1]
+        myrevlist = zip(index_numbers,receiving_months, payments_e, payments_r, mydeviation)
+
+       # del the_sub_months[0]
+
+          
+        context = {
+            'revenues': payments_r[::1],
+            'the_sub_months' : the_sub_months[::1],
+            'revenue_list' : myrevlist,
+            'weeks': weeks[::-1],
+            'payments': payments,
+            'months': the_sub_months[::1],
+            'phone_number': customer.msisdn,
+            'client_id': customer.id,
+            'amount_due': customer.amount_due,
+            'client_name': customer.names,
+            'client_court': customer.court,
+            'customer': customer,
+            'contacts': Contact.objects.filter(group__customer_id=customer.id).count(),
+            'water_clients': TeuleHouses.objects.filter().count(),
+            'groups': Group.objects.filter(customer_id=customer.id).count(),
+            'courts': WaterCourt.objects.filter().count(),
+            'readings': customer.last_meter_reading,
+            'last_date': customer.last_meter_reading_date,
+            
+            'outbox': TeuleMeterReadings.objects.filter().count(),
+            'unallocated_payments': MiwamaMpesa.objects.filter(processed=2).count(),
+            'admins': CustomerSubAccounts.objects.filter(owner=customer.id).count() + 1
+        }
+        return render(request, 'sms/teule_revenues.html', context)
+
+
+
 @login_required()
 def teule_payments(request):
     payments = TeulePaymentReceived.objects.all().order_by('-pay_date')[:600]
@@ -1712,7 +1824,6 @@ def teule_payments(request):
     }
     return render(request, 'sms/teule_payments.html', context)
 @login_required()
-
 
 def teule_payments_allocations(request):
 
@@ -1860,9 +1971,9 @@ def teule_main_account(request):
             'main_accounts': TeuleFlat.objects.filter().count(),
             'main_flats': TeuleFlat.objects.filter().count(),
             'this_month' : this_month,
-            'this_month_collections': WaterPaymentReceived.objects.filter(pay_date__month=today_month,pay_date__year=today_year).aggregate(total=Sum('amount'))['total'] or 0,
-            'last_month_collections': WaterPaymentReceived.objects.filter(pay_date__month=yesterday_month,pay_date__year=today_year).aggregate(total=Sum('amount'))['total'] or 0,
-            'tobe_collected': WaterClientAll.objects.filter().aggregate(total=Sum('amount_due'))['total'] or 0,
+            'this_month_collections': TeulePaymentReceived.objects.filter(pay_date__month=today_month,pay_date__year=today_year).aggregate(total=Sum('amount'))['total'] or 0,
+            'last_month_collections': TeulePaymentReceived.objects.filter(pay_date__month=yesterday_month,pay_date__year=today_year).aggregate(total=Sum('amount'))['total'] or 0,
+            'tobe_collected': TeuleHouses.objects.filter().aggregate(total=Sum('amount_due'))['total'] or 0,
             'unallocated_payments': MiwamaMpesa.objects.filter(processed=2).count(),
             'admins': CustomerSubAccounts.objects.filter(owner=customer.id).count() + 1
         }
