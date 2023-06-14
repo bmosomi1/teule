@@ -2002,7 +2002,7 @@ def house_report(request):
                     month_4_arrears=month_3_arrears-cust.amount_3
                 else:
                     month_4_arrears=0
-                if month_5_arrears>cust.amount_5:
+                if month_4_arrears>cust.amount_5:
                     month_5_arrears=month_4_arrears-cust.amount_4
                 else:
                     month_5_arrears=0
