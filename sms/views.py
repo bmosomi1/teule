@@ -1795,7 +1795,7 @@ def house_report(request):
             number = 1
             for cust in customer:
                 #summary_sheet.append((cust.id, cust.names, cust.last_meter_reading))
-                summary_sheet.append((cust.client_number, cust.names, number(cust.msisdn),cust.id_num,cust.house_number,cust.created_at ,cust.vacated_from,cust.amount_due))
+                summary_sheet.append((cust.client_number, cust.names, (cust.msisdn),cust.id_num,cust.house_number,cust.created_at ,cust.vacated_from,cust.amount_due))
                 number += 1
             
 
