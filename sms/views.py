@@ -1732,7 +1732,7 @@ def house_report(request):
             customer = TeuleClients.objects.filter(created_at__range=[start_date, plus_one_day]).order_by('id')
             report_net=2
             time = datetime.datetime.now()
-            file_namer = "water_clients_report"
+            file_namer = "tenants_report"
             file_path = 'media/reports/'
             filename = "%s_%d_%d.xlsx" % (file_namer, time.microsecond, time.second)
             #filename = "meter_readings.xlsx" % ( time.year, time.month)
@@ -1862,7 +1862,7 @@ def house_report(request):
                 'file_path': full_path,
                 'request_report':report_value
             }
-            return render(request, 'sms/water_reports.html', context)
+            return render(request, 'sms/house_reports.html', context)
         if report_value=='5':
 
 
@@ -2018,7 +2018,7 @@ def house_report(request):
                 'file_path': full_path,
                 'request_report':report_value
             }
-            return render(request, 'sms/water_reports.html', context)
+            return render(request, 'sms/house_reports.html', context)
         if report_value=='6':
 
 
@@ -2054,7 +2054,7 @@ def house_report(request):
                 'file_path': full_path,
                 'request_report':report_value
             }
-            return render(request, 'sms/water_reports.html', context)
+            return render(request, 'sms/house_reports.html', context)
             
         if report_value=='2':
 
@@ -2063,7 +2063,7 @@ def house_report(request):
             customer = WaterMeterReadings.objects.filter(read_date__range=[start_date, plus_one_day]).order_by('id')
             report_net=2
             time = datetime.datetime.now()
-            file_namer = "meter_readings_report"
+            file_namer = "house_report"
             file_path = 'media/reports/'
             filename = "%s_%d_%d.xlsx" % (file_namer, time.microsecond, time.second)
             #filename = "meter_readings.xlsx" % ( time.year, time.month)
@@ -2091,7 +2091,7 @@ def house_report(request):
                 'file_path': full_path,
                 'request_report':report_value
             }
-            return render(request, 'sms/water_reports.html', context)
+            return render(request, 'sms/house_reports.html', context)
         if report_value=='3':
 
 
@@ -2127,7 +2127,7 @@ def house_report(request):
                 'file_path': full_path,
                 'request_report':report_value
             }
-            return render(request, 'sms/water_reports.html', context)
+            return render(request, 'sms/house_reports.html', context)
 
 
 
