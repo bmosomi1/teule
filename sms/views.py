@@ -2050,12 +2050,51 @@ def house_report(request):
             #cell.value = 'Meter Readings'
             #cell.alignment = Alignment(horizontal='center', vertical='center')
             #summary_sheet.merge_cells('A1:B1')
-            summary_sheet.append(('A/C','NAMES', 'PHONE NUMBER', 'ID NUMBER', 'STATION','SUB STATION','LAST READING DATE', 'READINGS','AMOUNT DUE'))
+            summary_sheet.append(('HOUSE','NAMES', 'PHONE NUMBER', 'FLAT','LAST READING DATE', 'READINGS','AMOUNT DUE'))
 
             number = 1
             for cust in customer:
                 #summary_sheet.append((cust.id, cust.names, cust.last_meter_reading))
-                summary_sheet.append((cust.id, cust.names, cust.msisdn,cust.id_num,cust.network,cust.court,cust.last_meter_reading_date,cust.last_meter_reading,cust.amount_due))
+                summary_sheet.append((cust.house_number, cust.occupied_by.names, cust.occupied_by.msisdn,cust.flat.name,cust.last_meter_read_date,cust.reading,cust.amount_due))
+                number += 1
+
+            workbook.save(full_path)
+            context = {
+                'file_path': full_path,
+                'request_report':report_value
+            }
+            return render(request, 'sms/house_reports.html', context)
+        
+
+        if report_value=='7':
+
+
+            #customer = WaterMeterReadings.objects.all().order_by('id')
+            customer = TeuleVacateHistory.objects.filter(vacate_date__range=[start_date, plus_one_day]).order_by('id')
+            #customer = TeuleVacateHistory.objects.filter(vacate_date__lte=plus_one_months).order_by('read_date')
+            report_net=2
+            time = datetime.datetime.now()
+            file_namer = "overdue_meter_readings_report"
+            file_path = 'media/reports/'
+            filename = "%s_%d_%d.xlsx" % (file_namer, time.microsecond, time.second)
+            #filename = "meter_readings.xlsx" % ( time.year, time.month)
+            full_path = f"{file_path}/{filename}"
+            if not os.path.exists(file_path):
+                os.makedirs(file_path)
+            workbook = Workbook()
+            summary_sheet = workbook.get_sheet_by_name('Sheet')
+            summary_sheet.title = "Vacate History"
+            #summary_sheet.title = m
+            #cell = summary_sheet.cell(row=1, column=1)
+            #cell.value = 'Meter Readings'
+            #cell.alignment = Alignment(horizontal='center', vertical='center')
+            #summary_sheet.merge_cells('A1:B1')
+            summary_sheet.append(('HOUSE','CLIENT', 'PHONE NUMBER', 'FLAT','VACATE DATE','AMOUNT DUE'))
+
+            number = 1
+            for cust in customer:
+                #summary_sheet.append((cust.id, cust.names, cust.last_meter_reading))
+                summary_sheet.append((cust.house.house_number, cust.occupied_by.names, cust.occupied_by.msisdn,cust.flat.name,cust.vacate_date,cust.client.amount_due))
                 number += 1
 
             workbook.save(full_path)
