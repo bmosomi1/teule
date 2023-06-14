@@ -2194,12 +2194,14 @@ def teule_house_allocations(request):
         tenant = TeuleClients.objects.filter(id=client_id).first()
         house = TeuleHouses.objects.filter(id=house_id).first()
         house_number = house.house_number
+        amount_due = tenant.amount_due
         tenant.vacated='NO'
         tenant.house_number=house_number
         tenant.save()
         house.date_joined=datetime.datetime.now()
         house.occupied_by=tenant
         house.occupied_status='OCCUPIED'
+        house.amount_due=amount_due
         house.save()        
 
         
@@ -2427,13 +2429,16 @@ def vacate_house(request, client_id):
     client = TeuleClients.objects.get(id=client_id)
     vacated_house = client.house_number
     house = TeuleHouses.objects.get(house_number=vacated_house)
+    amount_due = house.amount_due
     client.house_number=''
     client.vacated='YES'
     client.vacated_from=vacated_house
     client.vacate_date=datetime.datetime.now()
+    client.amount_due=amount_due
     client.save()
     house.occupied_status='NO'
     house.occupied_by_id=''
+    house.amount_due=0
     house.save()
     TeuleVacateHistory.objects.create(
                 client= client,
