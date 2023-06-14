@@ -353,6 +353,18 @@ class TeuleHouses(models.Model):
     class Meta:
         verbose_name = 'Flat'
         verbose_name_plural = 'Flats'
+
+class TeuleMeterReplacement(models.Model):
+    client = models.ForeignKey(TeuleHouses, on_delete=models.CASCADE)
+    comments = models.CharField(max_length=250)
+    meter_number = models.CharField(max_length=250, null=True)
+    last_units = models.CharField(max_length=250)
+    names = models.CharField(max_length=250, null=True)
+    amount_due = models.CharField(max_length=250, null=True)
+    court = models.CharField(max_length=250, null=True)
+    phone_number = models.CharField(max_length=250, null=True)
+    network = models.CharField(max_length=250, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 class TeuleVacateHistory(models.Model):
     house = models.ForeignKey(TeuleHouses, on_delete=models.CASCADE)
     client = models.ForeignKey(TeuleClients, on_delete=models.CASCADE)     

@@ -4800,19 +4800,19 @@ def meter_replacement(request):
         comments = request.POST['comment']
         client_id = request.POST['meter']
         meter_number = request.POST['meter_number']
-        customer = WaterClientAll.objects.filter(id=client_id).first()
-        last_readings = customer.last_meter_reading
-        names = customer.names
-        court = customer.court
+        customer = TeuleHouses.objects.filter(id=client_id).first()
+        last_readings = customer.reading
+        names = customer.house_nummber
+        court = customer.flat.name
         amount_due = customer.amount_due
-        network=customer.network
-        phone_number=customer.msisdn
+        network=customer.house_number
+        phone_number=occupied_by.msisdn
 
 
 
 
 
-        WaterMeterReplacement.objects.create(
+        TeuleMeterReplacement.objects.create(
             client=customer,
             last_units=last_readings,
             comments=comments,
@@ -4824,7 +4824,7 @@ def meter_replacement(request):
             meter_number=meter_number
 
         )
-        customer.last_meter_reading = 0
+        customer.reading = 0
         customer.meter_number=meter_number
         customer.save()
 
