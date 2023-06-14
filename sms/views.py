@@ -1854,7 +1854,7 @@ def house_report(request):
             number = 1
             for cust in customer:
                 #summary_sheet.append((cust.id, cust.names, cust.last_meter_reading))
-                summary_sheet.append((cust.pay_date, cust.client.house_number, cust.account_name,int(float(cust.amount)),cust.received_from,cust.confirmation_code ,int(float(cust.balance_carried_forward)),cust.client.client.flat.name))
+                summary_sheet.append((cust.pay_date, cust.client.house_number, cust.account_name,int(float(cust.amount)),cust.received_from,cust.confirmation_code ,int(float(cust.balance_carried_forward)),cust.client.flat.name))
                 number += 1
 
             workbook.save(full_path)
