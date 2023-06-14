@@ -41,6 +41,7 @@
                         <th>Flat Name</th>
                         <th>Monthly Rent</th>
                         <th>Occupied Status</th>
+                        
                         <th>Occupied by</th>
                         <th>Contact</th>
                         <th>Amount Due</th>
@@ -57,7 +58,16 @@
                         <td>{{ house.flat.name }}</td>
                         <td>{{ house.monthly_rent}}</td>
                         <td>{{ house.occupied_status}}</td>
+                        {% if house.occupied_by.id %}
                         <td><a href="{% url 'sms:teule_client_dashboard' house.occupied_by.id %}">{{ house.occupied_by.names }}</a></td>
+                      
+                        {% else %}
+                        <td>{{ house.occupied_by.msisdn }}</td>
+
+                        {% endif %}
+
+                        
+                        
                         
                         <td>{{ house.occupied_by.msisdn }}</td>
                         <td>{{ house.amount_due }}</td>
