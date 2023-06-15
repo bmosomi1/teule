@@ -40,7 +40,7 @@
                 <div class="col-4">
                   <h2 class="page-header"><img alt="Logo" src="{% static 'images/teule_logo.PNG' %}" height="100px"></h2>
                   <p></p>
-                    <h3 style="margin-top: -13px !important; color: #1F494A; font-size: 11px !important;">Your Water Solutions</h3>
+                    <h3 style="margin-top: -13px !important; color: #1F494A; font-size: 11px !important;">Rent Management Solutions</h3>
                 </div>
                 <div class="col-4">
                     <p style="font-size: 14px !important; color: #1F494A;">Teule House</p>
@@ -62,9 +62,10 @@
                           
                           <p style="font-weight: bold">{{ client.flat.name }} ,</p>
                           
-                          <p style="font-weight: bold">Tel: {{ tel }} </p>
-                              {% if client.kra_pin != None %}
-                                  <p style="font-weight: bold">KRA PIN: {{ client.kra_pin }}</p>
+                         
+                              {% if client.occupied_by %}
+                                  <p style="font-weight: bold">Names: {{ client.occupied_by.name }}</p>
+                                  <p style="font-weight: bold">Tel: {{ client.occupied_by.msisdn }}</p>
                               {% endif %}
                       </div>
                       </div>
