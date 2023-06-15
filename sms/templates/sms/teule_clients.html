@@ -35,7 +35,7 @@
                     
                     <th>Flat Name</th>
                     <th>Reg Date</th>
-                    <th>Vacated</th>
+                    
                     <th>Actions</th>
 
                 </tr>
@@ -50,9 +50,9 @@
                     <td>{{ client.house_number }}</td>
                     
                     
-                    <td>{{ client.flat.name }}</td>
+                    <td>{{ client.flat_name }}</td>
                     <td>{{ client.created_at|date:'Y:m:d' }}</td>
-                    <td>{{ client.vacated }}</td>
+                    
                     <td>
                         <a href="{% url 'sms:edit_teule_client' client.id %}" title="Edit" class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-lg"></i></a>
 {#                        <a href="" title="Approve" class="btn btn-outline-primary btn-sm"><i class="fa fa-check-square-o"></i></a>#}
