@@ -2189,7 +2189,7 @@ def house_report(request):
 
 def house_invoices(request, house_id):
     client = TeuleHouses.objects.get(id=house_id)
-    invoices = TeuleMeterReadings.objects.filter(account_number_id=house_id).order_by('-id').values()
+    invoices = TeuleMeterReadings.objects.filter(account_number_id=house_id)
 
     context = {
         'client': client,
