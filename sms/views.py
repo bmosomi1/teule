@@ -2839,7 +2839,7 @@ def teule_house_dashboard(request,house_id):
         return render(request, 'sms/teule_client_apps.html', context)
     else:
         months = get_last_n_months(10)
-        payments = TeulePaymentReceived.objects.filter(client.id=house_id)
+        payments = TeulePaymentReceived.objects.filter(client_id=house_id)
         
         weeks = get_last_n_weeks(10)
         one_month_ago = datetime.datetime.today() - datetime.timedelta(days=30)
