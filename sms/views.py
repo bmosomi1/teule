@@ -2223,6 +2223,7 @@ def house_invoice_preview(request, invoice_id):
         units_consumed = service.units_consumed
         amount_from_units = service.amount_from_units
         invoice_account = service.account_number.house_number
+        invoice_client_names = service.names
         invoice_date = service.read_date
         flat = service.account_number.flat.name
         current_month = datetime.datetime.today()
@@ -2269,6 +2270,7 @@ def house_invoice_preview(request, invoice_id):
         'flat': flat,
         'invoice_number': invoice_number,
         'units_consumed': units_consumed,
+        'invoice_client_names': invoice_client_names,
         'amount_from_units': gross_amount,
         'the_montis': the_montis,
         'get_year': get_year,
