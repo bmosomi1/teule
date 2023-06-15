@@ -5089,7 +5089,7 @@ def meter_replacement(request):
         meter_number = request.POST['meter_number']
         customer = TeuleHouses.objects.filter(id=client_id).first()
         last_readings = customer.reading
-        names = customer.house_nummber
+        names = customer.house_number
         court = customer.flat.name
         amount_due = customer.amount_due
         network=customer.house_number
