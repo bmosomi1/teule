@@ -2820,7 +2820,7 @@ def teule_house_dashboard(request,house_id):
         credit_usage = []
         for month in months:
             # print(week)
-            messages = TeulePaymentReceived.objects.filter(client.id=house_id,read_date__gte=one_month_ago, read_date__lte=current_day).count()
+            messages = TeulePaymentReceived.objects.filter(id=house_id,read_date__gte=one_month_ago, read_date__lte=current_day).count()
             credit_usage.append(messages)
             current_day = current_day - datetime.timedelta(days=7)
             one_month_ago = one_month_ago - datetime.timedelta(days=30)
