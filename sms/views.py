@@ -5115,12 +5115,12 @@ def meter_replacement(request):
         customer.meter_number=meter_number
         customer.save()
 
-        messages.success(request, 'Credit Updated Successfully')
+        messages.success(request, 'meter relaced Successfully')
         return redirect('sms:meter_replacement')
     else:
         context = {
-            'replacements': WaterMeterReplacement.objects.filter().order_by('-id'),
-            'clients': WaterClientAll.objects.filter().order_by('names')
+            'replacements': TeuleMeterReplacement.objects.filter().order_by('-id'),
+            'clients': TeuleHouses.objects.filter(occupied_status='OCCUPIED').order_by('house_number')
         }
         return render(request, 'sms/meter_replace.html', context)
 
