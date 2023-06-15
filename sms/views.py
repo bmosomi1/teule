@@ -2358,7 +2358,7 @@ def house_statement_preview(request, client_id):
             'stat_date': stat_date,
             'balance_brought_forward': balance_brought_forward,
             'statement_day': statement_day,
-            'network': network,
+            
             'client_num': client_num,
             'client_id': client_id,
             'courts': court,
