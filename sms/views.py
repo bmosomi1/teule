@@ -2517,7 +2517,7 @@ def teule_payments_allocations(request):
         account_number = customer.house_number
         phone_number=transaction.sender_phone
         old_account = transaction.account_number
-        paid_by=transaction.names
+        paid_by=transaction.first_name
         confirmation_code = transaction.trans_id
         amount=transaction.amount
         new_comment = comments + " Orig account " + old_account
