@@ -35,7 +35,7 @@
         <div class="col-md-6 col-lg-3">
           <div class="widget-small danger coloured-icon"><i class="icon fa fa-money fa-3x"></i>
             <div class="info">
-              <h4>Joined on</h4>
+              <h4>Registered on</h4>
               <p><b>{{ customer.created_at|date:"M d, Y" }}</b></p>
             </div>
           </div>
@@ -45,7 +45,7 @@
     <div class="row">
         <div class="col-md-6">
           <div class="tile">
-            <p><b>{{ client_name }}    <a href="{% url 'sms:vacate_house' client_id %}" class="text-success"> Vacate House </a></b></p>
+            <p><b>{{ client_name }} {{ customer.house_type }}    </b></p>
             
 {#              <p><a class="btn btn-primary icon-btn" href=""><i class="fa fa-plus"></i>Add Item	</a></p>#}
               <hr>
@@ -59,7 +59,7 @@
 
         <div class="col-md-6">
           <div class="tile">
-            <p><b>{{ customer.house_number }}   {{ client_court }} Monthly Rent {{customer.monthly_rent}}</b></p>
+            <p><b>{{ customer.flat.name }}    Monthly Rent {{customer.monthly_rent}}</b></p>
                 <hr>
 {#              <p><a class="btn btn-primary icon-btn" href=""><i class="fa fa-plus"></i>Add Item	</a></p>#}
             <div class="tile-body">
@@ -75,7 +75,7 @@
         <div class="col-lg-12">
             <div class="tile" style="height: 400px;">
 
-                <h3>Monthly water consumptions</h3>
+                <h3>Rent payments per Month</h3>
                
                 <hr>
                 <div class="tile-body">
