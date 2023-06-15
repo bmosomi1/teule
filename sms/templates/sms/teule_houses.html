@@ -55,7 +55,7 @@
 
                         
                         
-                        <td><a href="{% url 'sms:teule_house_dashboard' house.client.id %}">{{ house.house_number }}</a></td>
+                        <td><a href="{% url 'sms:teule_house_dashboard' house.id %}">{{ house.house_number }}</a></td>
                         <td>{{ house.flat.name }}</td>
                         <td>{{ house.monthly_rent}}</td>
                         <td>{{ house.house_type}}</td>
