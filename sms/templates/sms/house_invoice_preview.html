@@ -24,11 +24,11 @@
                 </div>
                   <div class="col-4">
                     <p style="font-size: 14px !important; color: #1F494A;">Teule House</p>
-                    <p style="color: #1F494A; margin-top: -15px !important; font-size: 14px !important;">P.O.BOX 1262-00200 NAIROBI</p>
-                    <p style="color: #1F494A; margin-top: -15px !important; font-size: 14px !important;">Katani Rd, Twiga court</p>
-                    <p style="color: #1F494A; margin-top: -15px !important; font-size: 14px !important;">tel : 0712730611</p>
-                    <p style="color: #1F494A; margin-top: -15px !important; font-size: 14px !important;">email : admin@tom.com</p>
-                    <p style="color: #1F494A; margin-top: -15px !important; font-size: 14px !important;">Borehole Water Service</p>
+                    <p style="color: #1F494A; margin-top: -15px !important; font-size: 14px !important;">P.O.BOX 1-00200 NAIROBI</p>
+                    <p style="color: #1F494A; margin-top: -15px !important; font-size: 14px !important;">Katani Rd, Katani</p>
+                    <p style="color: #1F494A; margin-top: -15px !important; font-size: 14px !important;">tel : 0715812323</p>
+                    <p style="color: #1F494A; margin-top: -15px !important; font-size: 14px !important;">email : teule@gmail.com</p>
+                    <p style="color: #1F494A; margin-top: -15px !important; font-size: 14px !important;">rent Service</p>
                   </div>
                 <div class="col-3">
                   <h2 class="text-left" style="color: #1F494A; font-size: 35px">INVOICE</h2>
@@ -40,7 +40,7 @@
                           <div class="card-body">
                           <h5>BILL TO.:</h5>
                           <p style="font-weight: bold">{{ invoice_account }}</p>
-                          <p style="font-weight: bold">{{ courts }} Station,</p>
+                          <p style="font-weight: bold">{{ flat }} ,</p>
                           
                           <p style="font-weight: bold">Tel: {{ tel }} </p>
                               {% if service.account_number.kra_pin != None %}
@@ -104,7 +104,15 @@
                     <tbody>
                     
                       <tr>
-                        <td>Rent Innvoice for {{ the_montis }} {{ get_year }}</td>
+                        <td>Rent for {{ the_montis }} {{ get_year }}</td>
+                        <td>1</td>
+                        <td>{{ monthly_rent|floatformat:"2" }}</td>
+                        
+                        <td>{{ monthly_rent|floatformat:"2" }}</td>
+                        
+                      </tr>
+                      <tr>
+                        <td>Water Bill for {{ the_montis }} {{ get_year }}</td>
                         <td>{{ units_consumed }}</td>
                         <td>{{ rate }}</td>
                         
@@ -113,27 +121,7 @@
                       </tr>
                       
 
-                              {% if standing_charge %}
-                              <tr>
-                                <td>Standing charge for {{ the_montis }} {{ get_year }}</td>
-                                <td>1</td>
-                                <td>{{ standing_charge }}</td>
-                                
-                                <td>{{ standing_charge|floatformat:"2" }}</td>
-                                
-                              </tr>
-                              {% endif %}
-                              {% if water_levy %}
                               
-                              
-                                <td>water Levy for {{ the_montis }} {{ get_year }}</td>
-                                <td>1</td>
-                                <td>{{ water_levy }}</td>
-                                
-                                <td>{{ water_levy|floatformat:"2" }}</td>
-                                
-                             
-                              {% endif %}
                     
                     <tr>
                              <td>  </td>
@@ -183,14 +171,14 @@
                     <h6>Subtotal:</h6>
                     <h6>Discount: </h6>
                     <h6>Total: </h6>
-                    <h6>VAT {{ invoice.vat }}%:</h6>
+                    
                     <h5>Amount Payable:</h5>
                 </div>
                 <div class="col-sm-3">
                     <h6 style="text-align: right">{{ total|floatformat:"2" }}</h6>
                     <h6 style="text-align: right">{{ discount|floatformat:"2" }}</h6>
                     <h6 style="text-align: right">{{ sub_total|floatformat:"2" }}</h6>
-                    <h6 style="text-align: right">{{ vat|floatformat:"2" }}</h6>
+                    
                     <h5 style="text-align: right">{{ new_total|floatformat:"2" }}</h5>
                 </div>
             </div>
@@ -205,7 +193,7 @@
                             <h4>Make Payment To</h4>
                             <h5>Equity Bank </h5>
                             <h5>Mama Ngina Branch</h5>
-                            <h4>A/C 01502644335694</h4>
+                            <h4>A/C 11111111</h4>
                         </div>
                     </div>
                 </div>
