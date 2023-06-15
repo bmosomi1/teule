@@ -29,6 +29,7 @@
                     <th>House Number</th>
                     <th>Invoice Date</th>
                     <th>Units </th>
+                    <th>Rent </th>
                     <th>Amount</th>
                     <th>P.Status</th>
                     <th>Actions</th>
@@ -43,6 +44,7 @@
                     <td>{{ invoice.account_number.house_number }}</td>
                     <td>{{ invoice.read_date }}</td>
                     <td>{{ invoice.units_consumed }}</td>
+                    <td>{{ invoice.monthly_rent }}</td>
                     <td>{{ invoice.amount_from_units }}</td>
                     <td>
                         {% if invoice.message == True %}
