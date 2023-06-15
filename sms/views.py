@@ -2371,9 +2371,8 @@ def house_statement_preview(request, client_id):
             'statement': statement,        
             
             'names': names,
-            'tel': tel,
+            'tel': tel,      
             
-            'balance_brought_forward': balance_brought_forward,
             
             
             'client_num': client_num,
