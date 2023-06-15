@@ -65,7 +65,7 @@
 {#              <p><a class="btn btn-primary icon-btn" href=""><i class="fa fa-plus"></i>Add Item	</a></p>#}
             <div class="tile-body">
                 <h5 class=""> <a href="{%url 'sms:house_statement_preview' client_id%}" class="text-success">Generate Statement</a></h5>
-                <h5 class=""> <a href="{%url 'sms:teule_payments_clients' client_id%}" class="text-success">Payment History</a></h5>
+                <h5 class=""> <a href="{%url 'sms:teule_payments_clients' customer.id%}" class="text-success">Payment History</a></h5>
                   
             </div>
           </div>
