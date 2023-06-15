@@ -2380,6 +2380,7 @@ def house_statement_preview(request, client_id):
             'client_id': client_id,
             
             'client': client
+        }
         return render(request, 'sms/house_statement_preview.html', context)
         
 
