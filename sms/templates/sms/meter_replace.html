@@ -27,7 +27,7 @@
                     <select name="meter" class="form-control" id="meter" style="width:300px" required>
                         <option value="">Select a meter</option>
                         {% for client in clients %}
-                            <option value="{{ client.id }}">{{ client.names }} {{ client.id }}</option>
+                            <option value="{{ client.id }}">{{ client.house_number }} -- {{ client.reading }}</option>
                         {% endfor %}
                     </select>
 

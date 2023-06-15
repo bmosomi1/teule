@@ -5120,7 +5120,7 @@ def meter_replacement(request):
     else:
         context = {
             'replacements': TeuleMeterReplacement.objects.filter().order_by('-id'),
-            'clients': TeuleHouses.objects.filter(occupied_status='OCCUPIED').order_by('house_number')
+            'clients': TeuleHouses.objects.filter().order_by('house_number')
         }
         return render(request, 'sms/meter_replace.html', context)
 
