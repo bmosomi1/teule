@@ -5093,7 +5093,7 @@ def meter_replacement(request):
         court = customer.flat.name
         amount_due = customer.amount_due
         network=customer.house_number
-        phone_number=occupied_by.msisdn
+        phone_number=customer.occupied_by.msisdn
 
 
 
