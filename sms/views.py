@@ -2855,7 +2855,7 @@ def teule_house_dashboard(request,house_id):
         
     
             
-            payment_received = int(TeulePaymentReceived.objects.filter(client.id=house_id,pay_date__month=this_month).aggregate(total=Sum('amount'))['total'] or 0)
+            payment_received = int(TeulePaymentReceived.objects.filter(client_id=house_id,pay_date__month=this_month).aggregate(total=Sum('amount'))['total'] or 0)
             
             monthly_payments.append(payment_received)
             the_sub_months.append(this_month)
