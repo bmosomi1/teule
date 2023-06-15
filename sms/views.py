@@ -2198,6 +2198,89 @@ def house_invoices(request, house_id):
     }
     return render(request, 'sms/house_invoices.html', context)
 
+def house_invoice_preview(request, invoice_id):
+    invoices = TeuleMeterReadings.objects.filter(id=invoice_id)
+    
+    #client_s=WaterClientAll.objects.filter(id=invoices.meter_num)
+    
+    #services = Service.objects.filter(invoice=invoice)
+    #client = WaterClientAll.objects.filter(id=13)
+    total_amount = 0
+    for service in invoices:
+        total_amount += (float(service.amount_from_units))
+        standing_charge = service.standing_charge
+        rate = service.rate
+        monthly_rent = service.monthly_rent
+        water_levy = service.water_levy
+        invoice_number = service.id
+
+        court = service.account_number.house_number
+        network = service.account_number.house_type
+        names = service.names
+        tel = service.msisdn
+        client_num = house_number
+        
+        units_consumed = service.units_consumed
+        amount_from_units = service.amount_from_units
+        invoice_account = service.account_number.names
+        invoice_date = service.read_date
+        current_month = datetime.datetime.today()
+        read_month = invoice_date
+        get_month = invoice_date.month
+        get_date = invoice_date.day
+        get_year= invoice_date.year
+        gross_amount=units_consumed*rate
+       # get_date=int(get_date)
+        if get_date < 10:
+
+            get_month=get_month-1
+            if get_month==0:
+
+                get_month=12
+                get_year=get_year-1
+
+        the_montis=calendar.month_name[get_month]
+        
+    discount = 0
+  
+        
+        
+    discount = 0
+    
+    new_total = total_amount - discount
+    sub_total = new_total
+    vat = new_total * 16/100
+    #new_total += vat
+    context = {
+        'invoice': invoices,
+        'services': invoices,
+        'total': total_amount,
+        'invoice_account':invoice_account,
+        'new_total': new_total,
+        'sub_total': sub_total,
+        'discount': discount,
+        'vat': vat,
+        'rate': rate,
+        'standing_charge': standing_charge,
+        'monthly_rent': monthly_rent,
+        'water_levy': water_levy,
+        'invoice_date': invoice_date,
+        'invoice_number': invoice_number,
+        'units_consumed': units_consumed,
+        'amount_from_units': gross_amount,
+        'the_montis': the_montis,
+        'get_year': get_year,
+        'get_date': get_date,
+        'get_month': get_month,
+        'names': names,
+        'tel': tel,
+        'network': network,
+        'client_num': client_num,
+        'courts': court,
+        
+    }
+    return render(request, 'sms/house_invoice_preview.html', context)
+
 @login_required()
 @is_user_customer
 def teule_revenues(request):
