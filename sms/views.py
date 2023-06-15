@@ -3024,6 +3024,7 @@ def vacate_house(request, client_id):
     amount_due = house.amount_due
     client.house_number=''
     client.vacated='YES'
+    client.flat_name=''
     client.vacated_from=vacated_house
     client.vacate_date=datetime.datetime.now()
     client.amount_due=amount_due
