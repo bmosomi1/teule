@@ -2780,7 +2780,7 @@ def teule_home(request):
         one_month_ago = datetime.datetime.today() - datetime.timedelta(days=30)
         current_day = datetime.datetime.today()
         this_month = current_day.month
-        monthly_all_consumptions = []
+        monthly_payments_received = []
         monthss=[]
         for month in months:
             #print(month)
@@ -2788,7 +2788,7 @@ def teule_home(request):
             payment_received = TeulePaymentReceived.objects.filter(pay_date__month=this_month).aggregate(total=Sum('amount'))['total'] or 0
                
             messages = WaterMeterReadings.objects.filter(read_date__gte=one_month_ago, read_date__lte=current_day).count()
-            monthly_all_consumptions.append(payment_received)
+            monthly_payments_received.append(payment_received)
             monthss.append(this_month)
             #monthly_consumptions.append(this_month)
             current_day = current_day - datetime.timedelta(days=30)
@@ -2797,7 +2797,7 @@ def teule_home(request):
             
        
         context = {
-            'messages_sent': monthly_all_consumptions[::-1],
+            'payments': monthly_payments_received[::-1],
             'months': monthss[::-1],
             'customer': customer,
             'contacts': Contact.objects.filter(group__customer_id=customer.id).count(),
