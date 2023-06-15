@@ -2886,6 +2886,7 @@ def teule_house_dashboard(request,house_id):
             'months': the_sub_months[::-1],
             'phone_number': customer.house_number,
             'client_id': customer.id,
+            'house_id': customer.id,
             'amount_due': customer.amount_due,
             'client_name': customer.house_number,
             'client_court': customer.flat.name,
