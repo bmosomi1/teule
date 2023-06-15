@@ -2294,7 +2294,7 @@ def house_statement_preview(request, client_id):
             court = clientn.house_number
             network = clientn.flat.name
             names = clientn.house_number
-            tel = clientn.msisdn
+            tel = clientn.house_number
             client_num = clientn.client_number      
     if request.method == 'POST':
         statement = TeuleStatement.objects.filter(id=0)
