@@ -2361,10 +2361,10 @@ def house_statement_preview(request, client_id):
             
             'client_num': client_num,
             'client_id': client_id,
-            'courts': court,
+            
             'client': client
         }
-        return render(request, 'sms/house_statement_preview.html', context)
+        return render(request, 'sms/house_statement_preview1.html', context)
     else:
         statement =TeuleStatement.objects.filter(id=0)
         context = {        
