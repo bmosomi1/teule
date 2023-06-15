@@ -2218,7 +2218,7 @@ def house_invoice_preview(request, invoice_id):
         network = service.account_number.house_type
         names = service.names
         tel = service.msisdn
-        client_num = house_number
+        client_num = service.account_number.house_number
         
         units_consumed = service.units_consumed
         amount_from_units = service.amount_from_units
