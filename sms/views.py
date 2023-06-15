@@ -2752,10 +2752,10 @@ def teule_home(request):
         
         for month in months:
             # print(week)
-            monthly_units = TeuleMeterReadings.objects.filter(read_date__month=this_month).aggregate(total=Sum('units_consumed'))['total'] or 0
+            monthly_payments = TeulePaymentReceived.objects.filter(pay_date__month=this_month).aggregate(total=Sum('amount'))['total'] or 0
                
             messages = TeuleMeterReadings.objects.filter(read_date__gte=one_month_ago, read_date__lte=current_day).count()
-            monthly_all_consumptions.append(monthly_units)
+            monthly_all_consumptions.append(monthly_payments)
             monthss.append(this_month)
             #monthly_consumptions.append(this_month)
             current_day = current_day - datetime.timedelta(days=30)
@@ -2785,10 +2785,10 @@ def teule_home(request):
         for month in months:
             #print(month)
             #ModelName.objects.aggregate(Sum('field_name'))
-            consumed_units = WaterMeterReadings.objects.filter(read_date__month=this_month).aggregate(total=Sum('units_consumed'))['total'] or 0
+            payment_received = TeulePaymentReceived.objects.filter(pay_date__month=this_month).aggregate(total=Sum('amount'))['total'] or 0
                
             messages = WaterMeterReadings.objects.filter(read_date__gte=one_month_ago, read_date__lte=current_day).count()
-            monthly_all_consumptions.append(consumed_units)
+            monthly_all_consumptions.append(payment_received)
             monthss.append(this_month)
             #monthly_consumptions.append(this_month)
             current_day = current_day - datetime.timedelta(days=30)
