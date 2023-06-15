@@ -14,7 +14,20 @@
 <hr>
 <form action="{% url 'sms:house_statement_preview' client_id %}" method="post">
     {% csrf_token %}
- 
+    <div class="row">
+        <div class="col-sm-4">
+            <input type="date" class="form-control" name="start_date" value="{{ start_date }}" required>
+        </div>
+
+
+        
+        <div class="col-sm-4">
+            <input type="date" class="form-control" name="end_date" value="{{ end_date }}" required>
+        </div>
+        <div class="col-sm-4">
+            <button type="submit" class="btn btn-outline-success">Generate Statement</button>
+        </div>
+    </div>
 </form>
 <hr>
 
@@ -48,10 +61,12 @@
                           <h5>HOUSE: {{ client.house_number }}</h5>
                           
                           <p style="font-weight: bold">{{ client.flat.name }} ,</p>
+                          <p style="font-weight: bold">{{ client.house_type }} ,</p>
                           
-                          <p style="font-weight: bold">Tel: {{ tel }} </p>
-                              {% if client.kra_pin != None %}
-                                  <p style="font-weight: bold">KRA PIN: {{ client.kra_pin }}</p>
+                         
+                              {% if client.occupied_by %}
+                                  <p style="font-weight: bold">Names: {{ client.occupied_by.names }}</p>
+                                  <p style="font-weight: bold">Tel: {{ client.occupied_by.msisdn }}</p>
                               {% endif %}
                       </div>
                       </div>
@@ -72,8 +87,8 @@
 
                          </tr>
                          <tr>
-                             <td>CUSTOMER NO:</td>
-                             <td> {{ client_num }}</td>
+                             <td>HOUSE NUMBER:</td>
+                             <td> {{ customer.house_number }}</td>
                          </tr>
                         <!-- <tr>
                              <td>PIN NUMBER:</td>

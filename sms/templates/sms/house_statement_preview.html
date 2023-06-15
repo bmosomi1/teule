@@ -61,10 +61,11 @@
                           <h5>HOUSE: {{ client.house_number }}</h5>
                           
                           <p style="font-weight: bold">{{ client.flat.name }} ,</p>
+                          <p style="font-weight: bold">{{ client.house_type }} ,</p>
                           
                          
                               {% if client.occupied_by %}
-                                  <p style="font-weight: bold">Names: {{ client.occupied_by.name }}</p>
+                                  <p style="font-weight: bold">Names: {{ client.occupied_by.names }}</p>
                                   <p style="font-weight: bold">Tel: {{ client.occupied_by.msisdn }}</p>
                               {% endif %}
                       </div>
@@ -86,8 +87,8 @@
 
                          </tr>
                          <tr>
-                             <td>CUSTOMER NO:</td>
-                             <td> {{ client_num }}</td>
+                             <td>HOUSE NUMBER:</td>
+                             <td> {{ customer.house_number }}</td>
                          </tr>
                         <!-- <tr>
                              <td>PIN NUMBER:</td>
