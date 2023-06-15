@@ -25,8 +25,8 @@
             <table class="table table-hover table-bordered" id="sampleTable">
                 <thead>
                 <tr>
-                    <th>Client Name</th>
-                    <th>A/C</th>
+                    <th>Tenant Name</th>
+                    <th>House Number</th>
                     <th>Invoice Date</th>
                     <th>Units </th>
                     <th>Amount</th>
@@ -39,7 +39,8 @@
                 <tr>
                     <td><a href="{% url 'sms:client_dashboard' client.id %}">{{ client.names }}</a></td>
                    <!--<td><a href="{% url 'Invoices:invoice_services' invoice.id %}">{{ invoice.client.company_name }}</a></td>--> 
-                    <td>{{ invoice.account_number.id }}</td>
+                    <td>{{ invoice.names }}</td>
+                    <td>{{ invoice.house_number }}</td>
                     <td>{{ invoice.read_date }}</td>
                     <td>{{ invoice.units_consumed }}</td>
                     <td>{{ invoice.amount_from_units }}</td>
