@@ -2222,7 +2222,7 @@ def house_invoice_preview(request, invoice_id):
         
         units_consumed = service.units_consumed
         amount_from_units = service.amount_from_units
-        invoice_account = service.account_number.names
+        invoice_account = service.account_number.house_number
         invoice_date = service.read_date
         current_month = datetime.datetime.today()
         read_month = invoice_date
