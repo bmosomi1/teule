@@ -2850,7 +2850,7 @@ def teule_house_dashboard(request,house_id):
         the_sub_months=[]
         #the_sub_months=[2,1,12,11,10,9,8,7,6,5,4]
         #monthly_consumptions = [0, 10, 0, 5, 0, 0, 0, 0, 0, 0, 0, 15]
-        monthly_consumptions = []
+        monthly_payments = []
         for month in months:
         
     
