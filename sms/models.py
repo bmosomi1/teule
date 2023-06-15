@@ -465,6 +465,7 @@ class TeuleMeterReadings(models.Model):
     account_number = models.ForeignKey(TeuleHouses, on_delete=models.CASCADE)
     id_num = models.CharField(max_length=250, null=True)
     meter_num = models.CharField(max_length=250, null=True)
+    monthly_rent = models.CharField(max_length=250, default=0,null=True)
     customer_rate = models.CharField(max_length=250, null=True)
     reading_type = models.CharField(max_length=250, null=True)
     read_by = models.CharField(max_length=250, null=True)

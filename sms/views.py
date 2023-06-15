@@ -3893,6 +3893,7 @@ def add_meter_readings(request):
         names = waterclient.names
         id_num = waterclient.id_num
         amount_due = waterclient.amount_due
+        monthly_rent = house.monthly_rent
         amount_0 = waterclient.amount_0
         amount_1 = waterclient.amount_1
         amount_2 = waterclient.amount_2
@@ -3910,6 +3911,7 @@ def add_meter_readings(request):
                 previous_reading=last_meter_reading,
                 readings=readings,
                 names=names,
+                monthly_rent=monthly_rent,
                 reading_type="System Input",
                 units_consumed=units_consumed
 
