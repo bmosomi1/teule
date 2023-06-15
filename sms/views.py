@@ -2291,9 +2291,11 @@ def house_statement_preview(request, client_id):
     client = TeuleHouses.objects.filter(id=client_id)
     balance_bought_forward=0
     for clientn in client:            
-            court = clientn.house_number
-            network = clientn.flat.name
+            house = clientn.house_number
+            flat = clientn.flat.name
             names = clientn.house_number
+            amount_due = clientn.amount_due
+            occupied_status = clientn.occupied_status
             tel = clientn.monthly_rent
             client_num = clientn.house_type      
     if request.method == 'POST':
@@ -2362,7 +2364,7 @@ def house_statement_preview(request, client_id):
             'courts': court,
             'client': client
         }
-        return render(request, 'sms/statement_preview.html', context)
+        return render(request, 'sms/house_statement_preview.html', context)
     else:
         statement =TeuleStatement.objects.filter(id=0)
         context = {        
@@ -2373,9 +2375,9 @@ def house_statement_preview(request, client_id):
             'tel': tel,
             'client_id': client_id,
             
-            'network': network,
+            'flat': flat,
             'client_num': client_num,
-            'courts': court,
+            'house': house,
             'client': client
         }
         return render(request, 'sms/house_statement_preview.html', context)

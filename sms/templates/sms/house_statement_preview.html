@@ -58,9 +58,9 @@
                   <div class="col-sm-8">
                       <div class="card col-sm-6 border-dark">
                           <div class="card-body">
-                          <h5>CLIENT.:</h5>
-                          <p style="font-weight: bold">{{ names }}</p>
-                          <p style="font-weight: bold">{{ courts }} Station,</p>
+                          <h5>HOUSE: {{ client.house_number }}</h5>
+                          
+                          <p style="font-weight: bold">{{ client.flat.name }} ,</p>
                           
                           <p style="font-weight: bold">Tel: {{ tel }} </p>
                               {% if client.kra_pin != None %}
