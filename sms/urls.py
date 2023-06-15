@@ -60,6 +60,7 @@ urlpatterns = [
     path('teule/main/account', views.teule_main_account, name='teule_main_account'),
     path('teule/revenues', views.teule_revenues, name='teule_revenues'),
     path('teule/houses', views.teule_houses, name='teule_houses'),
+    path('house/invoices/<int:house_id>', views.house_invoices, name='house_invoices'),
     path('vacate/house/<int:client_id>', views.vacate_house, name='vacate_house'),
     path('teule/house/allocations', views.teule_house_allocations, name='teule_house_allocations'),
     path('edit/teule/house/<int:house_id>', views.edit_teule_house, name='edit_teule_house'),

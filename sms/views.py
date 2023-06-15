@@ -2186,6 +2186,18 @@ def house_report(request):
 
         #return render(request, 'sms/meter_readings_report.html', context)
     return render(request, 'sms/house_reports.html')
+
+def house_invoices(request, house_id):
+    client = TeuleHouses.objects.get(id=house_id)
+    invoices = TeuleMeterReadings.objects.filter(account_number_id=house_id).order_by('-id').values()
+
+    context = {
+        'client': client,
+        'invoices': invoices,
+        'house_id': house_id
+    }
+    return render(request, 'sms/house_invoices.html', context)
+
 @login_required()
 @is_user_customer
 def teule_revenues(request):
