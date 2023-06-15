@@ -11,6 +11,26 @@
 {% endblock %}
 
 {% block content %}
+<hr>
+<form action="{% url 'sms:house_statement_preview' client_id %}" method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-sm-4">
+            <input type="date" class="form-control" name="start_date" value="{{ start_date }}" required>
+        </div>
+
+
+        
+        <div class="col-sm-4">
+            <input type="date" class="form-control" name="end_date" value="{{ end_date }}" required>
+        </div>
+        <div class="col-sm-4">
+            <button type="submit" class="btn btn-outline-success">Generate Statement</button>
+        </div>
+    </div>
+</form>
+<hr>
+
 <div class="row">
         <div class="col-md-12">
         <div class="card">
@@ -20,9 +40,9 @@
                 <div class="col-4">
                   <h2 class="page-header"><img alt="Logo" src="{% static 'images/teule_logo.PNG' %}" height="100px"></h2>
                   <p></p>
-                    <h3 style="margin-top: -13px !important; color: #1F494A; font-size: 11px !important;">Rent Management Solutions</h3>
+                    <h3 style="margin-top: -13px !important; color: #1F494A; font-size: 11px !important;">Your Water Solutions</h3>
                 </div>
-                  <div class="col-4">
+                <div class="col-4">
                     <p style="font-size: 14px !important; color: #1F494A;">Teule House</p>
                     <p style="color: #1F494A; margin-top: -15px !important; font-size: 14px !important;">P.O.BOX 1-00200 NAIROBI</p>
                     <p style="color: #1F494A; margin-top: -15px !important; font-size: 14px !important;">Katani Rd, Katani</p>
@@ -31,20 +51,20 @@
                     <p style="color: #1F494A; margin-top: -15px !important; font-size: 14px !important;">www.teulehouse.com</p>
                   </div>
                 <div class="col-3">
-                  <h2 class="text-left" style="color: #1F494A; font-size: 35px">INVOICE</h2>
+                  <h2 class="text-left" style="color: #1F494A; font-size: 35px">STATEMENT</h2>
                 </div>
               </div>
               <div class="row invoice-info" style="">
                   <div class="col-sm-8">
                       <div class="card col-sm-6 border-dark">
                           <div class="card-body">
-                          <h5>BILL TO.:</h5>
-                          <p style="font-weight: bold">{{ invoice_account }}</p>
-                          <p style="font-weight: bold">{{ flat }} ,</p>
+                          <h5>CLIENT.:</h5>
+                          <p style="font-weight: bold">{{ names }}</p>
+                          <p style="font-weight: bold">{{ courts }} Station,</p>
                           
                           <p style="font-weight: bold">Tel: {{ tel }} </p>
-                              {% if service.account_number.kra_pin != None %}
-                                  <p style="font-weight: bold">KRA PIN: {{ service.account_number.kra_pin }}</p>
+                              {% if client.kra_pin != None %}
+                                  <p style="font-weight: bold">KRA PIN: {{ client.kra_pin }}</p>
                               {% endif %}
                       </div>
                       </div>
@@ -56,25 +76,25 @@
                          </thead>
                          <tbody>
                          <tr>
-                             <td>INVOICE DATE: </td>
-                             <td>{{ invoice_date|date:"d M Y"}}</td>
+                             <td>DATE: </td>
+                             <td>{{ statement_day|date:"d M Y"}}</td>
                          </tr>
                          <tr>
-                             <td>INVOICE NO:</td>
-                             <td>{{ invoice_number }} </td>
+                             <td>PERIOD:</td>
+                             <td>{{ starting_date|date:"d/m/Y" }}-{{ ending_date|date:"d/m/Y" }} </td>
 
                          </tr>
                          <tr>
                              <td>CUSTOMER NO:</td>
                              <td> {{ client_num }}</td>
                          </tr>
-                         <tr>
+                        <!-- <tr>
                              <td>PIN NUMBER:</td>
-                             <td></td>
+                             <td></td>-->
                          </tr>
 {#                         <tr>#}
 {#                             <td>CUSTOMER PO NUMBER:</td>#}
-{#                             <td>{{ service.account_number.address }}</td>#}
+{#                             <td>{{ client.address }}</td>#}
 {#                         </tr>#}
 {#                         <tr>#}
 {#                             <td>#}
@@ -93,49 +113,65 @@
                   <table class="table table-striped">
                     <thead>
                       <tr>
-                        <th>Product/Service</th>
-                        <th>Quantity</th>
-                        <th>Rate</th>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
                         
-                        <th>Amount</th>
+                        <th>Balance</th>
                       </tr>
                      
                     </thead>
                     <tbody>
+                      {% if balance_brought_forward%}
+
+                        <tr>
+                            
+                          <td>{{ stat_date|date:"d M Y" }}</td>
+                          <td>Balance Brought forward</td>
+                          <td>0</td>
+                          <td>0</td>
+                          <td>{{ balance_brought_forward|floatformat:"2" }}</td>
+                        </tr>
                     
-                      <tr>
-                        <td>Rent for {{ the_montis }} {{ get_year }}</td>
-                        <td>1</td>
-                        <td>{{ monthly_rent|floatformat:"2" }}</td>
+                      {% endif %}
+                        {% for service in statement %}
+                        <tr>
+                          
+                          <td>{{ service.statement_date|date:"d M Y" }}</td>
+                          {% if service.units %}
+
+                            <td>{{ service.narration }} P. Readings:  {{ service.prev_reading }}, Current: {{ service.curr_reading }}, units: {{ service.units}}.</td>
+                            {% else %}
+                            <td>{{ service.narration }} </td>
+
+                            {% endif %}
+                          <td>{{ service.debit }}</td>
+                          <td>{{ service.credits|floatformat:"2" }}</td>
+                          <td>{{ service.balance|floatformat:"2" }}</td>
+                        </tr>
+                      {% endfor %}
                         
-                        <td>{{ monthly_rent|floatformat:"2" }}</td>
-                        
-                      </tr>
-                      <tr>
-                        <td>Water Bill for {{ the_montis }} {{ get_year }}</td>
-                        <td>{{ units_consumed }}</td>
-                        <td>{{ rate }}</td>
-                        
-                        <td>{{ amount_from_units|floatformat:"2" }}</td>
-                        
-                      </tr>
+                      
                       
 
-                              
                     
                     <tr>
                              <td>  </td>
                              <td>  </td>
                              <td>  </td>
-                             <td> - </td>
-                         </tr>
-                         <tr>
-                             <td>  </td>
-                             <td>  </td>
                              <td>  </td>
                              <td> - </td>
                          </tr>
                          <tr>
+                             <td>  </td>
+                             <td>  </td>
+                             <td>  </td>
+                             <td>  </td>
+                             <td> - </td>
+                         </tr>
+                         <tr>
+                             <td>  </td>
                              <td>  </td>
                              <td>  </td>
                              <td>  </td>
@@ -145,70 +181,43 @@
                              <td>  </td>
                              <td>  </td>
                              <td>  </td>
+                             <td>  </td>
                              <td> - </td>
                          </tr>
                         <tr>
                              <td>  </td>
                              <td>  </td>
                              <td>  </td>
+                             <td>  </td>
                              <td> - </td>
                          </tr>
+                         <tr>
+                            <td>  </td>
+                            <td>  </td>
+                            <td>  </td>
+                            <td>  </td>
+                            <td> - </td>
+                        </tr>
+                        <tr>
+                            <td>  </td>
+                            <td>  </td>
+                            <td>  </td>
+                            <td>  </td>
+                            <td> - </td>
+                        </tr>
 
                     </tbody>
                   </table>
                 </div>
               </div>
-            <div class="row">
-                <div class="col-sm-5">
-                    <div class="card">
-                        <div class="card-body">
-                            <h6>Payment Terms:</h6>
-                            <p>IMMEDIATE</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <h6>Subtotal:</h6>
-                    <h6>Discount: </h6>
-                    <h6>Total: </h6>
-                    
-                    <h5>Amount Payable:</h5>
-                </div>
-                <div class="col-sm-3">
-                    <h6 style="text-align: right">{{ total|floatformat:"2" }}</h6>
-                    <h6 style="text-align: right">{{ discount|floatformat:"2" }}</h6>
-                    <h6 style="text-align: right">{{ sub_total|floatformat:"2" }}</h6>
-                    
-                    <h5 style="text-align: right">{{ new_total|floatformat:"2" }}</h5>
-                </div>
-            </div>
-            <div class="row" style="margin-top: 40px;">
-                <div class="col-sm-5">
-                    <div class="card">
-                        <div class="card-header" style="height: 16px !important; background-color: #1F494A;; color: white">
-                            <h6 style="margin-top: -6px !important;">Special Notes And Instructions</h6>
-                        </div>
-                        <div class="card-body">
-                         
-                            <h4>Make Payment To</h4>
-                            <h5>Equity Bank </h5>
-                            <h5>Mama Ngina Branch</h5>
-                            <h4>A/C 11111111</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        
+        
 
             <div class="row" style="margin-top: 100px !important;">
                 <div class="col-sm-3">
 
                 </div>
-                <div class="col-sm-6">
-                  <h8>NB: This Bill was sent via sms to the registered phone</h8>
-                    <h6>Thank you for your business</h6>
-                    <p>For any inquiry about this invoice call 0715812323</p>
-                    <hr>
-                </div>
+               
                  <div class="col-sm-3">
 
                 </div>
@@ -225,4 +234,23 @@
 
 {% block additional_scripts %}
 
+
+<script type="text/javascript" src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+    <script type="text/javascript">
+      $('#demoDate').datepicker({
+      	format: "yyyy-mm-dd",
+      	autoclose: true,
+      	todayHighlight: true
+      });
+
+       $('#demoDate2').datepicker({
+      	format: "yyyy-mm-dd",
+      	autoclose: true,
+      	todayHighlight: true
+      });
+    </script>
+
 {% endblock %}
+
+
+

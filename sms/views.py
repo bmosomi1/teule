@@ -2284,6 +2284,102 @@ def house_invoice_preview(request, invoice_id):
         
     }
     return render(request, 'sms/house_invoice_preview.html', context)
+@login_required()
+@is_user_customer
+def house_statement_preview(request, client_id): 
+    
+    client = TeuleHouses.objects.filter(id=client_id)
+    balance_bought_forward=0
+    for clientn in client:            
+            court = clientn.house_number
+            network = clientn.flat.name
+            names = clientn.house_number
+            tel = clientn.msisdn
+            client_num = clientn.client_number      
+    if request.method == 'POST':
+        statement = TeuleStatement.objects.filter(id=0)
+
+       
+        start_date = request.POST['start_date']
+        end_date = request.POST['end_date']
+        starting_date = datetime.datetime.strptime(start_date, "%Y-%m-%d")
+        ending_date = datetime.datetime.strptime(end_date, "%Y-%m-%d")
+        yesteday_is = datetime.datetime.today() + datetime.timedelta(days=-1)
+        tomorrow_is = datetime.datetime.today() + datetime.timedelta(days=1)
+
+        plus_one_day = ending_date + datetime.timedelta(days=1)
+        client = TeuleHouses.objects.filter(id=client_id).first()
+        statement = TeuleStatement.objects.filter(account_number=client.id,statement_date__range=[starting_date, plus_one_day])
+        statement_first = TeuleStatement.objects.filter(account_number=client.id,statement_date__range=[starting_date, plus_one_day]).first()
+        balance_brought_forward=0
+        stat_date = request.POST['start_date']  
+        if statement_first:
+
+
+            stat_date=statement_first.statement_date
+            
+            if statement_first.debit>0:
+                balance_brought_forward=statement_first.balance-statement_first.debit
+                
+            else:
+                balance_brought_forward=statement_first.balance+statement_first.credits
+
+        invoice_date = client.created_at
+        current_month = datetime.datetime.today()
+        statement_day = datetime.datetime.today()
+        read_month = invoice_date
+        get_month = invoice_date.month
+        get_date = invoice_date.day
+        get_year= invoice_date.year
+       
+        if get_date < 10:
+
+            get_month=get_month-1
+            if get_month==0:
+
+                get_month=12
+                get_year=get_year-1
+
+        the_montis=calendar.month_name[get_month]
+
+        
+        
+        
+    
+    #new_total += vat
+        context = {        
+            'statement': statement,        
+            'starting_date': starting_date,
+            'ending_date': ending_date,
+            'names': names,
+            'tel': tel,
+            'stat_date': stat_date,
+            'balance_brought_forward': balance_brought_forward,
+            'statement_day': statement_day,
+            'network': network,
+            'client_num': client_num,
+            'client_id': client_id,
+            'courts': court,
+            'client': client
+        }
+        return render(request, 'sms/statement_preview.html', context)
+    else:
+        statement =TeuleStatement.objects.filter(id=0)
+        context = {        
+            'statement': statement,
+                    
+            
+            'names': names,
+            'tel': tel,
+            'client_id': client_id,
+            
+            'network': network,
+            'client_num': client_num,
+            'courts': court,
+            'client': client
+        }
+        return render(request, 'sms/house_statement_preview.html', context)
+        
 
 @login_required()
 @is_user_customer

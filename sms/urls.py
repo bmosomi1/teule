@@ -61,6 +61,7 @@ urlpatterns = [
     path('teule/revenues', views.teule_revenues, name='teule_revenues'),
     path('teule/houses', views.teule_houses, name='teule_houses'),
     path('house/invoices/<int:house_id>', views.house_invoices, name='house_invoices'),
+    path('house/statement/preview/<int:client_id>', views.house_statement_preview, name='house_statement_preview'),
     path('house/invoice/preview/<int:invoice_id>', views.house_invoice_preview, name='house_invoice_preview'),
     path('vacate/house/<int:client_id>', views.vacate_house, name='vacate_house'),
     path('teule/house/allocations', views.teule_house_allocations, name='teule_house_allocations'),
