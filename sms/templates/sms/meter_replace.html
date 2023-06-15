@@ -48,13 +48,12 @@
             <table class="table table-hover table-bordered" id="sampleTable">
                 <thead>
                 <tr>
-                    <th>Client Name</th>
-                    <th>Meter Number</th>
+                    <th>House Number</th>
+                    
                     <th>Phone Number</th>
 
 
-                    <th>Sub Station</th>
-                    <th>Station</th>
+                    <th>Flat</th>
                     <th>Last Readings</th>
                     <th>Amount Due</th>
                     <th>Replace Date</th>
@@ -64,14 +63,13 @@
                 <tbody>
                 {% for client in replacements %}
                 <tr>
-                    <td><a href="{% url 'sms:edit_water_client' client.id %}">{{ client.client.names }}</a></td>
-                    <td>{{ client.meter_number }}</td>
-                    <td>{{ client.client.msisdn }}</td>
-                    <td>{{ client.client.court }}</td>
-
-                    <td>{{ client.client.network }}</td>
+                    
+                    <td>{{ client.names }}</td>
+                    <td>{{ client.client.occupied_by.msisdn }}</td>
                     <td>{{ client.last_units }}</td>
-                    <td>{{ client.client.amount_due }}</td>
+
+                    <td>{{ client.court }}</td>
+                    <td>{{ client.amount_due }}</td>
                     <td>{{ client.created_at|date:'Y:m:d' }}</td>
                     <td>
                         <a href="#" title="Edit" class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-lg"></i></a>
