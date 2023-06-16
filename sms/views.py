@@ -2438,7 +2438,7 @@ def import_house_clients(request):
                         
 
                     )
-                    the_house=TeuleHouses.objects.filter(house_number=house_number)
+                    the_house=TeuleHouses.objects.filter(house_number=house_number).first()
                     the_client=TeuleClients.objects.filter(house_number=house_number)
                     the_house.occupied_status='OCCUPIED'
                     the_house.occupied_by=the_client
