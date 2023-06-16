@@ -83,6 +83,28 @@
  </div>
 
 </div>
+<div class="col-md-6">
+  <div class="tile">
+    <h3 class="tile-title">Import Tenants</h3>
+      <a href="../../../media/templates/house_clients.xlsx" download="download" class="btn btm-sm btn-outline-primary pull-right">Download Template</a>
+    <div class="tile-body">
+        <form action="{% url 'sms:import_house_clients' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <h6 class="text-danger">Make sure the file has these headings (name,phone_number,ID, house numbere) on the first row</h6>
+                <label class="control-label">Choose a .csv or .xlsx file containing your clients.</label>
+                <label class="control-label">Ensuer you have added the house number that the client is registered under and is enterd exactly as it is on the system</label>
+
+                <input class="form-control" name="my_file" type="file" required>
+            </div>
+            <button type="submit" class="btn btn-outline-success">Import</button>
+        </form>
+    </div>
+  </div>
+
+</div>
+
+</div>
 
 
 {% endblock %}
