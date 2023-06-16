@@ -2381,7 +2381,87 @@ def house_statement_preview(request, client_id):
             'client': client
         }
         return render(request, 'sms/house_statement_preview.html', context)
-        
+
+
+
+
+def import_houses(request):
+    if request.method == 'POST':
+        last_client = TeuleClients.objects.all().order_by('id').last()
+        flat_id = request.POST['flat_id']
+        flat = TeuleFlat.objects.filter(id=flat_id)
+        #customer = Customer.objects.filter(user_ptr_id=request.user.id).first()
+        customer = Customer.objects.filter(id=1).first()
+
+
+        if customer is not None:
+            file = request.FILES['my_file']
+            fs = FileSystemStorage()
+            filename = fs.save(file.name, file)
+            uploaded_file_url = fs.url(filename)
+            f_path = uploaded_file_url.split('/', 1)[1]
+            #f_path = "templates"
+            extension = file.name.rsplit('.', 1)[1]
+            workbook = load_workbook(filename=f_path, read_only=True)
+            worksheet = workbook[workbook.sheetnames[0]]
+            for i in range(2, worksheet.max_row + 1):
+                if worksheet.cell(row=i, column=1).value != '':
+
+                    house_number = worksheet.cell(row=i, column=1).value.upper()
+                    house_type = str(worksheet.cell(row=i, column=2).value).upper()
+                    rent = float(worksheet.cell(row=i, column=3).value)
+                    deposit = float((worksheet.cell(row=i, column=4).value) or 0)
+                    amount_due = float((worksheet.cell(row=i, column=5).value) or 0)
+                    reading = float((worksheet.cell(row=i, column=6).value)or 0)
+                    
+
+
+
+                    
+                if not TeuleHouses.objects.filter(house_number=house_number).exists():
+                    TeuleHouses.objects.update_or_create(
+                        flat=flat
+                        house_number=house_number,
+                        house_type=house_type,
+                        monthly_rent=rent,
+                        deposit=deposit,
+                        rent_arrears=amount_due,
+                        reading=reading,
+                        occupied_status='NO'
+                        
+                        
+
+                    )
+                   
+                   
+                
+
+
+
+
+            messages.success(request, filename)
+
+            context = {
+                'clients': TeuleClients.objects.filter().order_by('-id')
+            }
+            return render(request, 'sms/teule_clients.html', context)
+
+        else:
+            customer = CustomerSubAccounts.objects.filter(user_ptr_id=request.user.id).first().owner
+            file = request.FILES['my_file']
+            fs = FileSystemStorage()
+            filename = fs.save(file.name, file)
+            uploaded_file_url = fs.url(filename)
+            f_path = uploaded_file_url.split('/', 1)[1]
+            extension = file.name.rsplit('.', 1)[1]
+            s = store_meter_readings_task.delay(extension, uploaded_file_url, f_path)
+            CustomerTask.objects.create(
+                customer=customer,
+                task_id=s.id
+            )
+            return redirect('sms:contacts_upload_status', s.id)
+
+
 def import_house_clients(request):
     if request.method == 'POST':
         last_client = TeuleClients.objects.all().order_by('id').last()
