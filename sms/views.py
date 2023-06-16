@@ -2413,19 +2413,22 @@ def import_houses(request):
                     deposit = float((worksheet.cell(row=i, column=4).value) or 0)
                     amount_due = float((worksheet.cell(row=i, column=5).value) or 0)
                     reading = float((worksheet.cell(row=i, column=6).value)or 0)
-                    TeuleHouses.objects.create(
-                        flat=flat,
-                        house_number=house_num,
-                        house_type=house_type,
-                        monthly_rent=rent,
-                        deposit=deposit,
-                        rent_arrears=amount_due,
-                        reading=reading,
-                        occupied_status='NO'
-                        
-                        
+                    if not TeuleHouses.objects.filter(house_number=house_number).exists():
 
-                    )
+
+                        TeuleHouses.objects.create(
+                            flat=flat,
+                            house_number=house_num,
+                            house_type=house_type,
+                            monthly_rent=rent,
+                            deposit=deposit,
+                            rent_arrears=amount_due,
+                            reading=reading,
+                            occupied_status='NO'
+                            
+                            
+
+                        )
                     
 
 
