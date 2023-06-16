@@ -2382,7 +2382,87 @@ def house_statement_preview(request, client_id):
         }
         return render(request, 'sms/house_statement_preview.html', context)
         
+def import_house_clients(request):
+    if request.method == 'POST':
+        last_client = TeuleHouses.objects.all().order_by('id').last()
+        #customer = Customer.objects.filter(user_ptr_id=request.user.id).first()
+        customer = Customer.objects.filter(id=1).first()
 
+
+        if customer is not None:
+            file = request.FILES['my_file']
+            fs = FileSystemStorage()
+            filename = fs.save(file.name, file)
+            uploaded_file_url = fs.url(filename)
+            f_path = uploaded_file_url.split('/', 1)[1]
+            #f_path = "templates"
+            extension = file.name.rsplit('.', 1)[1]
+            workbook = load_workbook(filename=f_path, read_only=True)
+            worksheet = workbook[workbook.sheetnames[0]]
+            for i in range(2, worksheet.max_row + 1):
+                if worksheet.cell(row=i, column=1).value != '':
+
+                    names = worksheet.cell(row=i, column=1).value
+                    phone_numbers = str(worksheet.cell(row=i, column=2).value)
+                    phone_numbers2 = str(worksheet.cell(row=i, column=3).value)
+                    id_number = (worksheet.cell(row=i, column=4).value)
+                    house_number = (worksheet.cell(row=i, column=5).value)
+                    email = (worksheet.cell(row=i, column=6).value) 
+                    gender = (worksheet.cell(row=i, column=7).value)                  
+                    
+                    phone_number = f"{0}{phone_numbers.replace(' ', '')[-9:]}"
+                    phone_number2 = f"{0}{phone_numbers2.replace(' ', '')[-9:]}"
+
+
+
+                    if not last_client:
+                        cn = 'TH-100'
+                    else:
+                        cn = last_client.client_number
+                    
+                    cn_int = int(cn.split('TH-')[-1])
+                    new_cn_int = cn_int + 1
+                    new_cn = f"TH-{new_cn_int}"
+                    customer_number = new_cn
+                if TeuleHouses.objects.filter(house_number=house_number).exists():
+                    TeuleClients.objects.update_or_create(
+                        names=names,
+                        msisdn=phone_number,
+                        msisdn2=phone_number2,
+                        client_number=customer_number,
+                        id_num=id_number,
+                        house_number=house_number,
+                        
+
+                        gender=gender
+                        
+
+                    )
+
+
+
+
+            messages.success(request, filename)
+
+            context = {
+                'clients': TeuleClients.objects.filter().order_by('-id')
+            }
+            return render(request, 'sms/teule_clients.html', context)
+
+        else:
+            customer = CustomerSubAccounts.objects.filter(user_ptr_id=request.user.id).first().owner
+            file = request.FILES['my_file']
+            fs = FileSystemStorage()
+            filename = fs.save(file.name, file)
+            uploaded_file_url = fs.url(filename)
+            f_path = uploaded_file_url.split('/', 1)[1]
+            extension = file.name.rsplit('.', 1)[1]
+            s = store_meter_readings_task.delay(extension, uploaded_file_url, f_path)
+            CustomerTask.objects.create(
+                customer=customer,
+                task_id=s.id
+            )
+            return redirect('sms:contacts_upload_status', s.id)
 @login_required()
 @is_user_customer
 def teule_revenues(request):
