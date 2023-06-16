@@ -2413,7 +2413,7 @@ def import_houses(request):
                     deposit = float((worksheet.cell(row=i, column=4).value) or 0)
                     amount_due = float((worksheet.cell(row=i, column=5).value) or 0)
                     reading = float((worksheet.cell(row=i, column=6).value)or 0)
-                    if not TeuleHouses.objects.filter(house_number=house_number).exists():
+                    if not TeuleHouses.objects.filter(house_number=house_num).exists():
 
 
                         TeuleHouses.objects.create(
