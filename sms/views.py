@@ -2384,7 +2384,7 @@ def house_statement_preview(request, client_id):
         
 def import_house_clients(request):
     if request.method == 'POST':
-        last_client = TeuleHouses.objects.all().order_by('id').last()
+        last_client = TeuleClients.objects.all().order_by('id').last()
         #customer = Customer.objects.filter(user_ptr_id=request.user.id).first()
         customer = Customer.objects.filter(id=1).first()
 
