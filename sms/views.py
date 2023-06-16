@@ -2413,7 +2413,7 @@ def import_houses(request):
                     deposit = float((worksheet.cell(row=i, column=4).value) or 0)
                     amount_due = float((worksheet.cell(row=i, column=5).value) or 0)
                     reading = float((worksheet.cell(row=i, column=6).value)or 0)
-                    TeuleHouses.objects.update_or_create(
+                    TeuleHouses.objects.create(
                         flat=flat,
                         house_number=house_num,
                         house_type=house_type,
@@ -2427,8 +2427,6 @@ def import_houses(request):
 
                     )
                     
-
-
 
 
             messages.success(request, filename)
