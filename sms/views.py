@@ -2418,7 +2418,7 @@ def import_houses(request):
 
 
                     
-                if not TeuleHouses.objects.filter(house_number=house_num).exists():
+                if TeuleHouses.objects.filter(house_number=house_num).first().DoesNotExist:
                     TeuleHouses.objects.update_or_create(
                         flat=flat,
                         house_number=house_num,
