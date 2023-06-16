@@ -2420,7 +2420,7 @@ def import_houses(request):
                     
                 if not TeuleHouses.objects.filter(house_number=house_number).exists():
                     TeuleHouses.objects.update_or_create(
-                        flat=flat
+                        flat=flat,
                         house_number=house_number,
                         house_type=house_type,
                         monthly_rent=rent,
