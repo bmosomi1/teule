@@ -2407,7 +2407,7 @@ def import_houses(request):
             for i in range(2, worksheet.max_row + 1):
                 if worksheet.cell(row=i, column=1).value != '':
 
-                    house_number = worksheet.cell(row=i, column=1).value.upper()
+                    house_num = worksheet.cell(row=i, column=1).value.upper()
                     house_type = str(worksheet.cell(row=i, column=2).value).upper()
                     rent = float(worksheet.cell(row=i, column=3).value)
                     deposit = float((worksheet.cell(row=i, column=4).value) or 0)
@@ -2418,10 +2418,10 @@ def import_houses(request):
 
 
                     
-                if not TeuleHouses.objects.filter(house_number='A12').exists():
+                if not TeuleHouses.objects.filter(house_number=house_num).exists():
                     TeuleHouses.objects.update_or_create(
                         flat=flat,
-                        house_number=house_number,
+                        house_number=house_num,
                         house_type=house_type,
                         monthly_rent=rent,
                         deposit=deposit,
