@@ -2389,7 +2389,7 @@ def import_houses(request):
     if request.method == 'POST':
         last_client = TeuleClients.objects.all().order_by('id').last()
         flat_id = request.POST['flat_id']
-        flat = TeuleFlat.objects.filter(id=flat_id)
+        flat = TeuleFlat.objects.filter(id=flat_id).first()
         #customer = Customer.objects.filter(user_ptr_id=request.user.id).first()
         customer = Customer.objects.filter(id=1).first()
 
