@@ -86,7 +86,7 @@
 <div class="col-md-6">
   <div class="tile">
     <h3 class="tile-title">Import Houses</h3>
-      <a href="../../../media/templates/house_clients.xlsx" download="download" class="btn btm-sm btn-outline-primary pull-right">Download Template</a>
+      <a href="../../../media/templates/house_templates.xlsx" download="download" class="btn btm-sm btn-outline-primary pull-right">Download Template</a>
     <div class="tile-body">
         <form action="{% url 'sms:import_house_clients' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -97,6 +97,15 @@
 
                 <input class="form-control" name="my_file" type="file" required>
             </div>
+            <div class="form-group">
+              <label>Flat Name</label>
+              <select name="flat_id" class="form-control" id="flat_id" required>
+                  <option value="">Select a flat</option>
+                  {% for flat in flats %}
+                      <option value="{{ flat.id }}">{{ flat.name }}-- {{ flat.location }}</option>
+                  {% endfor %}
+              </select>
+          </div>
             <button type="submit" class="btn btn-outline-success">Import</button>
         </form>
     </div>
