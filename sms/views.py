@@ -2406,7 +2406,7 @@ def import_house_clients(request):
                     phone_numbers = str(worksheet.cell(row=i, column=2).value)
                     phone_numbers2 = str(worksheet.cell(row=i, column=3).value)
                     id_number = (worksheet.cell(row=i, column=4).value)
-                    house_number = (worksheet.cell(row=i, column=5).value)
+                    house_number = (worksheet.cell(row=i, column=5).value).upper()
                     email = (worksheet.cell(row=i, column=6).value) 
                     gender = (worksheet.cell(row=i, column=7).value)                  
                     
@@ -2424,7 +2424,7 @@ def import_house_clients(request):
                     new_cn_int = cn_int + 1
                     new_cn = f"TH-{new_cn_int}"
                     customer_number = new_cn
-                if TeuleHouses.objects.filter(house_number=house_number).exists():
+                if TeuleHouses.objects.filter(house_number=house_number,occupied_status='NO').exists():
                     TeuleClients.objects.update_or_create(
                         names=names,
                         msisdn=phone_number,
@@ -2438,6 +2438,13 @@ def import_house_clients(request):
                         
 
                     )
+                    the_house=TeuleHouses.objects.filter(house_number=house_number)
+                    the_client=TeuleClients.objects.filter(house_number=house_number)
+                    the_house.occupied_status='OCCUPIED'
+                    the_house.occupied_by=the_client
+                    the_house.save()
+                   
+                
 
 
 
