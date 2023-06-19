@@ -3350,9 +3350,10 @@ def edit_teule_client(request, client_id):
     TeulePaymentReallocate.objects.all().delete()
     TeuleMeterReadingSmsRaw.objects.all().delete()
     #WaterCourt.objects.all().delete()
+    TeuleHouses.objects.all().delete()
     TeuleClients.objects.all().delete()
     
-    #TeuleHouses.objects.all().delete()
+    TeuleHouses.objects.all().delete()
     TeuleFlat.objects.all().delete()
     MiwamaMpesa.objects.all().delete()
 
