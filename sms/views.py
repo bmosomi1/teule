@@ -3348,7 +3348,7 @@ def edit_teule_client(request, client_id):
     WaterOutbox.objects.all().delete()
     TeuleMeterReplacement.objects.all().delete()
     TeulePaymentReallocate.objects.all().delete()
-    #WaterNetwork.objects.all().delete()
+    TeuleMeterReadingSmsRaw.objects.all().delete()
     #WaterCourt.objects.all().delete()
     TeuleClients.objects.all().delete()
     
@@ -3749,7 +3749,7 @@ def edit_water_client(request, client_id):
 
 
 def edit_sms_reading(request, reading_id):
-    client = WaterMeterReadingSmsRaw.objects.get(id=reading_id)
+    client = TeuleMeterReadingSmsRaw.objects.get(id=reading_id)
     if request.method == 'POST':
         client.readings = request.POST['readings']
         #client.rate = request.POST['rate']
