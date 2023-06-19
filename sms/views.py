@@ -3342,20 +3342,20 @@ def edit_teule_client(request, client_id):
     client = TeuleClients.objects.get(id=client_id)
     amount_due1 = client.amount_due
     readings1 = client.last_meter_reading
-    TeuleMeterReadings.objects.all().delete()
-    TeulePaymentReceived.objects.all().delete()
-    TeulePaymentReceivedManual.objects.all().delete()
-    WaterOutbox.objects.all().delete()
-    TeuleMeterReplacement.objects.all().delete()
-    TeulePaymentReallocate.objects.all().delete()
-    TeuleMeterReadingSmsRaw.objects.all().delete()
+    #TeuleMeterReadings.objects.all().delete()
+    #TeulePaymentReceived.objects.all().delete()
+    #TeulePaymentReceivedManual.objects.all().delete()
+    #WaterOutbox.objects.all().delete()
+    #TeuleMeterReplacement.objects.all().delete()
+    #TeulePaymentReallocate.objects.all().delete()
+    #TeuleMeterReadingSmsRaw.objects.all().delete()
     #WaterCourt.objects.all().delete()
-    TeuleHouses.objects.all().delete()
-    TeuleClients.objects.all().delete()
+    #TeuleHouses.objects.all().delete()
+    #TeuleClients.objects.all().delete()
     
-    TeuleHouses.objects.all().delete()
-    TeuleFlat.objects.all().delete()
-    MiwamaMpesa.objects.all().delete()
+    #TeuleHouses.objects.all().delete()
+    #TeuleFlat.objects.all().delete()
+    #MiwamaMpesa.objects.all().delete()
 
     if request.method == 'POST':
         client.names = request.POST['names']
