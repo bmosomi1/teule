@@ -3342,16 +3342,19 @@ def edit_teule_client(request, client_id):
     client = TeuleClients.objects.get(id=client_id)
     amount_due1 = client.amount_due
     readings1 = client.last_meter_reading
-    #WaterMeterReadings.objects.all().delete()
-    #WaterPaymentReceived.objects.all().delete()
-    #WaterPaymentReceivedManual.objects.all().delete()
-    #WaterOutbox.objects.all().delete()
-    #WaterMeterReplacement.objects.all().delete()
-    #WaterPaymentReallocate.objects.all().delete()
+    TeuleMeterReadings.objects.all().delete()
+    TeulePaymentReceived.objects.all().delete()
+    TeulePaymentReceivedManual.objects.all().delete()
+    WaterOutbox.objects.all().delete()
+    TeuleMeterReplacement.objects.all().delete()
+    TeulePaymentReallocate.objects.all().delete()
     #WaterNetwork.objects.all().delete()
     #WaterCourt.objects.all().delete()
-    #WaterClientAll.objects.all().delete()
-    #MiwamaMpesa.objects.all().delete()
+    TeuleClients.objects.all().delete()
+    
+    TeuleHouses.objects.all().delete()
+    TeuleFlat.objects.all().delete()
+    MiwamaMpesa.objects.all().delete()
 
     if request.method == 'POST':
         client.names = request.POST['names']
@@ -3841,7 +3844,7 @@ def meter_readings(request):
 
 def meter_readings_sms(request):
     #meter_readings = WaterMeterReadings.objects.all()
-    meter_readings_sms = WaterMeterReadingSmsRaw.objects.all().order_by('-read_date')[:600]
+    meter_readings_sms = TeuleMeterReadingSmsRaw.objects.all().order_by('-read_date')[:600]
     #meter_readingss = WaterMeterReadings.objects.all().delete()
 
     context = {
