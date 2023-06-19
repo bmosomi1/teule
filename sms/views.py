@@ -3352,7 +3352,7 @@ def edit_teule_client(request, client_id):
     #WaterCourt.objects.all().delete()
     TeuleClients.objects.all().delete()
     
-    TeuleHouses.objects.all().delete()
+    #TeuleHouses.objects.all().delete()
     TeuleFlat.objects.all().delete()
     MiwamaMpesa.objects.all().delete()
 
